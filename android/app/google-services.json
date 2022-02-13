@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "184458547804",
+    "project_id": "mob-infochat",
+    "storage_bucket": "mob-infochat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184458547804:android:cf95ba9262e076be014c99",
+        "android_client_info": {
+          "package_name": "com.infobot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184458547804-4c2pbk4nso53alvd14n3b1a3tvsafrad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobot",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "184458547804-92snk0a20npj96nh7oa1jthvsj6b1ood.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infobot",
+            "certificate_hash": "0f96638a6ecad1ac33afe98a7efb3ed95c6aff29"
+          }
+        },
+        {
+          "client_id": "184458547804-mmbe1jbvn4qtdcg6amc6l1cq54mu0nip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm0QJrQKV0EERw0k748PcSR7rQIeEWqMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184458547804-mmbe1jbvn4qtdcg6amc6l1cq54mu0nip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
