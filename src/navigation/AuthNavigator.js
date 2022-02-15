@@ -11,10 +11,17 @@ export default AuthNavigator = () => (
     }}
   >
     <Stack.Screen
+      options={{ headerShown: false }}
       name="Login"
       component={Login}
     />
     <Stack.Screen
+      options={{ 
+        title: 'Sign Up Form', 
+        headerStyle: {
+          backgroundColor: '#98cce3',
+        } 
+      }}
       name="SignUp"
       component={SignUp}
     />

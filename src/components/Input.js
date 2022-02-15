@@ -18,12 +18,12 @@ export default Input = ({placeholder, value, onChangeText, secureTextEntry}) => 
 const styles = StyleSheet.create({
     inputContainer:{
         width: 300,
-        height: 45,
-        borderColor: colors.primary,
+        height: 50,
+        borderColor: '#262626',
         borderWidth: 1.5,
-        marginVertical: 20,
-        color: colors.primary,
-        fontSize: 14,
+        marginVertical: 5,
+        color: colors.black,
+        fontSize: 16,
         borderRadius: 10,
         paddingHorizontal: 10
     }

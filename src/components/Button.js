@@ -13,7 +13,7 @@ export default Button = ({buttonText, onPress}) => {
 const styles = StyleSheet.create({
     button:{
         backgroundColor: colors.primary,
-        width: 300,
+        width: 200,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     },
     text:{
         color: colors.white,
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: 'bold',
     }
 })

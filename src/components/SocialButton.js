@@ -12,11 +12,11 @@ export default Button = ({buttonText, onPress, backgroundColor, color}) => {
 
 const styles = StyleSheet.create({
     button:{
-        width: 300,
+        width: 200,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 20,
+        marginVertical: 1,
         borderRadius: 10
     },
     text:{

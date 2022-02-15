@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, Image } from 'react-native';
 import { colors } from '../constants';
 import { Button, Input, TextButton, SocialButton } from '../components';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 // service
 import { Auth } from '../services'
 
@@ -15,13 +17,19 @@ export default Login = ({ navigation }) => {
       style={styles.scroll}
       contentContainerStyle={styles.container}
     >
-      <Text style={styles.heading}>Login</Text>
+      <Image 
+        source={require('../assets/logo.png')} 
+        style={styles.logo}
+      />
+      <Text style={styles.heading}>GC InfoChat</Text>
+      <Text style={styles.heading1}>Login your account here</Text>
 
       <Input
-        placeholder="Email"
+        placeholder="E-mail"
         value={email}
         onChangeText={e => setEmail(e)}
       />
+
       <Input
         placeholder="Password"
         secureTextEntry={true}
@@ -30,7 +38,7 @@ export default Login = ({ navigation }) => {
       />
 
       <TextButton
-        text="Forget Password"
+        text="Forgot Password?"
         onPress={() => navigation.navigate('ForgetPassword')}
       />
 
@@ -46,7 +54,7 @@ export default Login = ({ navigation }) => {
       />
 
       <TextButton
-        text="Have not an account? Signup"
+        text="Not registered yet? Sign Up"
         onPress={() => navigation.navigate('SignUp')}
       />
     </ScrollView>
@@ -58,13 +66,26 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
-    backgroundColor: colors.white,
+    flex: 1,
+    backgroundColor: '#98cce3',
     alignItems: 'center',
     justifyContent: 'center'
   },
   heading: {
-    fontSize: 24,
+    color: '#262626',
+    fontSize: 30,
     fontWeight: 'bold',
-    paddingVertical: 20,
-  }
+    paddingVertical: 35,
+  },
+  heading1: {
+    color: '#262626',
+    fontSize: 18,
+    bottom: 10,
+  },
+  logo: {
+    top: 30,
+    height: 150,
+    width: 150,
+    resizeMode: 'cover',
+  },
 })

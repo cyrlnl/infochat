@@ -4,17 +4,11 @@ import { Button, Input, TextButton } from '../components'
 // service
 import {Auth} from '../services'
 
-export default Home = ({navigation}) => {
-
-    const [ email, setEmail ] = useState()
+export default Chatbot = ({navigation}) => {
 
     return(
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Home</Text>
-
-            <TouchableOpacity onPress={() => Auth.signOut()}>
-                <Text>Sign Out</Text>
-            </TouchableOpacity>
+            <Text>CHATBOT SCREEN</Text>
         </View>
     )
 }

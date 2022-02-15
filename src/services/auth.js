@@ -1,4 +1,5 @@
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
@@ -20,6 +21,16 @@ const googleLogin = async () => {
   })
 }
 
+const createUserDb = (uid, fullName, email) => {
+  return firestore().collection('users').doc(uid).set(
+    {
+      uid,
+      fullName,
+      email
+    }
+  )
+}
+
 // signup handling
 const signUp = (fullName, email, password) => {
   if(!fullName || !email || !password){
@@ -36,6 +47,7 @@ const signUp = (fullName, email, password) => {
 
       return uid
   })
+  .then( uid => createUserDb(uid, fullName, email))
   .catch(
       err => Alert.alert(err.code, err.message)
   )
