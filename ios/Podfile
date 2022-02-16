@@ -12,6 +12,10 @@ target 'infobot' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-dialogflow', :path => '../node_modules/react-native-dialogflow'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'infobotTests' do
     inherit! :complete
     # Pods for testing

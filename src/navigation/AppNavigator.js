@@ -17,21 +17,28 @@ const AppNavigator = () => {
         tabBarShowLabel: false,
         // tabBarActiveTintColor: '#e91e63',
         tabBarStyle: {
-          position: 'absolute',
-          bottom: 20,
-          left: 20,
-          right: 20,
-          elevation: 0,
+          // position: 'absolute',
+          // bottom: 20,
+          // left: 20,
+          // right: 20,
+          // elevation: 0,
           backgroundColor: '#5ca4c4',
-          borderRadius: 15,
-          height: 65,
-          ...style.shadow
+          // borderRadius: 10,
+          height: 60,
+        //   ...style.shadow
         }
       }
       }
     >
       <Tab.Screen name='Chatbot' component={Chatbot}
         options={{
+          title: 'GC InfoChat',
+          headerStyle: {
+            backgroundColor: '#5ca4c4',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          },
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
@@ -50,6 +57,7 @@ const AppNavigator = () => {
       />
       <Tab.Screen name='Profile' component={Profile}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
@@ -68,6 +76,13 @@ const AppNavigator = () => {
       />
       <Tab.Screen name='About' component={About}
         options={{
+          title: 'About Gordon College',
+          headerStyle: {
+            backgroundColor: '#5ca4c4',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          },
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image

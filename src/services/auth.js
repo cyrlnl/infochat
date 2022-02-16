@@ -3,6 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
+
 const googleLogin = async () => {
   // Get the users ID token
   const { idToken } = await GoogleSignin.signIn();
@@ -73,9 +74,21 @@ const forgetPassword = (email) => {
   return auth().sendPasswordResetEmail(email)
 }
 
-const signOut = () => {
-  return auth().signOut()
-}
+// const signOut = () => {
+//   return auth().signOut()
+// }
+
+const signOut = async () => {
+  try {
+    // await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    auth()
+      .signOut()
+      .then(() => alert('Your are signed out!'));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const Auth = {
   signUp,
