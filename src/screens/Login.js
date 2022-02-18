@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, Image } from 'react-native';
 import { colors } from '../constants';
 import { Button, Input, TextButton, SocialButton } from '../components';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 
 // service
 import { Auth } from '../services'
