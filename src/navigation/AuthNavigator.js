@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login, SignUp, ForgetPassword, OnboardingScreen } from "../screens";
+import { Login, SignUp, ForgotPassword, OnboardingScreen } from "../screens";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -32,38 +32,42 @@ const AuthNavigator = () => {
 
   return (
     <Stack.Navigator
-    initialRouteName={routeName}
-    screenOptions={{
-      headerShown: null
-    }}
-  >
-    <Stack.Screen
-      options={{ headerShown: false }}
-      name="OnboardingScreen"
-      component={OnboardingScreen}
-    />
-    <Stack.Screen
-      options={{ headerShown: false }}
-      name="Login"
-      component={Login}
-    />
-    <Stack.Screen
-      options={{
-        title: 'Sign Up Form',
-        headerStyle: {
-          backgroundColor: '#98cce3',
-        }
+      initialRouteName={routeName}
+      screenOptions={{
+        headerShown: null
       }}
-      name="SignUp"
-      component={SignUp}
-    />
-    <Stack.Screen
-      name="ForgetPassword"
-      component={ForgetPassword}
-    />
-  </Stack.Navigator>
+    >
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="OnboardingScreen"
+        component={OnboardingScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Login"
+        component={Login}
+      />
+      <Stack.Screen
+        options={{
+          // title: 'Sign Up Form',
+          headerShown: false
+          // headerStyle: {
+          //   backgroundColor: '#98cce3',
+          // }
+        }}
+        name="SignUp"
+        component={SignUp}
+      />
+      <Stack.Screen
+        options={{
+          title: 'Forgot Password'
+        }}
+        name="ForgotPassword"
+        component={ForgotPassword}
+      />
+    </Stack.Navigator>
   )
-  
+
 }
 
 export default AuthNavigator

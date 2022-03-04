@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Image, ScrollView, Alert, ActivityIndicator, Text, TouchableOpacity, Button } from "react-native";
+import { View, StyleSheet, Image, ScrollView, Alert, ActivityIndicator, Text, TouchableOpacity, Button, SafeAreaView } from "react-native";
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import { colors } from '../constants';
 import { Account } from '../services'
@@ -8,172 +9,179 @@ import { Account } from '../services'
 // service
 import { Auth } from '../services'
 
-const Profile = () => {
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+const Profile = ({ navigation, route }) => {
 
   // const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true);
   const user = auth().currentUser;
-  console.log(user);
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
-  // useEffect(() => {
-  //   Account.getProfile()
-  //     .then(acc =>
-  //       setUser(acc),
-  //       setLoading(false)
-  //     )
-  //     .catch(err => Alert.alert(err.code, err.message))
-  // })
 
-  // if (loading) {
-  //   return <ActivityIndicator
-  //     color={colors.primary}
-  //     size='large'
-  //   />
-  // }
+  const getUser = async () => {
+    await firestore()
+      .collection('users')
+      .doc(route.params ? route.params.userId : user.uid)
+      .get()
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          console.log('User Data', documentSnapshot.data());
+          setUserData(documentSnapshot.data());
+        }
+      })
+  }
 
-  // return (
-  //   <ScrollView
-  //     style={{ flex: 1 }}
-  //   >
-  //     {/* {
-  //       user && user.map((data, index) => (
-  //         <View
-  //           key={index}
-  //           style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
-  //         >
-  //           <Text>{data.fullName}</Text>
-  //           <Text>{data.email}</Text>
-  //         </View>
-  //       ))
-  //     } */}
-
-  //     <TouchableOpacity onPress={() => Auth.signOut()}>
-  //     <Text>Sign Out</Text>
-  //     </TouchableOpacity>
-
-  //     <Text>{user.email}</Text>
-  //     <Text>{user.displayName}</Text>
-
-  //   </ScrollView>
-  // )
+  useEffect(() => {
+    getUser();
+    navigation.addListener("focus", () => setLoading(!loading));
+  }, [navigation, loading])
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={StyleSheet.absoluteFill}
-          source={require('../assets/gc-logos/gcwallpaper.jpg')}
-        />
-      </View>
-      <Image style={styles.avatar} source={require('../assets/gc-logos/gclogo.png')} />
-        <View style={styles.bodyContent}>
-          <Text style={styles.textInfo}>
-            Name: {user.displayName}
-          </Text>
-          <Text style={styles.textInfo}>
-            Email: {user.email}
-          </Text>
-          <Text style={styles.textInfo}>Department: CCS</Text>
-          <Text style={styles.textInfo}>Program: BSCS</Text>
-        </View>
-    
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>Update Profile</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <Image style={styles.userImg} source={require('../assets/gc-logos/gclogo.png')} />
 
-        <TouchableOpacity style={styles.button1} onPress={Auth.signOut}>
-          <Text style={styles.text1}>Change Password</Text>
-        </TouchableOpacity>
-    </View>
+        <Text style={styles.userName}>{userData ? userData.fullName : 'Sample Name'}</Text>
+
+        {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
+
+        <Text style={styles.aboutUser}>{userData ? userData.status : 'Unknown'}</Text>
+
+        <View style={styles.userBtnWrapper}>
+
+          <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
+            <Icon name="account-edit" color="#009e05" size={22} />
+            <Text style={styles.userBtnTxt}>Edit Profile</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
+            <AntDesign name="logout" color="#ff3842" size={22} />
+            <Text style={styles.userBtnTxt}>Logout</Text>
+          </TouchableOpacity>
+
+        </View>
+
+        <View style={styles.userInfoWrapper}>
+          <View style={styles.userInfoSection}>
+            <View style={styles.row}>
+              <Icon name="email" color="#235b93" size={25} />
+              <Text style={{ color: "#333", marginLeft: 20, fontSize: 18 }}>
+                {userData ? userData.email : 'Email Address'}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="phone" color="#235b93" size={25} />
+              <Text style={{ color: "#333", marginLeft: 20, fontSize: 18 }}>
+                {userData ? userData.phone : 'Phone Number'}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="book-open-blank-variant" color="#235b93" size={25} />
+              <Text style={{ color: "#333", marginLeft: 20, fontSize: 18 }}>
+                {userData ? userData.course : 'Course'}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="office-building-marker" color="#235b93" size={25} />
+              <Text style={{ color: "#333", marginLeft: 20, fontSize: 18 }}>
+                {userData ? userData.department : 'Department'}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <FontAwesome5 name="school" color="#235b93" size={21} />
+              <Text style={{ color: "#333", marginLeft: 20, fontSize: 18 }}>
+                {userData ? userData.organization : 'School'}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#00BFFF",
-    height: 200,
-  },
-  avatar: {
-    width: 170,
-    height: 170,
-    borderRadius: 100,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    marginTop: 60
-  },
-  textInfo: {
-    fontSize: 20,
-    color: "black",
-    borderWidth: 1.5,
-    borderRadius: 10,
-    borderColor: "black",
-    backgroundColor: "white",
-    padding: 5,
-    margin: 5,
-  },
-  body: {
-    // marginTop: 40,
-  },
-  bodyContent: {
-    // flex: 1,
-    // alignItems: 'center',
-    marginTop: 50,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
     padding: 20,
   },
-  button: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // paddingVertical: 12,
-    // paddingHorizontal: 32,
-    padding: 10,
-    borderRadius: 4,
-    borderWidth: 1.5,
-    borderColor: 'bottom',
-    // elevation: 3,
-    backgroundColor: '#5eaed1',
-    flexDirection: "row" ,
-    marginLeft: 100,
-    marginHorizontal: 100, 
-    justifyContent: 'space-evenly'
+  userImg: {
+    height: 170,
+    width: 170,
+    borderRadius: 75,
   },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
+  userName: {
+    color: '#222',
+    fontSize: 24,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
-  button1: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // paddingVertical: 12,
     marginTop: 20,
-    // paddingHorizontal: 32,
-    padding: 10,
-    borderRadius: 4,
-    borderWidth: 1.5,
-    borderColor: 'bottom',
-    // elevation: 3,
-    backgroundColor: '#5eaed1',
-    flexDirection: "row" ,
-    marginLeft: 100,
-    marginHorizontal: 100, 
-    justifyContent: 'space-evenly'
+    marginBottom: 10,
   },
-  text1: {
-    fontSize: 16,
-    lineHeight: 21,
+  aboutUser: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#ff3842',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  userBtnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 15,
+  },
+  userBtn: {
+    borderColor: '#235b93',
+    borderWidth: 3,
+    borderRadius: 3,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    marginHorizontal: 30,
+    flexDirection: 'row',
+  },
+  userBtnTxt: {
+    color: '#222',
+    fontSize: 14,
+    // fontWeight: 'bold',
+    marginLeft: 5
+  },
+  userInfoWrapper: {
+    // flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginVertical: 20,
+  },
+  userInfoItem: {
+    justifyContent: 'center',
+  },
+  userInfoTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  userInfoSubTitle: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+  },
+  userInfoSection: {
+    paddingHorizontal: 30,
+    marginBottom: 25,
+  },
+  row: {
+    flexDirection: 'row',
+    marginBottom: 30,
   },
 });
-
-
-
 
 
 export default Profile

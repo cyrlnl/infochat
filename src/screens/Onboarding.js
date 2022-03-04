@@ -12,7 +12,7 @@ const Dot = (selected) => {
 			style={{
 				width: 5,
 				height: 5,
-        borderRadius: 5,
+				borderRadius: 5,
 				marginHorizontal: 3,
 				backgroundColor
 			}}
@@ -20,70 +20,70 @@ const Dot = (selected) => {
 	)
 }
 
-const Skip = ({...props}) => (
-  <Text
-    style={{
-      color: "#000",
-      marginHorizontal: 5,
-      fontSize: 16,
-    }}
-    { ...props}
-  >Skip</Text>
+const Skip = ({ ...props }) => (
+	<Text
+		style={{
+			color: "#000",
+			marginHorizontal: 5,
+			fontSize: 16,
+		}}
+		{...props}
+	>Skip</Text>
 )
 
-const Next = ({...props}) => (
-  <Text
-    style={{
-      color: "#000",
-      marginHorizontal: 5,
-      fontSize: 16,
-    }}
-    { ...props}
-  >Next</Text>
+const Next = ({ ...props }) => (
+	<Text
+		style={{
+			color: "#000",
+			marginHorizontal: 5,
+			fontSize: 16,
+		}}
+		{...props}
+	>Next</Text>
 )
 
-const Done = ({...props}) => (
-  <Text
-    style={{
-      color: "#000",
-      marginHorizontal: 7,
-      fontSize: 18,
-    }}
-    { ...props}
-  >DONE</Text>
+const Done = ({ ...props }) => (
+	<Text
+		style={{
+			color: "#000",
+			marginHorizontal: 7,
+			fontSize: 18,
+		}}
+		{...props}
+	>DONE</Text>
 )
 
 
-const OnboardingScreen = ({navigation}) => {
+const OnboardingScreen = ({ navigation }) => {
 	return (
-			<Onboarding
-				SkipButtonComponent = {Skip}
-				NextButtonComponent = {Next}
-				DoneButtonComponent = {Done}
-				DotComponent = {Dot}
-				onSkip={() => navigation.replace("Login")}
-				onDone={() => navigation.navigate("Login")}
-				pages={[
-					{
-						backgroundColor: '#a6e4d0',
-						image: <Image source={require('../assets/onboarding-img1.png')} />,
-						title: 'Onboarding',
-						subtitle: 'Done with React Native Onboarding Swiper',
-					},
-					{
-						backgroundColor: '#fdeb93',
-						image: <Image source={require('../assets/onboarding-img2.png')} />,
-						title: 'Onboarding',
-						subtitle: 'Done with React Native Onboarding Swiper',
-					},
-					{
-						backgroundColor: '#e9bcbe',
-						image: <Image source={require('../assets/onboarding-img3.png')} />,
-						title: 'Onboarding',
-						subtitle: 'Done with React Native Onboarding Swiper',
-					},
-  			]}
-			/>
+		<Onboarding
+			SkipButtonComponent={Skip}
+			NextButtonComponent={Next}
+			DoneButtonComponent={Done}
+			DotComponent={Dot}
+			onSkip={() => navigation.replace("Login")}
+			onDone={() => navigation.navigate("Login")}
+			pages={[
+				{
+					backgroundColor: '#fff',
+					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Interaction.png')} />,
+					title: 'Interaction',
+					subtitle: 'Interact with the Gordon College',
+				},
+				{
+					backgroundColor: '#fff',
+					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Internet.png')} />,
+					title: 'Inquire',
+					subtitle: 'Ask whenever and wherever you are.',
+				},
+				{
+					backgroundColor: '#fff',
+					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Chatbot.png')} />,
+					title: 'User-friendly Chatbot',
+					subtitle: 'Talk to the chat bot to answer your queries instantly.',
+				},
+			]}
+		/>
 	)
 }
 

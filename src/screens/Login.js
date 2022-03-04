@@ -1,90 +1,124 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, Image } from 'react-native';
-import { colors } from '../constants';
-import { Button, Input, TextButton, SocialButton } from '../components';
+import React from 'react';
+import { View, Text, SafeAreaView, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import colors from '../constants/colors';
+import Button from '../components/Button';
+import Input from '../components/Input';
+import Social from '../components/SocialButton'
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '../components/Loader';
 
 // service
 import { Auth } from '../services'
 
-export default Login = ({ navigation }) => {
+const Login = ({ navigation }) => {
+  const [inputs, setInputs] = React.useState({ email: '', password: '' });
+  const [errors, setErrors] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const validate = async () => {
+    Keyboard.dismiss();
+    let isValid = true;
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+    
+    if (!password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    }
+    if (isValid) {
+      Auth.signIn(email, password)
+    }
+  };
 
+
+  const handleOnchange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }));
+  };
+
+  const handleError = (error, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: error }));
+  };
   return (
-    <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={styles.container}
-    >
-      <Image 
-        source={require('../assets/logo.png')} 
-        style={styles.logo}
-      />
-      <Text style={styles.heading}>GC InfoChat</Text>
-      <Text style={styles.heading1}>Login your account here</Text>
+    <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
 
-      <Input
-        placeholder="E-mail"
-        value={email}
-        onChangeText={e => setEmail(e)}
-      />
+      <View style={{ paddingTop: 50, paddingHorizontal: 20 }}>
 
-      <Input
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={e => setPassword(e)}
-      />
+        <Text style={{ color: colors.black, fontSize: 40, fontWeight: 'bold' }}>
+          Log In
+        </Text>
+        <Text style={{ color: colors.facebook, fontSize: 18, fontWeight: 'bold', marginVertical: 10 }}>
+          Enter Your Details to Sign In
+        </Text>
 
-      <TextButton
-        text="Forgot Password?"
-        onPress={() => navigation.navigate('ForgetPassword')}
-      />
+        <View style={{ marginVertical: 20 }}>
 
-      <Button
-        buttonText="Login"
-        onPress={() => Auth.signIn(email, password)}
-      />
+          <Input
+            // onChangeText={text => handleOnchange(text, 'email')}
+            onChangeText={text => setEmail(text)}
+            value={email}
+            keyboardType="email-address"
+            onFocus={() => handleError(null, 'email')}
+            iconName="email-outline"
+            label="Email"
+            placeholder="Enter your email address"
+            error={errors.email}
+          />
 
-      <SocialButton
-        buttonText="Google Sign In"
-        backgroundColor={colors.google}
-        onPress={() => Auth.googleLogin()}
-      />
+          <Input
+            // onChangeText={text => handleOnchange(text, 'password')}
+            onChangeText={text => setPassword(text)}
+            value={password}
+            onFocus={() => handleError(null, 'password')}
+            iconName="lock-outline"
+            label="Password"
+            placeholder="Enter your password"
+            error={errors.password}
+            password
+          />
 
-      <TextButton
-        text="Not registered yet? Sign Up"
-        onPress={() => navigation.navigate('SignUp')}
-      />
-    </ScrollView>
-  )
-}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text
+              style={{ left: 120, fontWeight: 'bold', fontSize: 14, color: colors.google }}
+            >
+              Forgot Password?
+            </Text>
+          </TouchableOpacity>
 
-const styles = StyleSheet.create({
-  scroll: {
-    flex: 1
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#98cce3',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  heading: {
-    color: '#262626',
-    fontSize: 30,
-    fontWeight: 'bold',
-    paddingVertical: 35,
-  },
-  heading1: {
-    color: '#262626',
-    fontSize: 18,
-    bottom: 10,
-  },
-  logo: {
-    top: 30,
-    height: 150,
-    width: 150,
-    resizeMode: 'cover',
-  },
-})
+          <Button title="Log In" onPress={validate} />
+
+          <Text
+            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black' }}
+          >
+            -- OR --
+          </Text>
+
+          <Social title="Google Sign In" onPress={() => Auth.googleSignIn()} />
+
+          <Text
+            onPress={() => navigation.navigate('SignUp')}
+            style={{
+              color: colors.black,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontSize: 16,
+            }}>
+            Don't have account? Register
+          </Text>
+
+        </View>
+      </View>
+    </SafeAreaView >
+  );
+};
+
+export default Login;
