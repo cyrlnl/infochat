@@ -7,13 +7,16 @@ import {
   TextInput,
   StyleSheet,
   Alert,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
-import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
+
+import ImagePicker from 'react-native-image-crop-picker';
+
 // service
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +31,9 @@ const EditProfile = () => {
 
   const user = auth().currentUser;
   // console.log(user);
-
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
 
   const getUser = async () => {
@@ -44,12 +49,33 @@ const EditProfile = () => {
       })
   }
 
-  const handleUpdate = async () => {
-    // let imgUrl = await uploadImage();
+  const pickImageFromGallery = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+      compressImageQuality: 0.7,
+    }).then((image) => {
+      console.log(image);
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+      setImage(imageUri);
+    });
+  }
 
-    // if( imgUrl == null && userData.userImg ) {
-    //   imgUrl = userData.userImg;
-    // }
+  // const pickImage = () => {
+  //   launchImageLibrary({ quality: 0.5 }, (image) => {
+  //     const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+  //     setImage(imageUri);
+  //     // uploadImage();
+  //   })
+  // }
+
+  const handleUpdate = async () => {
+    let imgUrl = await uploadImage();
+
+    if (imgUrl == null && userData.userImg) {
+      imgUrl = userData.userImg;
+    }
 
     firestore()
       .collection('users')
@@ -62,7 +88,7 @@ const EditProfile = () => {
         course: userData.course,
         status: userData.status,
         organization: userData.organization,
-        // userImg: imgUrl,
+        userImg: imgUrl,
       })
       .then(() => {
         console.log('User Updated!');
@@ -73,6 +99,58 @@ const EditProfile = () => {
       })
   }
 
+  const uploadImage = async () => {
+    if (image == null) {
+      return null;
+    }
+    const uploadUri = image;
+    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+    // Add timestamp to File Name
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.');
+    filename = name + Date.now() + '.' + extension;
+
+    setUploading(true);
+    setTransferred(0);
+
+    const storageRef = storage().ref(`photos/${filename}`);
+    const task = storageRef.putFile(uploadUri);
+
+    // Set transferred state
+    task.on('state_changed', (taskSnapshot) => {
+      console.log(
+        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+      );
+
+      setTransferred(
+        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+        100,
+      );
+    });
+
+    try {
+      await task;
+
+      const url = await storageRef.getDownloadURL();
+
+      setUploading(false);
+      setImage(null);
+
+      // Alert.alert(
+      //   'Image uploaded!',
+      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+      // );
+      return url;
+
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+
+  };
+
+
   useEffect(() => {
     getUser();
   }, [])
@@ -80,8 +158,9 @@ const EditProfile = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={{ margin: 20 }}>
+
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => { }}>
+          <TouchableOpacity onPress={() => pickImageFromGallery()}>
             <View style={{
               height: 100,
               width: 100,
@@ -90,9 +169,14 @@ const EditProfile = () => {
               alignItems: 'center',
             }}>
               <ImageBackground
-                source={
-                  require('../assets/gc-logos/gclogo.png')
-                }
+                source={{
+                  uri: image
+                    ? image
+                    : userData
+                      ? userData.userImg ||
+                      'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938'
+                      : 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938',
+                }}
                 style={{ height: 100, width: 100 }}
                 imageStyle={{ borderRadius: 15, borderWidth: 1, borderColor: '#999' }}
               >
@@ -211,9 +295,17 @@ const EditProfile = () => {
           />
         </View>
 
-        <TouchableOpacity style={styles.commandButton} onPress={handleUpdate}>
-          <Text style={styles.panelButtonTitle}>Update</Text>
-        </TouchableOpacity>
+        {uploading ? (
+          <View style={styles.statusWrapper}>
+            <Text>{transferred} % Completed!</Text>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        ) : (
+          <TouchableOpacity style={styles.commandButton} onPress={handleUpdate}>
+            <Text style={styles.panelButtonTitle}>Update</Text>
+          </TouchableOpacity>
+        )}
+
 
       </View>
     </ScrollView>
@@ -224,6 +316,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  statusWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   commandButton: {
     padding: 15,
