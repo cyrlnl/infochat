@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import auth from '@react-native-firebase/auth';
+
 import { Chatbot } from "../screens";
 import { Profile } from "../screens";
 import { About } from "../screens";
@@ -14,6 +16,8 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
 
+  const user = auth().currentUser;
+  // console.log(user);
 
   const ProfileStack = () => (
     <Stack.Navigator>
@@ -32,6 +36,7 @@ const AppNavigator = () => {
           tabBarHideOnKeyboard: true,
           title: 'Edit Profile',
           headerTitleStyle: {
+            fontFamily: 'Poppins-SemiBold',
             color: 'black'
           },
           headerBackTitleVisible: false,
@@ -57,7 +62,13 @@ const AppNavigator = () => {
       }
       }
     >
-      <Tab.Screen name='Chatbot' component={Chatbot}
+      <Tab.Screen
+        name='Chatbot'
+        component={Chatbot}
+        initialParams={{
+          name: user.displayName,
+          id: user.uid,
+        }}
         options={{
           tabBarHideOnKeyboard: true,
           title: 'GC InfoChat',
@@ -65,9 +76,12 @@ const AppNavigator = () => {
             backgroundColor: '#235b93',
           },
           headerTitleStyle: {
+            fontFamily: 'Poppins-SemiBold',
+            top: 2,
             color: 'white'
           },
-          headerLeft: () => <Icon name="robot" size={35} color="#fff" style={{marginHorizontal: 3, left: 7}}/>,
+          headerLeft: () => <Icon name="robot" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
+          headerRight: () => <Text style={{ right: 10, color: '#fff', fontFamily: 'Poppins-BlackItalic', fontSize: 17, fontStyle: 'italic' }}>{user.displayName}</Text>,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
@@ -76,10 +90,10 @@ const AppNavigator = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? '#fff' : '#777c7c'
+                  tintColor: focused ? '#fff' : '#92949c'
                 }}
               />
-              <Text style={{ color: focused ? '#fff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>CHAT</Text>
+              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>CHAT</Text>
             </View>
           )
         }}
@@ -96,24 +110,26 @@ const AppNavigator = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? '#fff' : '#777c7c'
+                  tintColor: focused ? '#fff' : '#92949c'
                 }}
               />
-              <Text style={{ color: focused ? '#fff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>PROFILE</Text>
+              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>PROFILE</Text>
             </View>
           )
         }}
       />
       <Tab.Screen name='About' component={About}
         options={{
-          title: 'About Gordon College',
+          title: 'About',
           headerStyle: {
             backgroundColor: '#235b93',
           },
           headerTitleStyle: {
+            fontFamily: 'Poppins-SemiBold',
+            top: 2,
             color: 'white'
           },
-          headerLeft: () => <Icon name="information-outline" size={35} color="#fff" style={{marginHorizontal: 3, left: 7}}/>,
+          headerLeft: () => <Icon name="information-outline" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
@@ -122,10 +138,10 @@ const AppNavigator = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? '#fff' : '#777c7c'
+                  tintColor: focused ? '#fff' : '#92949c'
                 }}
               />
-              <Text style={{ color: focused ? '#fff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>ABOUT</Text>
+              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontWeight: 'bold', fontSize: 12, top: 1 }}>ABOUT</Text>
             </View>
           )
         }}

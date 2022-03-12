@@ -137,12 +137,18 @@ const SignUp = ({ navigation }) => {
           <Button title="Register" onPress={validate} />
 
           <Text
-            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black' }}
+            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black', bottom: 5 }}
           >
             -- OR --
           </Text>
 
-          <Social title="Google Sign Up" onPress={() => Auth.googleSignUp()} />
+          <Social
+            buttonTitle="Sign Up with Google"
+            btnType="google"
+            color="#f5e7ea"
+            backgroundColor="#de4d41"
+            onPress={() => Auth.googleSignIn()}
+          />
 
           <Text
             onPress={() => navigation.navigate('Login')}
@@ -151,6 +157,7 @@ const SignUp = ({ navigation }) => {
               fontWeight: 'bold',
               textAlign: 'center',
               fontSize: 16,
+              top: 15
             }}>
             Already have account ?Login
           </Text>

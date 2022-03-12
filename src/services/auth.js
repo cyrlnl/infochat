@@ -4,57 +4,81 @@ import { Alert } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const googleSignIn = async () => {
-  // Get the users ID token
-  const { idToken } = await GoogleSignin.signIn();
+  try {
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
 
-  // Create a Google credential with the token
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  // Sign-in the user with the credential
-  const user_sign_in = auth().signInWithCredential(googleCredential);
+    // Sign-in the user with the credential
+    const user_sign_in = auth().signInWithCredential(googleCredential);
 
-  user_sign_in.then((user) => {
-    console.log(user);
-  })
-    .catch((error) => {
-      console.log(error);
+    user_sign_in.then((user) => {
+      console.log(user);
     })
+      .catch((error) => {
+        console.log(error);
+      })
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      alert('Cancel');
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      alert('Signin in progress');
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      alert('PLAY_SERVICES_NOT_AVAILABLE');
+    } else {
+    }
+  }
+
 }
 
 const googleSignUp = async () => {
-  // Get the users ID token
-  const { idToken } = await GoogleSignin.signIn();
+  try {
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
 
-  // Create a Google credential with the token
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  // Sign-in the user with the credential
-  const user_sign_in = auth().signInWithCredential(googleCredential);
+    // Sign-in the user with the credential
+    const user_sign_in = auth().signInWithCredential(googleCredential);
 
-  user_sign_in.then((user) => {
-    console.log(user);
-  })
-    .then(() => {
-      //   //Once the user creation has happened successfully, we can add the currentUser into firestore
-      //   //with the appropriate details.
-      console.log('current User', auth().currentUser);
-      firestore().collection('users').doc(auth().currentUser.uid)
-        .set({
-          fullName: auth().currentUser.displayName,
-          status: 'Guest',
-          email: auth().currentUser.email,
-          createdAt: firestore.Timestamp.fromDate(new Date()),
-          userImg: null,
-        })
-        //ensure we catch any errors at this stage to advise us if something does go wrong
-        .catch(error => {
-          console.log('Something went wrong with added user to firestore: ', error);
-        })
+    user_sign_in.then((user) => {
+      console.log(user);
     })
-    //we need to catch the whole sign up process if it fails too.
-    .catch(error => {
-      console.log('Something went wrong with sign up: ', error);
-    });
+      .then(() => {
+        //   //Once the user creation has happened successfully, we can add the currentUser into firestore
+        //   //with the appropriate details.
+        console.log('current User', auth().currentUser);
+        firestore().collection('users').doc(auth().currentUser.uid)
+          .set({
+            fullName: auth().currentUser.displayName,
+            status: 'Guest',
+            email: auth().currentUser.email,
+            createdAt: firestore.Timestamp.fromDate(new Date()),
+            userImg: null,
+          })
+          //ensure we catch any errors at this stage to advise us if something does go wrong
+          .catch(error => {
+            console.log('Something went wrong with added user to firestore: ', error);
+          })
+      })
+      //we need to catch the whole sign up process if it fails too.
+      .catch(error => {
+        console.log('Something went wrong with sign up: ', error);
+      });
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      alert('Cancel');
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      alert('Signin in progress');
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      alert('PLAY_SERVICES_NOT_AVAILABLE');
+    } else {
+    }
+  }
+
 }
 
 const createUserDb = (uid, fullName, email, status) => {
@@ -90,34 +114,6 @@ const signUp = (fullName, status, email, password) => {
       err => Alert.alert(err.code, err.message)
     )
 }
-
-// const register = (email, password) => {
-//   try {
-//     await auth().createUserWithEmailAndPassword(email, password)
-//       .then(() => {
-//         //Once the user creation has happened successfully, we can add the currentUser into firestore
-//         //with the appropriate details.
-//         firestore().collection('users').doc(auth().currentUser.uid)
-//           .set({
-//             fullName: '',
-//             lname: '',
-//             email: email,
-//             createdAt: firestore.Timestamp.fromDate(new Date()),
-//             userImg: null,
-//           })
-//           //ensure we catch any errors at this stage to advise us if something does go wrong
-//           .catch(error => {
-//             console.log('Something went wrong with added user to firestore: ', error);
-//           })
-//       })
-//       //we need to catch the whole sign up process if it fails too.
-//       .catch(error => {
-//         console.log('Something went wrong with sign up: ', error);
-//       });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
 
 
 // LOGIN

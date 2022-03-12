@@ -1,51 +1,59 @@
-// import React from 'react';
-// import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-// import { colors } from '../constants';
-
-// export default Button = ({buttonText, onPress, backgroundColor, color}) => {
-//     return(
-//         <TouchableOpacity onPress= {onPress} style={[styles.button, {backgroundColor: backgroundColor || colors.primary}]}>
-//             <Text style={[styles.text, {color: color || colors.white}]}>{buttonText}</Text>
-//         </TouchableOpacity>
-//     )
-// }
-
-// const styles = StyleSheet.create({
-//     button:{
-//         width: 200,
-//         height: 45,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         marginVertical: 1,
-//         borderRadius: 10
-//     },
-//     text:{
-//         fontSize: 16,
-//         fontWeight: 'bold'
-//     }
-// })
-
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import colors from '../constants/colors';
-const SocialButton = ({title, onPress = () => {}}) => {
+import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {windowHeight, windowWidth} from '../utils/Dimensions';
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+const SocialButton = ({
+  buttonTitle,
+  btnType,
+  color,
+  backgroundColor,
+  ...rest
+}) => {
+  let bgColor = backgroundColor;
   return (
     <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={{
-        height: 55,
-        width: '100%',
-        backgroundColor: colors.google,
-        marginVertical: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 18}}>
-        {title}
-      </Text>
+      style={[styles.buttonContainer, {backgroundColor: bgColor}]}
+      {...rest}>
+      <View style={styles.iconWrapper}>
+        <FontAwesome name={btnType} style={styles.icon} size={22} color={color} />
+      </View>
+      <View style={styles.btnTxtWrapper}>
+        <Text style={[styles.buttonText, {color: color}]}>{buttonTitle}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
 export default SocialButton;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
+    padding: 10,
+    flexDirection: 'row',
+    borderRadius: 3,
+  },
+  iconWrapper: {
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    fontWeight: 'bold',
+  },
+  btnTxtWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Lato-Regular',
+  },
+});

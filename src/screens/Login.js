@@ -7,11 +7,16 @@ import Social from '../components/SocialButton'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../components/Loader';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // service
 import { Auth } from '../services'
+import auth from '@react-native-firebase/auth';
 
 const Login = ({ navigation }) => {
+
+  const user = auth().currentUser;
+
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
@@ -28,7 +33,7 @@ const Login = ({ navigation }) => {
       handleError('Please input a valid email', 'email');
       isValid = false;
     }
-    
+
     if (!password) {
       handleError('Please input password', 'password');
       isValid = false;
@@ -94,15 +99,24 @@ const Login = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
 
-          <Button title="Log In" onPress={validate} />
+          <Button
+            title="Log In"
+            onPress={validate}
+          />
 
           <Text
-            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black' }}
+            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black', bottom: 5 }}
           >
             -- OR --
           </Text>
 
-          <Social title="Google Sign In" onPress={() => Auth.googleSignIn()} />
+          <Social
+            buttonTitle="Sign In with Google"
+            btnType="google"
+            color="#f5e7ea"
+            backgroundColor="#de4d41"
+            onPress={() => Auth.googleSignIn()}
+          />
 
           <Text
             onPress={() => navigation.navigate('SignUp')}
@@ -111,6 +125,7 @@ const Login = ({ navigation }) => {
               fontWeight: 'bold',
               textAlign: 'center',
               fontSize: 16,
+              top: 15
             }}>
             Don't have account? Register
           </Text>
