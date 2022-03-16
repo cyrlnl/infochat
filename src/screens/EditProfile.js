@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Image
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-crop-picker';
@@ -93,12 +94,11 @@ const EditProfile = () => {
       .then(() => {
         console.log('User Updated!');
         Alert.alert(
-          'Profile Updated!',
-          'Your profile has been updated successfully.'
+          "Profile Updated!",
+          "Thank you " + user.displayName + "\nYour profile has been successfully updated.",
         );
       })
   }
-
   const uploadImage = async () => {
     if (image == null) {
       return null;
@@ -316,10 +316,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    fontFamily: 'Poppins-Medium',
   },
   statusWrapper: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   commandButton: {
     padding: 15,

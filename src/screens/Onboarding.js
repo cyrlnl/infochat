@@ -65,22 +65,22 @@ const OnboardingScreen = ({ navigation }) => {
 			onDone={() => navigation.navigate("Login")}
 			pages={[
 				{
-					backgroundColor: '#fff',
+					backgroundColor: '#1f75cc',
 					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Interaction.png')} />,
-					title: 'Interaction',
-					subtitle: 'Interact with the Gordon College',
+					title: <Text style={{fontFamily: 'Poppins-Medium', fontSize: 24, textAlign: 'center', color: '#222'}}>Interaction</Text>,
+					subtitle: <Text style={{fontFamily: 'Poppins-Regular', fontSize: 18, textAlign: 'center', color: '#222'}}>Interact with the Gordon College</Text>,
 				},
 				{
-					backgroundColor: '#fff',
+					backgroundColor: '#1f75cc',
 					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Internet.png')} />,
-					title: 'Inquire',
-					subtitle: 'Ask whenever and wherever you are.',
+					title: <Text style={{fontFamily: 'Poppins-Medium', fontSize: 24, textAlign: 'center', color: '#222'}}>Inquire</Text>,
+					subtitle: <Text style={{fontFamily: 'Poppins-Regular', fontSize: 18, textAlign: 'center', color: '#222'}}>Ask whenever and wherever you are.</Text>,
 				},
 				{
-					backgroundColor: '#fff',
+					backgroundColor: '#1f75cc',
 					image: <Image style={{ justifyContent: 'center', alignItems: 'center' }} source={require('../assets/onboarding/Chatbot.png')} />,
-					title: 'User-friendly Chatbot',
-					subtitle: 'Talk to the chat bot to answer your queries instantly.',
+					title: <Text style={{fontFamily: 'Poppins-Medium', fontSize: 24, textAlign: 'center', color: '#222'}}>User-friendly Chatbot</Text>,
+					subtitle: <Text style={{fontFamily: 'Poppins-Regular', fontSize: 18, textAlign: 'center', color: '#222'}}>Talk to the chat bot to answer your queries instantly.</Text>,
 				},
 			]}
 		/>

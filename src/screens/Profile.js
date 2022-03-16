@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Image, ScrollView, Alert, ActivityIndicator, Text, TouchableOpacity, Button, SafeAreaView } from "react-native";
+import { View, StyleSheet, Image, ScrollView, Alert, ActivityIndicator, Text, TouchableOpacity, Button, SafeAreaView, ImageBackground } from "react-native";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -40,13 +40,23 @@ const Profile = ({ navigation, route }) => {
   }, [navigation, loading])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.header, {justifyContent: 'center', alignItems: 'center'}]}>
+        <ImageBackground
+          source={require('../assets/bg.jpg')}
+          resizeMode="cover"
+          imageStyle={{
+            // flex: 1,
+            width: '110%',
+            height: '100%',
+            // justifyContent: "center"
+          }}
+        >
+        <View style={[styles.header, { justifyContent: 'center', alignItems: 'center' }]}>
           <Image
             style={styles.userCoverPhoto}
             source={{ uri: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/125995205_3559319607478017_4764283917276019832_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeFGT7AK63oGFevcVHyMPMtNeJ796IOPVsh4nv3og49WyBhnMXxtKNbdgBcNQs0vJjPG27jAq5BSBPgvEy9jSJcm&_nc_ohc=38Lw2ftyg3kAX-q_BVS&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-INkGba28qYYGd_KzK2XtX3d_2GXtZBmriUMJYM2aoBg&oe=6248D3E4' }}
@@ -63,6 +73,7 @@ const Profile = ({ navigation, route }) => {
 
           <Text style={styles.aboutUser}>{userData ? userData.status : 'Unknown'}</Text>
         </View>
+
         <View style={styles.footer}>
           <View style={styles.userBtnWrapper}>
 
@@ -82,40 +93,41 @@ const Profile = ({ navigation, route }) => {
             <View style={styles.userInfoSection}>
               <View style={styles.row}>
                 <Icon name="email" color="#235b93" size={25} />
-                <Text style={{ color: "#333", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 18 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
                   {userData ? userData.email : 'Email Address'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="phone" color="#235b93" size={25} />
-                <Text style={{ color: "#333", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 18 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
                   {userData ? userData.phone : 'Phone Number'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="book-open-blank-variant" color="#235b93" size={25} />
-                <Text style={{ color: "#333", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 18 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
                   {userData ? userData.course : 'Course'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="office-building-marker" color="#235b93" size={25} />
-                <Text style={{ color: "#333", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 18 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
                   {userData ? userData.department : 'Department'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <FontAwesome5 name="school" color="#235b93" size={21} />
-                <Text style={{ color: "#333", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 18 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
                   {userData ? userData.organization : 'School'}
                 </Text>
               </View>
             </View>
           </View>
         </View>
-
-      </ScrollView>
-    </SafeAreaView>
+      </ImageBackground>
+    </ScrollView>
+    
+    </SafeAreaView >
   );
 }
 
@@ -128,53 +140,55 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     justifyContent: 'flex-end',
-    padding: 2,
+    // padding: 2,
     // paddingHorizontal: 20,
     paddingBottom: -20
   },
   footer: {
-    flex: 3,
-    backgroundColor: '#f2f2f2',
-    borderColor: '#235b93',
-    borderWidth: 3,
-    borderBottomColor: '#f2f2f2',
+    flex: 1,
+    backgroundColor: '#fff',
+    // borderColor: '#3880ff',
+    // borderWidth: 3,
+    // borderBottomColor: '#3880ff',
     // borderRadius: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 15
+    paddingHorizontal: 15,
+    marginHorizontal: 20,
+    paddingVertical: 20,
   },
   userImg: {
-    height: 170,
-    width: 170,
+    height: 150,
+    width: 150,
     borderRadius: 90,
-    borderWidth: 1.5,
-    borderColor: '#949494',
+    borderWidth: 0.5,
+    borderColor: '#444',
     // borderColor: '#3dc2ff',
-    bottom: 105
+    bottom: 135,
+    marginBottom: -35,
   },
   userCoverPhoto: {
     height: 160,
-    width: 390,
+    width: 400,
     borderRadius: 5,
     borderWidth: .5,
     borderColor: '#009e05',
-    opacity: 1
+    opacity: 0
 
   },
   userName: {
-    color: '#222',
+    color: '#f2f2f2',
     fontFamily: 'Poppins-Medium',
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    // fontWeight: 'bold',
     marginTop: -90,
-    marginBottom: 5,
+    marginBottom: -5,
   },
   aboutUser: {
-    fontSize: 22,
-    fontFamily: 'Poppins-Medium',
-    fontWeight: '600',
-    color: '#ff3842',
+    fontSize: 20,
+    fontFamily: 'Poppins-Regular',
+    // fontWeight: '600',
+    color: '#f2f2f2',
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -186,8 +200,8 @@ const styles = StyleSheet.create({
   },
   userBtn: {
     borderColor: '#235b93',
-    // backgroundColor: '#5cacd4',
-    borderWidth: 3,
+    backgroundColor: '#f2f2f2',
+    borderWidth: 2,
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
@@ -195,17 +209,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   userBtnTxt: {
-    color: '#222',
-    fontFamily: 'Poppins-Medium',
+    color: '#333',
+    fontFamily: 'Poppins-Bold',
     fontSize: 14,
-    // fontWeight: 'bold',
     marginLeft: 5
   },
   userInfoWrapper: {
     // flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginVertical: 20,
+    // marginVertical: 20,
   },
   userInfoItem: {
     justifyContent: 'center',
@@ -222,8 +235,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
+    paddingHorizontal: 25,
+    // marginBottom: 25,
   },
   row: {
     flexDirection: 'row',

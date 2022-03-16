@@ -11,6 +11,8 @@ import {
 
 // services
 import { Auth } from '../services'
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import colors from '../constants/colors';
 import Button from '../components/Button';
@@ -62,7 +64,7 @@ const SignUp = ({ navigation }) => {
     }
 
     if (isValid) {
-      Auth.signUp(userName, status, email, password)
+      Auth.signUp(userName, status, email, password);
     }
   };
 
@@ -79,11 +81,11 @@ const SignUp = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={{ paddingTop: 30, paddingHorizontal: 20 }}>
 
-        <Text style={{ color: colors.black, fontSize: 40, fontWeight: 'bold' }}>
+        <Text style={{ color: colors.black, fontSize: 40, fontFamily: 'Poppins-Medium', }}>
           Register
         </Text>
 
-        <Text style={{ color: colors.facebook, fontSize: 18, fontWeight: 'bold', marginVertical: 10 }}>
+        <Text style={{ color: colors.facebook, fontSize: 18, fontFamily: 'Poppins-Regular', marginVertical: -5 }}>
           Enter Your Details to Register
         </Text>
 
@@ -137,7 +139,7 @@ const SignUp = ({ navigation }) => {
           <Button title="Register" onPress={validate} />
 
           <Text
-            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black', bottom: 5 }}
+            style={{ textAlign: 'center', fontFamily: 'Poppins-Bold', fontSize: 15, color: 'black', bottom: 5 }}
           >
             -- OR --
           </Text>
@@ -154,7 +156,7 @@ const SignUp = ({ navigation }) => {
             onPress={() => navigation.navigate('Login')}
             style={{
               color: colors.black,
-              fontWeight: 'bold',
+              fontFamily: 'Poppins-Regular',
               textAlign: 'center',
               fontSize: 16,
               top: 15

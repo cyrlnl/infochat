@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, SafeAreaView, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, View, Text, SafeAreaView, Keyboard, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import colors from '../constants/colors';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -17,11 +17,39 @@ const Login = ({ navigation }) => {
 
   const user = auth().currentUser;
 
-  const [inputs, setInputs] = React.useState({ email: '', password: '' });
-  const [errors, setErrors] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
-  const [email, setEmail] = React.useState();
-  const [password, setPassword] = React.useState();
+  const [inputs, setInputs] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator
+          animating={true}
+          size="large"
+          color="#265d94" />
+        <Text style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 20 }}>Loading</Text>
+      </View>
+
+    )
+  }
+  // LOGIN AUTHENTICATION 
+  const userLogin = async () => {
+    setLoading(true)
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter all fields')
+      return
+    }
+    try {
+      await auth().signInWithEmailAndPassword(email, password)
+      setLoading(false)
+    } catch (err) {
+      alert("something went wrong")
+    }
+
+  }
 
   const validate = async () => {
     Keyboard.dismiss();
@@ -39,7 +67,7 @@ const Login = ({ navigation }) => {
       isValid = false;
     }
     if (isValid) {
-      Auth.signIn(email, password)
+      userLogin();
     }
   };
 
@@ -51,20 +79,35 @@ const Login = ({ navigation }) => {
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
+
+
   return (
-    <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+      <ImageBackground
+        source={require('../assets/bg2.jpg')}
+        resizeMode="cover"
+        imageStyle={{
+          flex: 1,
+          width: 550,
+          height: 300,
+          justifyContent: "center",
+          opacity: 0.8
+        }}
+      >
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/logo.png')}
+          />
+          {/* <Text style={{ color: colors.black, fontSize: 40, fontWeight: 'bold' }}>
+            Log In
+          </Text> */}
+        </View>
 
-      <View style={{ paddingTop: 50, paddingHorizontal: 20 }}>
-
-        <Text style={{ color: colors.black, fontSize: 40, fontWeight: 'bold' }}>
-          Log In
-        </Text>
-        <Text style={{ color: colors.facebook, fontSize: 18, fontWeight: 'bold', marginVertical: 10 }}>
-          Enter Your Details to Sign In
-        </Text>
-
-        <View style={{ marginVertical: 20 }}>
-
+        <View style={styles.footer}>
+          <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Poppins-Regular', textAlign: 'center' }}>
+            Login your Credentials
+          </Text>
           <Input
             // onChangeText={text => handleOnchange(text, 'email')}
             onChangeText={text => setEmail(text)}
@@ -105,7 +148,7 @@ const Login = ({ navigation }) => {
           />
 
           <Text
-            style={{ left: 150, fontWeight: 'bold', fontSize: 15, color: 'black', bottom: 5 }}
+            style={{ textAlign: 'center', fontFamily: 'Poppins-Bold', fontSize: 15, color: 'black', bottom: 5 }}
           >
             -- OR --
           </Text>
@@ -122,18 +165,57 @@ const Login = ({ navigation }) => {
             onPress={() => navigation.navigate('SignUp')}
             style={{
               color: colors.black,
-              fontWeight: 'bold',
+              // fontWeight: 'bold',
+              fontFamily: 'Poppins-Regular',
               textAlign: 'center',
               fontSize: 16,
-              top: 15
+              top: 10
             }}>
             Don't have account? Register
           </Text>
-
         </View>
-      </View>
+      </ImageBackground>
     </SafeAreaView >
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 2,
+    paddingHorizontal: 20,
+    // paddingBottom: -20
+  },
+  footer: {
+    // flex: 1,
+    backgroundColor: '#fff',
+    // borderColor: '#3880ff',
+    // borderWidth: 3,
+    // borderBottomColor: '#3880ff',
+    // borderRadius: 10,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingHorizontal: 20,
+    // marginHorizontal: 1,
+    // marginVertical: 20,
+    paddingVertical: 20,
+    paddingBottom: 50,
+  },
+  logo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 180,
+    width: 180,
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: '#235b93',
+    marginVertical: 15,
+    // borderColor: '#235b93',
+    // bottom: 135,
+    marginBottom: 15,
+  },
+})
 
 export default Login;

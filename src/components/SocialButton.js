@@ -30,12 +30,13 @@ export default SocialButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginTop: 10,
-    width: '100%',
-    height: windowHeight / 15,
-    padding: 10,
+    marginTop: 5,
+    width: 260,
+    height: windowHeight / 18,
+    padding: 7,
     flexDirection: 'row',
-    borderRadius: 3,
+    borderRadius: 10,
+    left: 42,
   },
   iconWrapper: {
     width: 30,
@@ -50,10 +51,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     right: 10,
+
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Poppins-Regular',
   },
 });

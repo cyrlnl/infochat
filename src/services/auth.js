@@ -165,7 +165,12 @@ const signOut = async () => {
     await GoogleSignin.signOut();
     auth()
       .signOut()
-      .then(() => alert('Your are signed out!'));
+      .then(() => {
+        Alert.alert(
+          'Logging out...',
+          'Your are now signed out.'
+        )
+      });
   } catch (error) {
     console.error(error);
   }
