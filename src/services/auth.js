@@ -28,6 +28,10 @@ const googleSignIn = async () => {
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       alert('PLAY_SERVICES_NOT_AVAILABLE');
     } else {
+      Alert.alert('Something went wrong', error.toString());
+      this.setState({
+        error,
+      });
     }
   }
 
@@ -76,26 +80,30 @@ const googleSignUp = async () => {
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       alert('PLAY_SERVICES_NOT_AVAILABLE');
     } else {
+      Alert.alert('Something went wrong', error.toString());
+      this.setState({
+        error,
+      });
     }
   }
 
 }
 
-const createUserDb = (uid, fullName, email, status) => {
+const createUserDb = (uid, fullName, email) => {
   return firestore().collection('users').doc(uid).set(
     {
       uid,
       fullName,
       email,
-      status,
+      status: 'Guest',
       createdAt: firestore.Timestamp.fromDate(new Date())
     }
   )
 }
 
 // SIGNUP handling
-const signUp = (fullName, status, email, password) => {
-  if (!fullName || !status || !email || !password) {
+const signUp = (fullName, email, password) => {
+  if (!fullName || !email || !password) {
     Alert.alert('Error', 'Please enter all fields')
   }
 
@@ -109,7 +117,7 @@ const signUp = (fullName, status, email, password) => {
 
       return uid
     })
-    .then(uid => createUserDb(uid, fullName, email, status))
+    .then(uid => createUserDb(uid, fullName, email))
     .catch(
       err => Alert.alert(err.code, err.message)
     )
@@ -117,42 +125,41 @@ const signUp = (fullName, status, email, password) => {
 
 
 // LOGIN
-const signIn = (email, password) => {
+const signIn = async (email, password) => {
   if (!email || !password) {
     Alert.alert('Error', 'Please enter all fields')
   }
 
-  return auth().signInWithEmailAndPassword(email, password)
-    .then(() => { })
-    .catch(
-      err => Alert.alert(err.code, err.message)
-    )
+  try {
+    await auth().signInWithEmailAndPassword(email, password);
+  } catch (err) {
+    return Alert.alert(err.code, err.message);
+  }
 }
 
-const forgotPassword = (email) => {
+const forgotPassword = async (email) => {
   if (!email) {
     Alert.alert('Error', 'Please enter email')
   }
 
   console.log("reset email sent to " + email);
-  return auth().sendPasswordResetEmail(email, null)
-    .then(() => {
-      Alert.alert(
-        "Password Reset",
-        "Password reset email sent to " + '"' + email + '"' + "\nPlease check your registered E-mail. Thank you.",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
-          },
-          { text: "Confirm", onPress: () => console.log("Confirm Pressed") }
-        ]
-      );
-    })
-    .catch(function (e) {
-      console.log(e);
-    });
+  try {
+    await auth().sendPasswordResetEmail(email, null);
+    Alert.alert(
+      "Password Reset",
+      "Password reset email sent to " + '"' + email + '"' + "\nPlease check your registered E-mail. Thank you.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Confirm", onPress: () => console.log("Confirm Pressed") }
+      ]
+    );
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 // const signOut = () => {
@@ -161,7 +168,7 @@ const forgotPassword = (email) => {
 
 const signOut = async () => {
   try {
-    // await GoogleSignin.revokeAccess();
+    await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     auth()
       .signOut()

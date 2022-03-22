@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import {
   View,
@@ -7,6 +6,7 @@ import {
   Keyboard,
   ScrollView,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 
 // services
@@ -31,10 +31,25 @@ const SignUp = ({ navigation }) => {
   const [userName, setUserName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [status, setStatus] = useState()
+  const [confirmPass, setConfirmPass] = useState()
+  const [loading, setLoading] = useState(false)
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator
+          animating={true}
+          size="large"
+          color="#265d94" />
+        <Text style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 20 }}>Loading. Please wait...</Text>
+      </View>
+
+    )
+  }
 
   const validate = () => {
     Keyboard.dismiss();
+    setLoading(true)
     let isValid = true;
 
     if (!email) {
@@ -50,21 +65,32 @@ const SignUp = ({ navigation }) => {
       isValid = false;
     }
 
-    if (!status) {
-      handleError('Please input status', 'status');
-      isValid = false;
-    }
-
     if (!password) {
       handleError('Please input password', 'password');
       isValid = false;
-    } else if (password.length < 5) {
-      handleError('Minimum password length of 5', 'password');
+    } else if (password.length < 8 || password.length > 20) {
+      handleError('Password should be min 8 char and max 20 char', 'password');
+      isValid = false;
+    } else if (password !== confirmPass) {
+      handleError('Password and confirm password should be same.', 'password');
+      isValid = false;
+    }
+
+    if (!confirmPass) {
+      handleError('Please input confirm password', 'confirmPass');
+      isValid = false;
+    } else if (confirmPass.length < 8 || confirmPass.length > 20) {
+      handleError('Confirm Password should be min 8 char and max 20 char', 'confirmPass');
+      isValid = false;
+    } else if (confirmPass !== password) {
+      handleError('Password and confirm password should be same.', 'confirmPass');
       isValid = false;
     }
 
     if (isValid) {
-      Auth.signUp(userName, status, email, password);
+      Auth.signUp(userName, email, password)
+    } else {
+      setLoading(false)
     }
   };
 
@@ -114,16 +140,6 @@ const SignUp = ({ navigation }) => {
             error={errors.fullName}
           />
 
-          <Input
-            // onChangeText={text => handleOnchange(text, 'fullName')}
-            value={status}
-            onChangeText={e => setStatus(e)}
-            onFocus={() => handleError(null, 'status')}
-            iconName="list-status"
-            label="Status"
-            placeholder="Student or Guest"
-            error={errors.status}
-          />
 
           <Input
             // onChangeText={text => handleOnchange(text, 'password')}
@@ -136,10 +152,23 @@ const SignUp = ({ navigation }) => {
             error={errors.password}
             password
           />
+
+          <Input
+            // onChangeText={text => handleOnchange(text, 'password')}
+            value={confirmPass}
+            onChangeText={e => setConfirmPass(e)}
+            onFocus={() => handleError(null, 'confirmPass')}
+            iconName="lock-open-check-outline"
+            label="Confirm Password"
+            placeholder="Enter your confirm password"
+            error={errors.confirmPass}
+            password
+          />
+
           <Button title="Register" onPress={validate} />
 
           <Text
-            style={{ textAlign: 'center', fontFamily: 'Poppins-Bold', fontSize: 15, color: 'black', bottom: 5 }}
+            style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: 'black', bottom: 5 }}
           >
             -- OR --
           </Text>

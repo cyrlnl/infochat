@@ -1,7 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import colors from '../constants/colors';
-const Button = ({ title, onPress = () => { } }) => {
+import AntDesign from 'react-native-vector-icons/AntDesign';
+const Button = ({ title, btnType,
+  color, onPress = () => { } }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -14,12 +16,21 @@ const Button = ({ title, onPress = () => { } }) => {
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        left: 42
+        left: 42,
+        // flexDirection: 'row',
       }}>
-
       <Text style={{ fontFamily: 'Poppins-Regular', color: colors.white, fontSize: 18 }}>
         {title}
       </Text>
+
+      {/* <View style={{
+        width: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <AntDesign name={btnType} style={{ fontWeight: 'bold', }} size={22} color={color} />
+      </View> */}
+
     </TouchableOpacity>
   );
 };

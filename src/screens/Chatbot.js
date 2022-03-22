@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import {
   Actions,
@@ -90,34 +90,26 @@ class Chatbot extends Component {
                 categoryOption: true,
                 data: [
                   {
-                    title: 'Enrollment',
-                    text: 'Enrollment Queries\n \n1. Master of Arts in Nursing (MAN)\n \n2. Major in Administration of Nursing Schools & Services\n \n3. Master in Business Management (MBM)\n \n4. Master in Public Administration (MPA)\n \n5. Master of Arts in Education (MAEd) Major in Educational Management',
-
+                    title: 'FAQ',
+                    text: 'Frequently Ask Questions\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)'
                   },
                   {
-                    title: 'Random',
-                    text: "College of Computer Studies\n \n1. Bachelor of Science in Computer Science (BSCS)\n \n2. Bachelor of Science in Information Technology (BSIT)\n \n3. Bachelor of Science in Entertainment and Multimedia Computing (BSEMC)\n \n4. Associate in Computer Technology (ACT)"
+                    title: 'General',
+                    text: 'General Queries\n \n1. Calendar of Activities for Second Semester A.Y. 2021-2022.\n \n2. Gordon College Curricular Program Offerings.\n \n3. GC SSC Concern.\n \n4. How to request an appointment to visit the GC Satellite Office?',
                   },
                   {
-                    title: 'Schedule',
-                    text: 'College of Hospitality and Tourism Management\n \n1. Bachelor of Science in Hospitality Management (BSHM)\n \n2. Bachelor of Science in Tourism Management (BSTM)'
+                    title: 'Records and Classes',
+                    text: "Student Records and Classes\n \n1. Adding/Dropping of Classes via GC Student Portal.\n \n2. Online Request for Student Records.\n \n3. Adding/Dropping of Classes.\n \n4. Application for Permit for Leave of Absence.\n \n5. Application for Discontinuance of Studies/Withdrawal from the Institution.\n \n6. How to Activate my GC Domain Email?"
                   },
                   {
-                    title: 'Activity',
-                    text: 'College of Education, Arts and Sciences\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)\n \n4.Bachelor of Secondary Education - Major in Filipino(BSEd - FIL)\n \n5.Bachelor of Secondary Education - Major in Math(BSEd - M)\n \n6.Bachelor of Secondary Education - Major in Science(BSEd - SCI)\n \n7.Bachelor of Secondary Education - Major in Social Studies(BSEd - SOC)\n \n8. Bachelor of Physical Education(BPEd)\n \n9.Bachelor of Cultural and Arts Education(BCAEd)\n \n10.Bachelor of Arts in Communication(BACOM)\n \n11.Teacher Certificate Program(TCP)'
+                    title: 'Finance',
+                    text: 'Finance Queries\n \n1. Alternative Modes of Payment (Wire Transfer/Bank Deposit).'
                   },
                   {
-                    title: 'Scholarship',
-                    text: 'College of Business and Accountancy\n \n1.Bachelor of Science in Customs Administration (BSCA)\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)\n \n4.Bachelor of Science in Business Administration - Major in Marketing Management(BSBA-MKT)\n \n5.Bachelor of Science in Accountancy (BSA)'
-                  },
-                  {
-                    title: 'FaQs',
-                    text: 'College of Allied Health Studies\n \n1.Bachelor of Science in Nursing (BSN)\n \n2.Bachelor of Science in Midwifery (BSM)\n \n3.Graduate in Midwifery (GM)'
-                  },
-                  {
-                    title: 'General Info',
-                    text: 'Senior High School Department\n \n1.Information Communication Technology (ICT)\n \n2.Home Economics (HE)\n \n3.Science, Technology, Engineering, and Mathematics(STEM)\n \n4.Accountancy and Business Management(ABM)\n \n5.Humanities and Social Sciences(HUMMS)'
-                  }]
+                    title: 'Enrollment & Admission',
+                    text: 'Enrollment & Admission Queries\n \n1.Enrollment 2021-2022\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)'
+                  }
+                ]
               },
               {
                 _id: 2,
@@ -232,33 +224,26 @@ class Chatbot extends Component {
         categoryOption: true,
         data: [
           {
-            title: 'Enrollment',
-            text: 'Enrollment Queries\n \n1. Master of Arts in Nursing (MAN)\n \n2. Major in Administration of Nursing Schools & Services\n \n3. Master in Business Management (MBM)\n \n4. Master in Public Administration (MPA)\n \n5. Master of Arts in Education (MAEd) Major in Educational Management',
-          },
-          {
-            title: 'Random',
-            text: "College of Computer Studies\n \n1. Bachelor of Science in Computer Science (BSCS)\n \n2. Bachelor of Science in Information Technology (BSIT)\n \n3. Bachelor of Science in Entertainment and Multimedia Computing (BSEMC)\n \n4. Associate in Computer Technology (ACT)"
-          },
-          {
-            title: 'Schedule',
-            text: 'College of Hospitality and Tourism Management\n \n1. Bachelor of Science in Hospitality Management (BSHM)\n \n2. Bachelor of Science in Tourism Management (BSTM)'
-          },
-          {
-            title: 'Activity',
-            text: 'College of Education, Arts and Sciences\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)\n \n4.Bachelor of Secondary Education - Major in Filipino(BSEd - FIL)\n \n5.Bachelor of Secondary Education - Major in Math(BSEd - M)\n \n6.Bachelor of Secondary Education - Major in Science(BSEd - SCI)\n \n7.Bachelor of Secondary Education - Major in Social Studies(BSEd - SOC)\n \n8. Bachelor of Physical Education(BPEd)\n \n9.Bachelor of Cultural and Arts Education(BCAEd)\n \n10.Bachelor of Arts in Communication(BACOM)\n \n11.Teacher Certificate Program(TCP)'
-          },
-          {
-            title: 'Scholarship',
-            text: 'College of Business and Accountancy\n \n1.Bachelor of Science in Customs Administration (BSCA)\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)\n \n4.Bachelor of Science in Business Administration - Major in Marketing Management(BSBA-MKT)\n \n5.Bachelor of Science in Accountancy (BSA)'
-          },
-          {
-            title: 'FaQs',
-            text: 'College of Allied Health Studies\n \n1.Bachelor of Science in Nursing (BSN)\n \n2.Bachelor of Science in Midwifery (BSM)\n \n3.Graduate in Midwifery (GM)'
+            title: 'FaQ',
+            text: 'Frequently Ask Questions\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)'
           },
           {
             title: 'General',
-            text: 'Senior High School Department\n \n1.Information Communication Technology (ICT)\n \n2.Home Economics (HE)\n \n3.Science, Technology, Engineering, and Mathematics(STEM)\n \n4.Accountancy and Business Management(ABM)\n \n5.Humanities and Social Sciences(HUMMS)'
-          }]
+            text: 'General Queries\n \n1. Calendar of Activities for Second Semester A.Y. 2021-2022.\n \n2. Gordon College Curricular Program Offerings.\n \n3. GC SSC Concern.\n \n4. How to request an appointment to visit the GC Satellite Office?',
+          },
+          {
+            title: 'Records and Classes',
+            text: "Student Records and Classes\n \n1. Adding/Dropping of Classes via GC Student Portal.\n \n2. Online Request for Student Records.\n \n3. Adding/Dropping of Classes.\n \n4. Application for Permit for Leave of Absence.\n \n5. Application for Discontinuance of Studies/Withdrawal from the Institution.\n \n6. How to Activate my GC Domain Email?"
+          },
+          {
+            title: 'Finance',
+            text: 'Finance Queries\n \n1. Alternative Modes of Payment (Wire Transfer/Bank Deposit).'
+          },
+          {
+            title: 'Enrollment & Admission',
+            text: 'Enrollment & Admission Queries\n \n1.Enrollment 2021-2022\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)'
+          }
+        ]
       }
     }
 
@@ -362,7 +347,7 @@ class Chatbot extends Component {
 
     if (props.currentMessage.categoryOption) {
       return (
-        <ScrollView style={{ backgroundColor: '#f2f2f2' }} horizontal = {true}>
+        <ScrollView style={{ backgroundColor: '#f2f2f2' }} contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }} horizontal={true}>
           {props.currentMessage.data.map((item) => (
             <Button
               key={item.title}
@@ -374,8 +359,7 @@ class Chatbot extends Component {
                 color: 'white',
               }}
               iconRight
-              iconContainerStyle={{ marginLeft: 10 }}
-              titleStyle={{ fontWeight: '700' }}
+              titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 16 }}
               buttonStyle={{
                 backgroundColor: '#235b93',
                 borderColor: 'transparent',
@@ -414,8 +398,9 @@ class Chatbot extends Component {
         {...props}
         containerStyle={{
           backgroundColor: '#e6e6e6',
-          borderTopColor: '#999',
-          borderTopWidth: 1,
+          borderColor: '#999',
+          // borderTopWidth: 1,
+          borderWidth: 1,
           marginLeft: 10,
           marginRight: 10,
           marginBottom: 2,
@@ -469,7 +454,8 @@ class Chatbot extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
+
+      <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
         <GiftedChat messages={this.state.messages}
           onSend={(message) => this.onSend(message)}
           onQuickReply={(quickReply) => this.onQuickReply(quickReply)}

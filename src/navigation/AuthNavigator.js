@@ -49,11 +49,7 @@ const AuthNavigator = () => {
       />
       <Stack.Screen
         options={{
-          // title: 'Sign Up Form',
           headerShown: false
-          // headerStyle: {
-          //   backgroundColor: '#98cce3',
-          // }
         }}
         name="SignUp"
         component={SignUp}

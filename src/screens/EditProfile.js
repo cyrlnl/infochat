@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   Image
 } from 'react-native';
-
+import { useIsFocused } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 
 // service
@@ -36,6 +36,8 @@ const EditProfile = () => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
+  
+  const isFocused = useIsFocused();
 
   const getUser = async () => {
     const currentUser = await firestore()
@@ -62,14 +64,6 @@ const EditProfile = () => {
       setImage(imageUri);
     });
   }
-
-  // const pickImage = () => {
-  //   launchImageLibrary({ quality: 0.5 }, (image) => {
-  //     const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-  //     setImage(imageUri);
-  //     // uploadImage();
-  //   })
-  // }
 
   const handleUpdate = async () => {
     let imgUrl = await uploadImage();
@@ -137,10 +131,6 @@ const EditProfile = () => {
       setUploading(false);
       setImage(null);
 
-      // Alert.alert(
-      //   'Image uploaded!',
-      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-      // );
       return url;
 
     } catch (e) {
@@ -153,7 +143,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     getUser();
-  }, [])
+  }, [isFocused])
 
   return (
     <ScrollView style={styles.container}>
@@ -212,7 +202,7 @@ const EditProfile = () => {
         <View style={styles.action}>
           <FontAwesome name='user-o' size={23} color='#235b93' />
           <TextInput
-            onChangeText={(txt) => setUserData({ ...userData, fullName: txt })}
+            // onChangeText={(txt) => setUserData({ ...userData, fullName: txt })}
             placeholder='Full Name'
             placeholderTextColor='#666666'
             autoCorrect={false}
@@ -229,7 +219,19 @@ const EditProfile = () => {
             placeholderTextColor='#666666'
             autoCorrect={false}
             value={userData ? userData.email : ''}
-            onChangeText={(txt) => setUserData({ ...userData, email: txt })}
+            // onChangeText={(txt) => setUserData({ ...userData, email: txt })}
+            style={styles.textInput}
+          />
+        </View>
+
+        <View style={styles.action}>
+          <Icon name='list-status' size={23} color='#235b93' />
+          <TextInput
+            placeholder='Status "Student" or "Guest"'
+            placeholderTextColor='#666666'
+            autoCorrect={false}
+            value={userData ? userData.status : ''}
+            // onChangeText={(txt) => setUserData({ ...userData, status: txt })}
             style={styles.textInput}
           />
         </View>
@@ -239,6 +241,7 @@ const EditProfile = () => {
           <TextInput
             placeholder='Contact No.'
             keyboardType='number-pad'
+            maxLength={11}
             placeholderTextColor='#666666'
             autoCorrect={false}
             value={userData ? userData.phone : ''}
@@ -271,17 +274,7 @@ const EditProfile = () => {
           />
         </View>
 
-        <View style={styles.action}>
-          <Icon name='list-status' size={23} color='#235b93' />
-          <TextInput
-            placeholder='Status "Student" or "Guest"'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.status : ''}
-            onChangeText={(txt) => setUserData({ ...userData, status: txt })}
-            style={styles.textInput}
-          />
-        </View>
+
 
         <View style={styles.action}>
           <FontAwesome5 name='school' size={20} color='#235b93' />
@@ -298,7 +291,7 @@ const EditProfile = () => {
         {uploading ? (
           <View style={styles.statusWrapper}>
             <Text>{transferred} % Completed!</Text>
-            <ActivityIndicator size="large" color="#0000ff" />
+            <ActivityIndicator size="large" color="#235b93" />
           </View>
         ) : (
           <TouchableOpacity style={styles.commandButton} onPress={handleUpdate}>

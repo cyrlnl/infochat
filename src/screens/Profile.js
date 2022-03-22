@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Image, ScrollView, Alert, ActivityIndicator, Text, TouchableOpacity, Button, SafeAreaView, ImageBackground } from "react-native";
+import { useIsFocused } from '@react-navigation/native';
+
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -12,6 +14,7 @@ import { Auth } from '../services'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Profile = ({ navigation, route }) => {
 
@@ -39,6 +42,8 @@ const Profile = ({ navigation, route }) => {
     navigation.addListener("focus", () => setLoading(!loading));
   }, [navigation, loading])
 
+  useIsFocused();
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
@@ -56,77 +61,77 @@ const Profile = ({ navigation, route }) => {
             // justifyContent: "center"
           }}
         >
-        <View style={[styles.header, { justifyContent: 'center', alignItems: 'center' }]}>
-          <Image
-            style={styles.userCoverPhoto}
-            source={{ uri: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/125995205_3559319607478017_4764283917276019832_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeFGT7AK63oGFevcVHyMPMtNeJ796IOPVsh4nv3og49WyBhnMXxtKNbdgBcNQs0vJjPG27jAq5BSBPgvEy9jSJcm&_nc_ohc=38Lw2ftyg3kAX-q_BVS&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-INkGba28qYYGd_KzK2XtX3d_2GXtZBmriUMJYM2aoBg&oe=6248D3E4' }}
-          />
+          <View style={[styles.header, { justifyContent: 'center', alignItems: 'center' }]}>
+            <Image
+              style={styles.userCoverPhoto}
+              source={{ uri: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/125995205_3559319607478017_4764283917276019832_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeFGT7AK63oGFevcVHyMPMtNeJ796IOPVsh4nv3og49WyBhnMXxtKNbdgBcNQs0vJjPG27jAq5BSBPgvEy9jSJcm&_nc_ohc=38Lw2ftyg3kAX-q_BVS&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-INkGba28qYYGd_KzK2XtX3d_2GXtZBmriUMJYM2aoBg&oe=6248D3E4' }}
+            />
 
-          <Image
-            style={styles.userImg}
-            source={{ uri: userData ? userData.userImg || 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938' : 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938' }}
-          />
+            <Image
+              style={styles.userImg}
+              source={{ uri: userData ? userData.userImg || 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938' : 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938' }}
+            />
 
-          <Text style={styles.userName}>{userData ? userData.fullName : 'Sample Name'}</Text>
+            <Text style={styles.userName}>{userData ? userData.fullName : 'Sample Name'}</Text>
 
-          {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
+            {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
 
-          <Text style={styles.aboutUser}>{userData ? userData.status : 'Unknown'}</Text>
-        </View>
-
-        <View style={styles.footer}>
-          <View style={styles.userBtnWrapper}>
-
-            <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
-              <Icon name="account-edit" color="#009e05" size={22} />
-              <Text style={styles.userBtnTxt}>Edit Profile</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
-              <AntDesign name="logout" color="#ff3842" size={22} />
-              <Text style={styles.userBtnTxt}>Logout</Text>
-            </TouchableOpacity>
-
+            <Text style={styles.aboutUser}>{userData ? userData.status : 'Unknown'}</Text>
           </View>
 
-          <View style={styles.userInfoWrapper}>
-            <View style={styles.userInfoSection}>
-              <View style={styles.row}>
-                <Icon name="email" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.email : 'Email Address'}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Icon name="phone" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.phone : 'Phone Number'}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Icon name="book-open-blank-variant" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.course : 'Course'}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Icon name="office-building-marker" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.department : 'Department'}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <FontAwesome5 name="school" color="#235b93" size={21} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.organization : 'School'}
-                </Text>
+          <View style={styles.footer}>
+            <View style={styles.userBtnWrapper}>
+
+              <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
+                <Icon name="account-edit" color="#009e05" size={22} />
+                <Text style={styles.userBtnTxt}>Edit Profile</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
+                <AntDesign name="logout" color="#ff3842" size={22} />
+                <Text style={styles.userBtnTxt}>Logout</Text>
+              </TouchableOpacity>
+
+            </View>
+
+            <View style={styles.userInfoWrapper}>
+              <View style={styles.userInfoSection}>
+                <View style={styles.row}>
+                  <Icon name="email" color="#235b93" size={25} />
+                  <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                    {userData ? userData.email : 'Email Address'}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="phone" color="#235b93" size={25} />
+                  <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                    {userData ? userData.phone : 'Phone Number'}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="book-open-blank-variant" color="#235b93" size={25} />
+                  <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                    {userData ? userData.course : 'Course'}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="office-building-marker" color="#235b93" size={25} />
+                  <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                    {userData ? userData.department : 'Department'}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <FontAwesome5 name="school" color="#235b93" size={21} />
+                  <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                    {userData ? userData.organization : 'School'}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ImageBackground>
-    </ScrollView>
-    
+        </ImageBackground>
+      </ScrollView>
+
     </SafeAreaView >
   );
 }
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     // padding: 2,
     // paddingHorizontal: 20,
-    paddingBottom: -20
+    paddingBottom: 10
   },
   footer: {
     flex: 1,
@@ -153,9 +158,13 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     paddingHorizontal: 15,
     marginHorizontal: 20,
     paddingVertical: 20,
+    marginTop: -10,
+    marginBottom: 20
   },
   userImg: {
     height: 150,
@@ -182,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     // fontWeight: 'bold',
     marginTop: -90,
-    marginBottom: -5,
+    marginBottom: 0,
   },
   aboutUser: {
     fontSize: 20,
