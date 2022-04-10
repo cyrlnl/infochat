@@ -178,12 +178,12 @@ const EditProfile = () => {
                   <Icon
                     name='camera'
                     size={35}
-                    color="#fff"
+                    color="#333"
                     style={{
                       opacity: 0.7,
                       alignItems: 'center',
                       justifyContent: 'center',
-                      borderColor: '#fff',
+                      borderColor: '#999',
                       borderWidth: 1,
                       borderRadius: 10,
                     }}

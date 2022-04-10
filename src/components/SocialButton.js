@@ -31,12 +31,11 @@ export default SocialButton;
 const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 5,
-    width: 260,
+    width: '100%',
     height: windowHeight / 18,
     padding: 7,
     flexDirection: 'row',
     borderRadius: 10,
-    left: 42,
   },
   iconWrapper: {
     width: 30,
@@ -50,11 +49,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    right: 10,
+    // right: 10,
 
   },
   buttonText: {
     fontSize: 18,
     fontFamily: 'Poppins-Regular',
+    textAlign: 'center'
   },
 });

@@ -23,7 +23,7 @@ const Input = ({
               ? colors.red
               : isFocused
                 ? colors.darkBlue
-                : colors.light,
+                : colors.darkBlue,
             alignItems: 'center',
           },
         ]}>

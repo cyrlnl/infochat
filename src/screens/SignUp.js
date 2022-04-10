@@ -5,9 +5,14 @@ import {
   SafeAreaView,
   Keyboard,
   ScrollView,
-  Alert,
-  ActivityIndicator
+  Modal,
+  ActivityIndicator,
+  TouchableOpacity,
+  // Button,
+  StyleSheet
 } from 'react-native';
+
+import { Button } from 'react-native-elements';
 
 // services
 import { Auth } from '../services'
@@ -15,17 +20,13 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import colors from '../constants/colors';
-import Button from '../components/Button';
+import Buttons from '../components/Button';
 import Input from '../components/Input';
 import Social from '../components/SocialButton';
-import Loader from '../components/Loader';
-
+import terms from '../components/Terms';
+import CheckBox from '@react-native-community/checkbox';
 const SignUp = ({ navigation }) => {
-  const [inputs, setInputs] = useState({
-    email: '',
-    fullName: '',
-    password: '',
-  });
+
   const [errors, setErrors] = useState({});
 
   const [userName, setUserName] = useState()
@@ -33,6 +34,8 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState()
   const [confirmPass, setConfirmPass] = useState()
   const [loading, setLoading] = useState(false)
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  const [complianceModal, setComplianceModal] = useState(true);
 
   if (loading) {
     return (
@@ -95,14 +98,89 @@ const SignUp = ({ navigation }) => {
   };
 
 
-  const handleOnchange = (text, input) => {
-    setInputs(prevState => ({ ...prevState, [input]: text }));
-  };
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
   return (
     <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
+
+      <View>
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={complianceModal}
+        >
+          <ScrollView>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalView}>
+                <Text style={{ marginBottom: 10, color: '#235b93', textAlign: 'center', fontSize: 22, fontFamily: 'Poppins-Regular' }}>Terms and Conditions</Text>
+                <Text style={[styles.text, { textAlign: 'justify' }]}>{terms}</Text>
+                <View style={styles.checkboxContainer}>
+                  <CheckBox
+                    style={styles.checkbox}
+                    tintColors={{ true: '#235b93', false: 'black' }}
+                    disabled={false}
+                    value={toggleCheckBox}
+                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                  />
+                  <Text style={styles.text}>Yes, I agree.</Text>
+                </View>
+
+                <Button
+                  title="Continue to the register"
+                  icon={{
+                    name: 'arrow-right',
+                    type: 'font-awesome',
+                    size: 16,
+                    color: 'white',
+                  }}
+                  iconContainerStyle={{ left: -10 }}
+                  iconRight
+                  titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: '#fff', }}
+                  buttonStyle={{
+                    backgroundColor: toggleCheckBox ? '#235b93' : '#999',
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    borderRadius: 20,
+                  }}
+                  containerStyle={{
+                    width: 250,
+                    marginVertical: 30,
+                    marginBottom: 10
+                  }}
+                  disabled={!toggleCheckBox}
+                  onPress={() => setComplianceModal(false)}
+                />
+
+                <Button
+                  title="Back to the login"
+                  icon={{
+                    name: 'arrow-left',
+                    type: 'font-awesome',
+                    size: 16,
+                    color: 'white',
+                  }}
+                  iconContainerStyle={{ left: -10 }}
+                  iconLeft
+                  titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: '#fff', }}
+                  buttonStyle={{
+                    backgroundColor: '#235b93',
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    borderRadius: 20,
+                  }}
+                  containerStyle={{
+                    width: 240,
+                    marginVertical: 5,
+                    marginBottom: 10
+                  }}
+                  onPress={() => navigation.goBack()}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+      </View>
 
       <ScrollView
         contentContainerStyle={{ paddingTop: 30, paddingHorizontal: 20 }}>
@@ -165,7 +243,8 @@ const SignUp = ({ navigation }) => {
             password
           />
 
-          <Button title="Register" onPress={validate} />
+
+          <Buttons title="Register" onPress={validate} />
 
           <Text
             style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: 'black', bottom: 5 }}
@@ -178,7 +257,7 @@ const SignUp = ({ navigation }) => {
             btnType="google"
             color="#f5e7ea"
             backgroundColor="#de4d41"
-            onPress={() => Auth.googleSignIn()}
+            onPress={() => Auth.googleSignUp()}
           />
 
           <Text
@@ -190,12 +269,48 @@ const SignUp = ({ navigation }) => {
               fontSize: 16,
               top: 15
             }}>
-            Already have account ?Login
+            Already have account? Login
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0, 0.6)',
+  },
+  modalView: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    margin: 20,
+    padding: 20,
+    alignItems: 'center'
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginVertical: -20,
+    alignItems: 'center'
+  },
+  checkbox: {
+    width: 30,
+    height: 30,
+    marginRight: 10
+  },
+  continueButton: {
+    marginTop: 30,
+    padding: 15,
+    borderRadius: 20,
+  },
+  text: {
+    fontFamily: 'Poppins-Medium',
+    color: '#333'
+  }
+});
 
 export default SignUp;

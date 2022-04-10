@@ -5,283 +5,244 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const About = () => {
 
 	return (
-			<ScrollView style={styles.container}>
-				<View style={styles.header}>
-					<View style={styles.userInfoSection}>
-						<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-							<Image
-								source={require('../assets/gc-logos/gclogo.png')}
-								style={{
-									height: 90,
-									width: 90,
-									top: 10,
-									left: 5
-								}}
-							/>
-							<View style={{ marginLeft: 12 }}>
-								<Text style={[styles.title, {
-									marginTop: 5,
-									// marginBottom: -5,
-									color: '#f2f2f2'
-								}]}>
-									Gordon College
-								</Text>
-								<Text style={[styles.caption, { color: '#f2f2f2', marginTop: -5, marginRight: 20 }]}>
-								Since February 24, 1999{'\n'}Gordon College (formerly Olongapo{'\n'}City Colleges) is a local college{'\n'}operating under the City Government{'\n'}of Olongapo.
-								</Text>
-							</View>
+		<ScrollView style={styles.container}>
+			<View style={styles.header}>
+				<View style={styles.userInfoSection}>
+					<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+						<Image
+							source={require('../assets/gc-logos/gclogo.png')}
+							style={{
+								height: 90,
+								width: 90,
+								left: 40
+							}}
+						/>
+						<View>
+							<Text style={[styles.title, {
+								marginTop: 5,
+								color: '#f2f2f2'
+							}]}>
+								Gordon College
+							</Text>
+							<Text style={styles.caption}>
+								Since February 24, 1999 Gordon College (formerly Olongapo City Colleges) is a local college operating under the City Government of Olongapo.
+							</Text>
 						</View>
 					</View>
+				</View>
 
-					<View style={[styles.userInfoSection, {
-						marginBottom: 5,
-						marginTop: -5
-					}]}>
-						<View style={styles.row}>
-							<Image
-								source={require('../assets/gc-logos/css.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 20,
-									right: 5
-								}}
-							/>
-							<Image
-								source={require('../assets/gc-logos/cba.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 10,
-									right: 5
-								}}
-							/>
-							<Image
-								source={require('../assets/gc-logos/ceas.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 10
-								}}
-							/>
-						</View>
+				<View style={styles.userInfoSection}>
+					<View style={styles.row}>
+						<Image
+							source={require('../assets/gc-logos/css.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
+						<Image
+							source={require('../assets/gc-logos/cba.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
+						<Image
+							source={require('../assets/gc-logos/ceas.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
 					</View>
+				</View>
 
-					<View style={[styles.userInfoSection, {
-						marginBottom: 5,
-						marginTop: -5
-					}]}>
-						<View style={styles.row}>
-							<Image
-								source={require('../assets/gc-logos/cahs.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 20,
-									right: 5
-								}}
-							/>
-							<Image
-								source={require('../assets/gc-logos/chtm.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 10,
-									right: 5
-								}}
-							/>
-							<Image
-								source={require('../assets/gc-logos/shs.png')}
-								style={{
-									height: 80,
-									width: 80,
-									marginHorizontal: 10
-								}}
-							/>
+				<View style={styles.userInfoSection}>
+					<View style={styles.row}>
+						<Image
+							source={require('../assets/gc-logos/cahs.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
+						<Image
+							source={require('../assets/gc-logos/chtm.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
+						<Image
+							source={require('../assets/gc-logos/shs.png')}
+							style={{
+								height: 80,
+								width: 80,
+							}}
+						/>
+					</View>
+				</View>
+			</View>
+
+			<View style={{
+				paddingHorizontal: 20,
+			}}>
+				<View style={{ marginBottom: -30 }}>
+					<Text style={styles.text1}>
+						<Text style={{ color: '#235b93', fontSize: 20, fontFamily: 'Poppins-Bold', textAlign: 'center' }}>{'\n'}VISION</Text>
+						{'\n'}
+						A premiere institution of higher learning committed to the holistic development of the human person and society.{'\n'}
+						{'\n'}
+
+					</Text>
+				</View>
+
+				<View style={{ marginBottom: -10 }}>
+					<Text style={styles.text1}>
+						<Text style={{ color: '#235b93', fontSize: 20, fontFamily: 'Poppins-Bold', textAlign: 'center' }}>{'\n'}MISSION</Text>
+						{'\n'}
+						To produce well-trained, skilled, dynamic, and competitive individuals imbued with values and attitudes and responsive to the changing needs of the local, national and global communities.{'\n'}
+						{'\n'}
+					</Text>
+				</View>
+			</View>
+
+			<View style={{
+				paddingHorizontal: 20,
+				marginBottom: 30,
+			}}>
+				<View>
+
+					<Text style={{
+						textAlign: 'center',
+						fontFamily: 'Poppins-Bold',
+						top: 10,
+						color: '#235b93',
+						fontSize: 20
+					}}>
+						GOALS
+					</Text>
+					<Text style={{
+						textAlign: 'center',
+						fontFamily: 'Poppins-Regular',
+						color: '#235b93',
+						fontSize: 15
+					}}>
+						Gordon College shall:
+					</Text>
+					<Text style={styles.text2}>
+						1.) Provide opportunities that will enable individuals to acquire a high level of professional, technical and vocational courses of studies.{'\n'}
+						2.) Develop innovative programs, projects and models of practice by undertaking research and studies.{'\n'}
+						3.) Promote community development through relevant extension programs.{'\n'}
+						4.) Provide opportunities for entrepreneurship and employability of graduates.
+					</Text>
+				</View>
+			</View>
+
+			<View style={styles.footer}>
+				<View style={styles.userInfoSection}>
+					<View style={{ flexDirection: 'row', marginTop: 10 }}>
+						<Image
+							source={require('../assets/logo.png')}
+							style={{
+								height: 95,
+								width: 95,
+								borderRadius: 100,
+								borderWidth: 1,
+								borderColor: '#333',
+								marginTop: 10
+							}}
+						/>
+						<View>
+							<Text style={[styles.title1, {
+								marginTop: 5,
+								color: '#235b93',
+							}]}>
+								GC InfoChat
+							</Text>
+							<Text style={styles.caption1}>
+								GC InfoChat (Gordon College Informational Chatbot) is an{'\n'}automated chatbot that provide answers for students and guests' queries or questions about the institution.
+							</Text>
 						</View>
 					</View>
 				</View>
 
 				<View style={{
-					paddingHorizontal: 20,
-					marginBottom: -30,
+					marginTop: 5,
 				}}>
-					<View style={{
-						flexDirection: 'row',
-						marginBottom: -30,
-					}}>
-
-						<Text style={styles.text1}>
-							<Text style={{ color: '#235b93', fontSize: 20, fontFamily: 'Poppins-Bold' }}>{'\n'}VISION</Text>
-							{'\n'}
-							A premiere institution of higher learning committed to the holistic development of the human person and society.{'\n'}
-							{'\n'}
-
-						</Text>
-					</View>
-					<View style={{
-						flexDirection: 'row',
-					}}>
-						<Text style={styles.text1}>
-							<Text style={{ color: '#235b93', fontSize: 20, fontFamily: 'Poppins-Bold', }}>{'\n'}MISSION</Text>
-							{'\n'}
-							To produce well-trained, skilled, dynamic, and competitive individuals imbued with values and attitudes and responsive to the changing needs of the local, national and global communities.{'\n'}
-							{'\n'}
-						</Text>
+					<View style={{ flexDirection: 'row', paddingHorizontal: 20, }}>
+						<Image
+							source={require('../assets/codebrewers.png')}
+							style={{
+								width: 95,
+								height: 95,
+								resizeMode: 'contain'
+							}}
+						/>
+						<View>
+							<Text style={[styles.title1, {
+								marginBottom: 5,
+								color: '#502b09'
+							}]}>
+								Codebrewers
+							</Text>
+							<Text style={[styles.caption1, { color: '#000', marginTop: -10 }]}>
+								Developers of GC InfoChat
+							</Text>
+							<Text style={[styles.caption1, { color: '#000', marginTop: -20, }]}>
+								{'\n'}
+								Dianne F. Sudario
+								{'\n'}
+								Cyrel Neil E. Absalon
+								{'\n'}
+								Ria Christina G. Yambao
+							</Text>
+						</View>
 					</View>
 				</View>
+
 
 				<View style={{
 					paddingHorizontal: 20,
-					marginBottom: 1,
+					marginTop: 10,
+					marginBottom: 25,
 				}}>
-					<View style={{ marginBottom: 10 }}>
+					<View style={styles.row1}>
+						<Icon name="email" color="#049315" size={17} style={{ marginLeft: -5 }} />
+						<Text style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}>
+							info@gordoncollege.edu.ph
+						</Text>
 
-						<Text style={{
-							textAlign: 'center',
-							// lineHeight: 16,
-							fontFamily: 'Poppins-Bold',
-							top: 10,
-							letterSpacing: 0.25,
-							color: '#235b93',
-							fontSize: 20
-						}}>
-							GOALS
+						<Icon name="email" color="#1f75cc" size={17} style={{ marginLeft: 10 }} />
+						<Text style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}>
+							codebrewers.ccs@gmail.com
 						</Text>
-						<Text style={{
-							textAlign: 'center',
-							// lineHeight: 16,
-							fontFamily: 'Poppins-Regular',
-							// letterSpacing: 0.25, 
-							color: '#235b93',
-							fontSize: 15
-						}}>
-							Gordon College shall:
-						</Text>
-						<Text style={styles.text2}>
-							1.) Provide opportunities that will enable individuals to acquire a high level of professional, technical and vocational courses of studies.{'\n'}
-							2.) Develop innovative programs, projects and models of practice by undertaking research and studies.{'\n'}
-							3.) Promote community development through relevant extension programs.{'\n'}
-							4.) Provide opportunities for entrepreneurship and employability of graduates.
+					</View>
+					<View style={styles.row1}>
+						<Icon name="web" color="#049315" size={17} style={{ marginLeft: -10 }} />
+						<Text
+							style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}
+							onPress={() => Linking.openURL('https://l.facebook.com/l.php?u=http%3A%2F%2Fwww.gordoncollege.edu.ph%2F%3Ffbclid%3DIwAR2zV2HO1jAjAEFJFlRIsmeQnLpZoBLGZ-uYgioeogLRhckxa2JSn5UB9yw&h=AT1GekK_M-CHU1soVTdLNCYFT_LUcDi1BWGnk0TbuMauRtfZqjkt0UrftW3JO1QISzAoktTSeu83RjRx00XNdKWMC0JoNcyAdlVUtVuoiSJH0Pw75Vkwia63U03R1haXhiRH5w')}
+						>
+							http://www.gordoncollege.edu.ph/
 						</Text>
 					</View>
 				</View>
 
-				<View style={styles.footer}>
-					<View style={styles.userInfoSection}>
-						<View style={{ flexDirection: 'row', marginTop: 10 }}>
-							<Image
-								source={require('../assets/logo.png')}
-								style={{
-									height: 95,
-									width: 95,
-									borderRadius: 100,
-									borderWidth: 1,
-									borderColor: '#333',
-									marginTop: 20
-								}}
-							/>
-							<View style={{ marginLeft: 12 }}>
-								<Text style={[styles.title, {
-									marginTop: 1,
-									marginBottom: 5,
-									color: '#235b93',
-									// backgroundColor: 'red'
-								}]}>
-									GC InfoChat
-								</Text>
-								{/* <Text style={[styles.caption, { color: '#333', marginTop: -5 }]}>
-									Developed by Team Codebrewers
-								</Text> */}
-								<Text style={[styles.caption, { color: '#333', marginTop: -20, marginRight: 60, }]}>
-									{'\n'}
-									GC InfoChat (Gordon College Informational Chatbot) is an automated chatbot that provide answers for students and guests' queries or questions about the institution.
-								</Text>
-							</View>
-						</View>
-					</View>
-
-					<View style={{
-						paddingHorizontal: 20,
-						marginTop: 5,
-					}}>
-						<View style={{ flexDirection: 'row' }}>
-							<Image
-								source={require('../assets/codebrewers.png')}
-								style={{
-									width: 95,
-									height: 95,
-									marginTop: -10,
-									resizeMode: 'contain'
-								}}
-							/>
-							<View style={{ marginLeft: 12 }}>
-								<Text style={[styles.title, {
-									marginTop: -10,
-									marginBottom: 5,
-									color: '#333'
-								}]}>
-									Codebrewers
-								</Text>
-								<Text style={[styles.caption, { color: '#333', marginTop: -5 }]}>
-									Developers of GC InfoChat
-								</Text>
-								<Text style={[styles.caption, { color: '#333', marginTop: -15, }]}>
-									{'\n'}
-									Dianne F. Sudario
-									{'\n'}
-									Cyrel Neil E. Absalon
-									{'\n'}
-									Ria Christina G. Yambao
-								</Text>
-							</View>
-						</View>
-					</View>
-
-
-					<View style={{
-						paddingHorizontal: 20,
-						marginTop: 10,
-						marginBottom: 25,
-					}}>
-						<View style={styles.row}>
-							<Icon name="email" color="#2dd36f" size={17} style={{ marginLeft: -10 }} />
-							<Text style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}>
-								info@gordoncollege.edu.ph
-							</Text>
-
-							<Icon name="email" color="#3dc2ff" size={17} style={{ marginLeft: 10 }} />
-							<Text style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}>
-								codebrewers.ccs@gmail.com
-							</Text>
-						</View>
-						<View style={styles.row}>
-							<Icon name="web" color="#2dd36f" size={17} style={{ marginLeft: -10 }} />
-							<Text
-								style={{ color: "#333", marginLeft: 5, fontSize: 10.5, fontFamily: 'Poppins-Light' }}
-								onPress={() => Linking.openURL('https://l.facebook.com/l.php?u=http%3A%2F%2Fwww.gordoncollege.edu.ph%2F%3Ffbclid%3DIwAR2zV2HO1jAjAEFJFlRIsmeQnLpZoBLGZ-uYgioeogLRhckxa2JSn5UB9yw&h=AT1GekK_M-CHU1soVTdLNCYFT_LUcDi1BWGnk0TbuMauRtfZqjkt0UrftW3JO1QISzAoktTSeu83RjRx00XNdKWMC0JoNcyAdlVUtVuoiSJH0Pw75Vkwia63U03R1haXhiRH5w')}
-							>
-								http://www.gordoncollege.edu.ph/
-							</Text>
-						</View>
-					</View>
-
-					<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: -20 }}>
-						<Text style={{ fontSize: 13, color: '#333', fontFamily: 'Poppins-Medium' }}>Version 1.0</Text>
-					</View>
+				<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: -20 }}>
+					<Text style={{ fontSize: 13, color: '#333', fontFamily: 'Poppins-Medium' }}>Version 1.0</Text>
 				</View>
-			</ScrollView>
+			</View>
+		</ScrollView>
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// backgroundColor: '#fff',
 	},
 	header: {
 		flex: 1,
-		justifyContent: 'flex-end',
 		backgroundColor: '#235b93',
 		borderBottomLeftRadius: 30,
 		borderBottomRightRadius: 30,
@@ -289,15 +250,10 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 30,
 		marginHorizontal: 10,
 		marginTop: 9
-		// paddingHorizontal: 20,
-		// paddingBottom: 50
 	},
 	footer: {
 		flex: 3,
 		backgroundColor: '#b0bec5',
-		// borderColor: '#235b93',
-		// borderWidth: 4,
-		// borderBottomColor: '#f2f2f2',
 		borderTopLeftRadius: 30,
 		borderTopRightRadius: 30,
 		borderBottomLeftRadius: 30,
@@ -307,20 +263,39 @@ const styles = StyleSheet.create({
 	},
 	userInfoSection: {
 		paddingHorizontal: 20,
-		marginBottom: 15,
+		marginBottom: 10,
 	},
 	title: {
 		fontSize: 24,
+		paddingLeft: 50,
+		fontFamily: 'Poppins-Regular'
+	},
+	title1: {
+		fontSize: 24,
+		paddingLeft: 20,
 		fontFamily: 'Poppins-Regular'
 	},
 	caption: {
 		fontSize: 13,
-		lineHeight: 15,
+		color: '#fff',
+		paddingLeft: 50,
+		paddingRight: 30,
+		fontFamily: 'Poppins-Regular'
+	},
+	caption1: {
+		fontSize: 13,
+		color: '#000',
+		paddingLeft: 20,
+		paddingRight: 50,
 		fontFamily: 'Poppins-Regular'
 	},
 	row: {
 		flexDirection: 'row',
-		marginBottom: 10,
+		justifyContent: 'space-evenly',
+	},
+	row1: {
+		flexDirection: 'row',
+		justifyContent: 'center'
 	},
 	infoBoxWrapper: {
 		borderBottomColor: '#dddddd',
@@ -348,24 +323,16 @@ const styles = StyleSheet.create({
 		marginLeft: 20,
 		fontWeight: '600',
 		fontSize: 16,
-		lineHeight: 26,
 	},
 	text1: {
 		textAlign: 'center',
-		// marginTop: -40,
 		fontSize: 14,
-		lineHeight: 16,
 		fontFamily: 'Poppins-Regular',
-		letterSpacing: 0.25,
 		color: '#444',
 	},
 	text2: {
-		// textAlign: 'center',
-		// marginTop: -40,
 		fontSize: 14,
-		lineHeight: 16,
 		fontFamily: 'Poppins-Regular',
-		letterSpacing: 0.25,
 		color: '#444',
 	},
 });

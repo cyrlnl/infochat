@@ -90,8 +90,8 @@ class Chatbot extends Component {
                 categoryOption: true,
                 data: [
                   {
-                    title: 'FAQ',
-                    text: 'Frequently Ask Questions\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)'
+                    title: 'FAQs',
+                    text: 'Frequently Asked Questions\n \n1. What are your Curricular Program Offerings?\n \n2. Where could I send an inquiry or concern?\n \n3. Where is GC Satellite Office located to request for documents or pay my dues?'
                   },
                   {
                     title: 'General',
@@ -107,7 +107,11 @@ class Chatbot extends Component {
                   },
                   {
                     title: 'Enrollment & Admission',
-                    text: 'Enrollment & Admission Queries\n \n1.Enrollment 2021-2022\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)'
+                    text: 'Enrollment & Admission Queries\n \n1. Enrollment 2021-2022'
+                  },
+                  {
+                    title: 'Education',
+                    text: 'Education Queries\n \n1. Certificate of Registration (COR for Academic Year 2021-2022)'
                   }
                 ]
               },
@@ -162,40 +166,39 @@ class Chatbot extends Component {
         data: [
           {
             title: 'Institute of Graduate\nStudies Department',
-            image: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59515658_2239805946096063_7182580560512942080_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=174925&_nc_eui2=AeGgf2pf-2PwoxloYf8BpaIeaph3EPgWebVqmHcQ-BZ5tRMslFzzBiv6yvR6k2xBjBKDTjL0kCXsk0AMIwDm8Sgj&_nc_ohc=rbpUUrXguqQAX8dn9iA&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT8jAp7oAEBpNPcFntn4tUIf7xQN1lnGCK-6EWOOSb9yOg&oe=6257149E',
-            text: 'Institute of Graduate Studies\n \n1. Master of Arts in Nursing (MAN)\n \n2. Major in Administration of Nursing Schools & Services\n \n3. Master in Business Management (MBM)\n \n4. Master in Public Administration (MPA)\n \n5. Master of Arts in Education (MAEd) Major in Educational Management'
+            image: 'https://i.ibb.co/Swt3gZP/gclogo.png',
+            text: 'Institute of Graduate Studies\n \n1. Master of Arts in Nursing (MAN)\n \n2. Major in Administration of Nursing Schools & Services\n \n3. Master in Business Management (MBM)\n \n4. Master in Public Administration (MPA)\n \n5. Master of Arts in Education (MAEd) Major in Educational Management',
+
           },
           {
             title: 'College of Computer\nStudies',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR62nkyr-rlTQEhocUP5QK9RflXDYQuZLhZjw&usqp=CAU',
+            image: 'https://i.ibb.co/4M5wmLV/css.png',
             text: "College of Computer Studies\n \n1. Bachelor of Science in Computer Science (BSCS)\n \n2. Bachelor of Science in Information Technology (BSIT)\n \n3. Bachelor of Science in Entertainment and Multimedia Computing (BSEMC)\n \n4. Associate in Computer Technology (ACT)"
-            // optionData: {
-            //   _id: this.state.messages.length + 1,
-            //   text: 'GC CCS',
-            //   createdAt: new Date(), 
-            //   user: BOT,
-            // }
           },
           {
             title: 'College of Hospitality\nand Tourism Management',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzCDfPFUQ7iwEtjrR9RGByFvYyvt-W5lik7c0-aicg5OZ8zYEK1uPwrGnNNO5-xGQWWR0&usqp=CAU',
+            image: 'https://i.ibb.co/CKBJDWv/chtm.png',
             text: 'College of Hospitality and Tourism Management\n \n1. Bachelor of Science in Hospitality Management (BSHM)\n \n2. Bachelor of Science in Tourism Management (BSTM)'
           },
           {
             title: 'College of Education,\nArts and Sciences',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStGw7O1PS35zhG49Y1OMJa57eabEYtS0efg_wHlx78QNGs6Nmgy0QRJsAKcQredx5QTno&usqp=CAU'
+            image: 'https://i.ibb.co/gwB85dB/ceas.png',
+            text: 'College of Education, Arts and Sciences\n \n1. Bachelor of Elementary Education(BEEd)\n \n2. Bachelor of Early Childhood Education(BECEd)\n \n3. Bachelor of Secondary Education - Major in English(BSEd - E)\n \n4. Bachelor of Secondary Education - Major in Filipino(BSEd - FIL)\n \n5. Bachelor of Secondary Education - Major in Math(BSEd - M)\n \n6.Bachelor of Secondary Education - Major in Science(BSEd - SCI)\n \n7. Bachelor of Secondary Education - Major in Social Studies(BSEd - SOC)\n \n8. Bachelor of Physical Education(BPEd)\n \n9. Bachelor of Cultural and Arts Education(BCAEd)\n \n10. Bachelor of Arts in Communication(BACOM)\n \n11. Teacher Certificate Program(TCP)'
           },
           {
             title: 'College of Business\nand Accountancy',
-            image: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/117745647_105699964588436_526016872864729108_n.png?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeH8fpiabJskamj8v9ZUm7r4hXluzkt5qyGFeW7OS3mrIcpkptBFHiljahenkscSOlLCFB3RMiC4HYN1mmKQPkPV&_nc_ohc=NxlT_mJugrUAX_DdmNI&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT_evzezfWAn9VaSp7L60_q0lAPg_NjrFce5UVfE28Nh_g&oe=6233BEC0'
+            image: 'https://i.ibb.co/jb3Fd4n/cba.png',
+            text: 'College of Business and Accountancy\n \n1. Bachelor of Science in Customs Administration (BSCA)\n \n2. Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3. Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)\n \n4. Bachelor of Science in Business Administration - Major in Marketing Management(BSBA-MKT)\n \n5. Bachelor of Science in Accountancy (BSA)'
           },
           {
             title: 'College of Allied\nHealth Studies',
-            image: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/135014570_102306351834926_7933799612610204623_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFWLHH0iM6W3ati88rRzTAuJz_nI47ZSAYnP-cjjtlIBudJzR8riXQxBi0lerett2DZ2bTcNknUCkaAit45eb0Z&_nc_ohc=6WXxOfS0qOoAX9GhPyN&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT9r27vz7_SI07van0b5y6pQs6pb9UCtJhvEcAt08Ah4FA&oe=6232E17D'
+            image: 'https://i.ibb.co/ydmSSzP/cahs.png',
+            text: 'College of Allied Health Studies\n \n1. Bachelor of Science in Nursing (BSN)\n \n2. Bachelor of Science in Midwifery (BSM)\n \n3.Graduate in Midwifery (GM)'
           },
           {
             title: 'Senior High School\nDepartment',
-            image: 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/60217214_101003794475069_5161803966777917440_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFjBL5hier89ZRdsrYNTrBpSMjbIO_52qpIyNsg7_naqoryqBRDyeoZ2JKcMInb8-1eXgL9j8upeoAS-NViyT4k&_nc_ohc=TCzU61Hcr9MAX8YkIol&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT_sGxjvYovVZDUaJww9CoKAgCjRCK8D-HzsjQWl5jnDdg&oe=62334D43'
+            image: 'https://i.ibb.co/Y3bNsv5/shs.png',
+            text: 'Senior High School Department\n \n1. Information Communication Technology (ICT)\n \n2. Home Economics (HE)\n \n3. Science, Technology, Engineering, and Mathematics(STEM)\n \n4. Accountancy and Business Management(ABM)\n \n5. Humanities and Social Sciences(HUMMS)'
           }]
       };
     } else if (text == 'bye') {
@@ -224,8 +227,8 @@ class Chatbot extends Component {
         categoryOption: true,
         data: [
           {
-            title: 'FaQ',
-            text: 'Frequently Ask Questions\n \n1.Bachelor of Elementary Education(BEEd)\n \n2.Bachelor of Early Childhood Education(BECEd)\n \n3.Bachelor of Secondary Education - Major in English(BSEd - E)'
+            title: 'FAQs',
+            text: 'Frequently Asked Questions\n \n1. What are your Curricular Program Offerings?\n \n2. Where could I send an inquiry or concern?\n \n3. Where is GC Satellite Office located to request for documents or pay my dues?'
           },
           {
             title: 'General',
@@ -241,7 +244,11 @@ class Chatbot extends Component {
           },
           {
             title: 'Enrollment & Admission',
-            text: 'Enrollment & Admission Queries\n \n1.Enrollment 2021-2022\n \n2.Bachelor of Science in Business Administration - Major in Financial Management (BSBA-FM)\n \n3.Bachelor of Science in Business Administration - Major in Human Resource Management(BSBA-HRM)'
+            text: 'Enrollment & Admission Queries\n \n1. Enrollment 2021-2022'
+          },
+          {
+            title: 'Education',
+            text: 'Education Queries\n \n1.Certificate of Registration (COR for Academic Year 2021-2022)'
           }
         ]
       }
@@ -352,13 +359,14 @@ class Chatbot extends Component {
             <Button
               key={item.title}
               title={item.title}
-              icon={{
-                name: 'arrow-right',
-                type: 'font-awesome',
-                size: 15,
-                color: 'white',
-              }}
-              iconRight
+              // icon={{
+              //   name: 'arrow-right',
+              //   type: 'font-awesome',
+              //   size: 15,
+              //   color: 'white',
+              // }}
+              // iconContainerStyle={{ left: -5 }}
+              // iconRight
               titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 16 }}
               buttonStyle={{
                 backgroundColor: '#235b93',
@@ -367,7 +375,7 @@ class Chatbot extends Component {
                 borderRadius: 30,
               }}
               containerStyle={{
-                width: 150,
+                width: 210,
                 marginHorizontal: 10,
                 marginVertical: 10,
               }}
@@ -403,7 +411,7 @@ class Chatbot extends Component {
           borderWidth: 1,
           marginLeft: 10,
           marginRight: 10,
-          marginBottom: 2,
+          marginBottom: 3,
           borderRadius: 30,
         }}
       />

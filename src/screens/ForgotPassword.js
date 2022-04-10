@@ -38,10 +38,10 @@ const ForgotPassword = ({ navigation }) => {
 
 			<View style={{ paddingTop: 50, paddingHorizontal: 20 }}>
 
-				<Text style={{ color: colors.black, fontSize: 40, fontWeight: 'bold' }}>
+				<Text style={{ color: colors.black, fontSize: 40, fontFamily: 'Poppins-Medium', }}>
 					Forgot Password
 				</Text>
-				<Text style={{ color: colors.facebook, fontSize: 15, fontWeight: 'bold', marginVertical: 10 }}>
+				<Text style={{ color: colors.facebook, fontSize: 15, fontFamily: 'Poppins-Regular' }}>
 					Enter your registered E-mail to reset your password.
 				</Text>
 
@@ -68,10 +68,9 @@ const ForgotPassword = ({ navigation }) => {
 						onPress={() => navigation.navigate('Login')}
 						style={{
 							color: colors.google,
-							fontWeight: 'bold',
+							fontFamily: 'Poppins-Medium',
 							textAlign: 'center',
 							fontSize: 16,
-							marginVertical: 30
 						}}>
 						Go back to Login
 					</Text>

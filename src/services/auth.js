@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 const googleSignIn = async () => {
   try {
@@ -22,11 +22,11 @@ const googleSignIn = async () => {
       })
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      alert('Cancel');
+      Alert.alert('GOOGLE_SIGN_IN_CANCELLED');
     } else if (error.code === statusCodes.IN_PROGRESS) {
-      alert('Signin in progress');
+      Alert.alert('GOOGLE_SIGN_IN_PROGRESS');
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      alert('PLAY_SERVICES_NOT_AVAILABLE');
+      Alert.alert('PLAY_SERVICES_NOT_AVAILABLE');
     } else {
       Alert.alert('Something went wrong', error.toString());
       this.setState({
@@ -61,7 +61,7 @@ const googleSignUp = async () => {
             status: 'Guest',
             email: auth().currentUser.email,
             createdAt: firestore.Timestamp.fromDate(new Date()),
-            userImg: null,
+            userImg: auth().currentUser.photoURL,
           })
           //ensure we catch any errors at this stage to advise us if something does go wrong
           .catch(error => {
@@ -74,11 +74,11 @@ const googleSignUp = async () => {
       });
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      alert('Cancel');
+      Alert.alert('GOOGLE_SIGN_UP_CANCELLED');
     } else if (error.code === statusCodes.IN_PROGRESS) {
-      alert('Signin in progress');
+      Alert.alert('GOOGLE_SIGN_UP_PROGRESS');
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      alert('PLAY_SERVICES_NOT_AVAILABLE');
+      Alert.alert('PLAY_SERVICES_NOT_AVAILABLE');
     } else {
       Alert.alert('Something went wrong', error.toString());
       this.setState({
@@ -102,38 +102,75 @@ const createUserDb = (uid, fullName, email) => {
 }
 
 // SIGNUP handling
-const signUp = (fullName, email, password) => {
-  if (!fullName || !email || !password) {
-    Alert.alert('Error', 'Please enter all fields')
+const signUp = async (fullName, email, password) => {
+  try {
+    const cred = await auth().createUserWithEmailAndPassword(email, password);
+    const { uid } = cred.user;
+
+    auth().currentUser.updateProfile({
+      displayName: fullName
+    });
+    const uid_1 = uid;
+    return await createUserDb(uid_1, fullName, email);
+  } catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+      Alert.alert('That email address is already in use!');
+      console.log('That email address is already in use!');
+    }
+    if (error.code === 'auth/invalid-email') {
+      Alert.alert('That email address is invalid!');
+      console.log('That email address is invalid!');
+    }
+    console.error(error);
   }
-
-  return auth().createUserWithEmailAndPassword(email, password)
-    .then(cred => {
-      const { uid } = cred.user;
-
-      auth().currentUser.updateProfile({
-        displayName: fullName
-      })
-
-      return uid
-    })
-    .then(uid => createUserDb(uid, fullName, email))
-    .catch(
-      err => Alert.alert(err.code, err.message)
-    )
 }
 
 
 // LOGIN
 const signIn = async (email, password) => {
-  if (!email || !password) {
-    Alert.alert('Error', 'Please enter all fields')
-  }
-
   try {
-    await auth().signInWithEmailAndPassword(email, password);
-  } catch (err) {
-    return Alert.alert(err.code, err.message);
+    await auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/user-not-found') {
+          Alert.alert('There is no user record. The user may have been deleted. Try again.');
+          console.log('There is no user record. The user may have been deleted.');
+        }
+        if (error.code === 'auth/invalid-email') {
+          Alert.alert('That email address is invalid!');
+          console.log('That email address is invalid!');
+        }
+        if (error.code === 'auth/wrong-password') {
+          Alert.alert('The password is invalid or the user does not have a password.');
+          console.log('The password is invalid or the user does not have a password.');
+        }
+        if (error.code === 'auth/too-many-requests') {
+          Alert.alert('We have blocked all requests from this device due to unusual activity. Try again later.');
+          console.log('We have blocked all requests from this device due to unusual activity. Try again later.');
+        }
+        console.error(error);
+      });
+  } catch (error) {
+    if (error.code === 'auth/user-not-found') {
+      Alert.alert('There is no user record. The user may have been deleted. Try again.');
+      console.log('There is no user record. The user may have been deleted.');
+    }
+    if (error.code === 'auth/invalid-email') {
+      Alert.alert('That email address is invalid!');
+      console.log('That email address is invalid!');
+    }
+    if (error.code === 'auth/wrong-password') {
+      Alert.alert('The password is invalid or the user does not have a password.');
+      console.log('The password is invalid or the user does not have a password.');
+    }
+    if (error.code === 'auth/too-many-requests') {
+      Alert.alert('We have blocked all requests from this device due to unusual activity. Try again later.');
+      console.log('We have blocked all requests from this device due to unusual activity. Try again later.');
+    }
+    console.error(error);
+    // return Alert.alert(err.code, err.message)
   }
 }
 
@@ -162,13 +199,17 @@ const forgotPassword = async (email) => {
   }
 }
 
-// const signOut = () => {
-//   return auth().signOut()
+// const signOut = async () => {
+//   await auth().signOut();
+//   Alert.alert(
+//     'Logging out...',
+//     'Your are now signed out.'
+//   );
 // }
 
 const signOut = async () => {
   try {
-    await GoogleSignin.revokeAccess();
+    // await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     auth()
       .signOut()
