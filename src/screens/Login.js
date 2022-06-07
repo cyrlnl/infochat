@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, View, Text, SafeAreaView, Keyboard, Image, TouchableOpacity, StyleSheet, ImageBackground, Alert, ScrollView } from 'react-native';
+
+import Reminder from '../screens/Reminder';
+import Terms from '../components/TermsCondition';
 import colors from '../constants/colors';
-import Button from '../components/Button';
+import Buttons from '../components/Button';
 import Input from '../components/Input';
 import Social from '../components/SocialButton'
 
-import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 // service
 import { Auth } from '../services'
@@ -34,57 +36,24 @@ const Login = ({ navigation }) => {
     )
   }
   // LOGIN AUTHENTICATION 
-  const userLogin = async () => {
-    setLoading(true)
-    try {
-      await auth().signInWithEmailAndPassword(email, password)
-        .catch(err => {
-          Alert.alert(
-            "Warning",
-            "something went wrong",
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            }
-          )
-        })
-      setLoading(false)
-    } catch (err) {
-      Alert.alert(
-        "Warning",
-        "something went wrong",
-      )
-      setLoading(false)
-    }
-
-  }
   const signIn = async () => {
     setLoading(true)
     try {
-      await auth().signInWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('User account created & signed in!');
-        })
-        .catch(error => {
-          if (error.code === 'auth/user-not-found') {
-            Alert.alert('There is no user record. The user may have been deleted. Try again.');
-            console.log('There is no user record. The user may have been deleted.');
+      const user = await auth().signInWithEmailAndPassword(email, password)
+
+      auth().onAuthStateChanged(function (user) {
+        if (user) {
+          if (user.emailVerified === false) {
+            Alert.alert('Please verify Your Email Checkout Inbox');
+            auth().signOut();
+          } else {
+            // successful login 
+            // Alert.alert('You Are verified');
+            navigation.navigate('Chatbot');
           }
-          if (error.code === 'auth/invalid-email') {
-            Alert.alert('That email address is invalid!');
-            console.log('That email address is invalid!');
-          }
-          if (error.code === 'auth/wrong-password') {
-            Alert.alert('The password is invalid or the user does not have a password.');
-            console.log('The password is invalid or the user does not have a password.');
-          }
-          if (error.code === 'auth/too-many-requests') {
-            Alert.alert('We have blocked all requests from this device due to unusual activity. Try again later.');
-            console.log('We have blocked all requests from this device due to unusual activity. Try again later.');
-          }
-          console.error(error);
-        });
+        }
+      });
+     
       setLoading(false)
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
@@ -110,7 +79,6 @@ const Login = ({ navigation }) => {
 
   const validate = async () => {
     Keyboard.dismiss();
-    // setLoading(true)
     let isValid = true;
     if (!email) {
       handleError('Please input email', 'email');
@@ -126,18 +94,10 @@ const Login = ({ navigation }) => {
     }
     if (isValid) {
       signIn();
-      // Auth.signIn(email, password)
-      // setLoading(false)
-      // } else {
-      //   setLoading(false)
     }
 
   };
 
-
-  const handleOnchange = (text, input) => {
-    setInputs(prevState => ({ ...prevState, [input]: text }));
-  };
 
   const handleError = (error, input) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
@@ -145,112 +105,112 @@ const Login = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#38a67e' }}>
+
+      {/* <ImageBackground
+        source={require('../assets/newBG/newBG3.jpg')}
+        resizeMode="cover"
+        imageStyle={{
+          flex: 1,
+          width: windowWidth,
+          height: windowHeight,
+          // width: 550,
+          // height: 300,
+          justifyContent: "center",
+          opacity: 1
+        }}
+      > */}
       <ScrollView>
-        <ImageBackground
-          source={require('../assets/bg7.png')}
-          resizeMode="cover"
-          imageStyle={{
-            flex: 1,
-            width: windowWidth,
-            height: windowHeight,
-            // width: 550,
-            // height: 300,
-            justifyContent: "center",
-            opacity: 0.8
-          }}
-        >
-          <View style={styles.header}>
-            <Image
-              style={styles.logo}
-              source={require('../assets/logo.png')}
-            />
-          </View>
+        <Terms />
+        <Reminder />
+        <View style={styles.header}>
 
-          <View style={styles.footer}>
+          <Image
+            resizeMode="cover"
+            style={styles.logo}
+            source={require('../assets/app_logo/1.png')}
+          />
+        </View>
 
-            <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Poppins-Regular', textAlign: 'center' }}>
-              Login your Credentials
-            </Text>
+        <View style={styles.footer}>
+          <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Poppins-Regular', textAlign: 'center' }}>
+            Login your Credentials
+          </Text>
 
-            <Input
-              // onChangeText={text => handleOnchange(text, 'email')}
-              onChangeText={text => setEmail(text)}
-              value={email}
-              keyboardType="email-address"
-              onFocus={() => handleError(null, 'email')}
-              iconName="email-outline"
-              label="Email"
-              placeholder="Enter your email address"
-              error={errors.email}
-            />
+          <Input
+            onChangeText={text => setEmail(text)}
+            value={email}
+            keyboardType="email-address"
+            onFocus={() => handleError(null, 'email')}
+            iconName="email-outline"
+            label="Email"
+            placeholder="Enter your email address"
+            error={errors.email}
+          />
 
-            <Input
-              // onChangeText={text => handleOnchange(text, 'password')}
-              onChangeText={text => setPassword(text)}
-              value={password}
-              onFocus={() => handleError(null, 'password')}
-              iconName="lock-outline"
-              label="Password"
-              placeholder="Enter your password"
-              error={errors.password}
-              password
-            />
+          <Input
+            onChangeText={text => setPassword(text)}
+            value={password}
+            onFocus={() => handleError(null, 'password')}
+            iconName="lock-outline"
+            label="Password"
+            placeholder="Enter your password"
+            error={errors.password}
+            password
+          />
 
-            <TouchableOpacity
+          <TouchableOpacity
+            style={{
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text
               style={{
-                // width: windowWidth - 20,
-                // left: 100, 
-                textAlign: 'center',
-                justifyContent: 'center',
-                alignItems: 'center'
+                textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: 'black'
               }}
-              onPress={() => navigation.navigate('ForgotPassword')}
             >
-              <Text
-                style={{
-                  textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: colors.google
-                }}
-              >
-                Forgot Password?
-              </Text>
-            </TouchableOpacity>
-
-            <Button
-              title="Log In"
-              btnType="login"
-              color="#f5e7ea"
-              onPress={validate}
-            />
-
-            <Text
-              style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: 'black', bottom: 5 }}
-            >
-              -- OR --
+              Forgot Password?
             </Text>
+          </TouchableOpacity>
 
-            <Social
-              buttonTitle="Sign In with Google"
-              btnType="google"
-              color="#f5e7ea"
-              backgroundColor="#de4d41"
-              onPress={() => Auth.googleSignIn()}
-            />
+          <Buttons
+            title="Log In"
+            btnType="login"
+            color="#f5e7ea"
+            onPress={validate}
+          />
 
-            <Text
-              onPress={() => navigation.navigate('SignUp')}
-              style={{
-                color: colors.black,
-                fontFamily: 'Poppins-Regular',
-                textAlign: 'center',
-                fontSize: 16,
-                top: 20
-              }}>
-              Don't have account? Register
-            </Text>
-          </View>
-        </ImageBackground>
+          <Text
+            style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: 'black', bottom: 5 }}
+          >
+            OR
+          </Text>
+
+          <Social
+            buttonTitle="Sign In with Google"
+            btnType="google"
+            color="#f5e7ea"
+            backgroundColor="#de4d41"
+            onPress={() => Auth.googleSignUp()}
+          />
+
+          <Text
+            onPress={() => navigation.navigate('SignUp')}
+            style={{
+              color: colors.black,
+              fontFamily: 'Poppins-Regular',
+              textAlign: 'center',
+              fontSize: 16,
+              top: 20
+            }}>
+            Don't have an account? Sign Up
+          </Text>
+        </View>
       </ScrollView>
+      {/* </ImageBackground> */}
 
     </SafeAreaView >
   );
@@ -268,7 +228,7 @@ const styles = StyleSheet.create({
   footer: {
     // flex: 1,
     backgroundColor: '#fff',
-    // borderColor: '#3880ff',
+    // borderColor: '#089447',
     // borderWidth: 3,
     // borderBottomColor: '#3880ff',
     // borderRadius: 10,
@@ -279,6 +239,8 @@ const styles = StyleSheet.create({
     // marginVertical: 20,
     paddingVertical: 20,
     paddingBottom: 50,
+    marginLeft: 10,
+    marginRight: 10,
   },
   logo: {
     justifyContent: 'center',
@@ -287,7 +249,7 @@ const styles = StyleSheet.create({
     width: 180,
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: '#235b93',
+    // borderColor: '#204D25',
     marginVertical: 15,
     // borderColor: '#235b93',
     // bottom: 135,

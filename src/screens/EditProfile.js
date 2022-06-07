@@ -20,15 +20,8 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FormButton from '../components/Button';
 
-
-const EditProfile = () => {
+const EditProfile = ({ navigation }) => {
 
   const user = auth().currentUser;
   // console.log(user);
@@ -36,7 +29,8 @@ const EditProfile = () => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
+
   const isFocused = useIsFocused();
 
   const getUser = async () => {
@@ -76,13 +70,6 @@ const EditProfile = () => {
       .collection('users')
       .doc(user.uid)
       .update({
-        fullName: userData.fullName,
-        email: userData.email,
-        phone: userData.phone,
-        department: userData.department,
-        course: userData.course,
-        status: userData.status,
-        organization: userData.organization,
         userImg: imgUrl,
       })
       .then(() => {
@@ -143,7 +130,8 @@ const EditProfile = () => {
 
   useEffect(() => {
     getUser();
-  }, [isFocused])
+    navigation.addListener("focus", () => setLoading(!loading));
+  }, [navigation, loading])
 
   return (
     <ScrollView style={styles.container}>
@@ -152,8 +140,8 @@ const EditProfile = () => {
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity onPress={() => pickImageFromGallery()}>
             <View style={{
-              height: 100,
-              width: 100,
+              height: 200,
+              width: 200,
               borderRadius: 15,
               justifyContent: 'center',
               alignItems: 'center',
@@ -164,10 +152,10 @@ const EditProfile = () => {
                     ? image
                     : userData
                       ? userData.userImg ||
-                      'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938'
-                      : 'https://scontent.fsfs2-1.fna.fbcdn.net/v/t1.6435-9/59456339_2239808299429161_5937533450515906560_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeFRflDt2v2ogOsOyAnVlZZz2B_E7u5X9zrYH8Tu7lf3Ojdv1Kp7_TwzuWly7ET6feQCOf6G0CuODGAjj4KhkZsX&_nc_ohc=BrflGRbo6QAAX-SHglx&_nc_ht=scontent.fsfs2-1.fna&oh=00_AT-Pk6FxXdw7wPRLATTg-jxmuFlAVu1Lm4D2-OWMccy8yw&oe=62488938',
+                      'https://i.ibb.co/0ZtX4K7/user-Image.png'
+                      : 'https://i.ibb.co/0ZtX4K7/user-Image.png',
                 }}
-                style={{ height: 100, width: 100 }}
+                style={{ height: 200, width: 200 }}
                 imageStyle={{ borderRadius: 15, borderWidth: 1, borderColor: '#999' }}
               >
                 <View style={{
@@ -177,15 +165,15 @@ const EditProfile = () => {
                 }}>
                   <Icon
                     name='camera'
-                    size={35}
-                    color="#333"
+                    size={50}
+                    color="#fff"
                     style={{
                       opacity: 0.7,
                       alignItems: 'center',
                       justifyContent: 'center',
-                      borderColor: '#999',
-                      borderWidth: 1,
-                      borderRadius: 10,
+                      backgroundColor: '#000',
+                      borderRadius: 50,
+                      padding: 5
                     }}
                   />
                 </View>
@@ -199,99 +187,11 @@ const EditProfile = () => {
 
         </View>
 
-        <View style={styles.action}>
-          <FontAwesome name='user-o' size={23} color='#235b93' />
-          <TextInput
-            // onChangeText={(txt) => setUserData({ ...userData, fullName: txt })}
-            placeholder='Full Name'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.fullName : ''}
-            style={styles.textInput}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <Icon name='email-outline' size={23} color='#235b93' />
-          <TextInput
-            placeholder='E-mail address'
-            keyboardType='email-address'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.email : ''}
-            // onChangeText={(txt) => setUserData({ ...userData, email: txt })}
-            style={styles.textInput}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <Icon name='list-status' size={23} color='#235b93' />
-          <TextInput
-            placeholder='Status "Student" or "Guest"'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.status : ''}
-            // onChangeText={(txt) => setUserData({ ...userData, status: txt })}
-            style={styles.textInput}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <Feather name='phone' size={23} color='#235b93' />
-          <TextInput
-            placeholder='Contact No.'
-            keyboardType='number-pad'
-            maxLength={11}
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.phone : ''}
-            onChangeText={(txt) => setUserData({ ...userData, phone: txt })}
-            style={styles.textInput}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <Icon name='office-building-marker-outline' size={23} color='#235b93' />
-          <TextInput
-            placeholder='Department'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.department : ''}
-            onChangeText={(txt) => setUserData({ ...userData, department: txt })}
-            style={styles.textInput}
-          />
-        </View>
-
-        <View style={styles.action}>
-          <Ionicons name='book-outline' size={23} color='#235b93' />
-          <TextInput
-            placeholder='Course'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.course : ''}
-            onChangeText={(txt) => setUserData({ ...userData, course: txt })}
-            style={styles.textInput}
-          />
-        </View>
-
-
-
-        <View style={styles.action}>
-          <FontAwesome5 name='school' size={20} color='#235b93' />
-          <TextInput
-            placeholder='Organization'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-            value={userData ? userData.organization : ''}
-            onChangeText={(txt) => setUserData({ ...userData, organization: txt })}
-            style={styles.textInput}
-          />
-        </View>
 
         {uploading ? (
           <View style={styles.statusWrapper}>
             <Text>{transferred} % Completed!</Text>
-            <ActivityIndicator size="large" color="#235b93" />
+            <ActivityIndicator size="large" color="#2c8162" />
           </View>
         ) : (
           <TouchableOpacity style={styles.commandButton} onPress={handleUpdate}>
@@ -318,7 +218,7 @@ const styles = StyleSheet.create({
   commandButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#235b93',
+    backgroundColor: '#2c8162',
     alignItems: 'center',
     marginTop: 10,
   },

@@ -12,7 +12,7 @@ const Button = ({ title, btnType,
       style={{
         width: '100%',
         height: windowHeight / 18,
-        backgroundColor: '#235b93',
+        backgroundColor: '#38a67e',
         marginVertical: 20,
         borderRadius: 10,
         justifyContent: 'center',

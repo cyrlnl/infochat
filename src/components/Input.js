@@ -22,14 +22,14 @@ const Input = ({
             borderColor: error
               ? colors.red
               : isFocused
-                ? colors.darkBlue
-                : colors.darkBlue,
+                ? '#2c8162'
+                : '#2c8162',
             alignItems: 'center',
           },
         ]}>
         <Icon
           name={iconName}
-          style={{ color: '#235b93', fontSize: 22, marginRight: 10 }}
+          style={{ color: '#2c8162', fontSize: 22, marginRight: 10 }}
         />
         <TextInput
           autoCorrect={false}
@@ -41,7 +41,9 @@ const Input = ({
           secureTextEntry={hidePassword}
           style={{
             fontSize: 15,
-            fontFamily: 'Poppins-Regular', color: colors.black, flex: 1
+            fontFamily: 'Poppins-Regular',
+            color: colors.black,
+            flex: 1
           }}
           {...props}
         />
@@ -49,12 +51,12 @@ const Input = ({
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{ color: '#235b93', fontSize: 22 }}
+            style={{ color: '#2c8162', fontSize: 22 }}
           />
         )}
       </View>
       {error && (
-        <Text style={{ marginTop: 7, color: colors.red, fontSize: 12 }}>
+        <Text style={{ marginTop: 7, color: colors.red, fontSize: 12, left: 15 }}>
           {error}
         </Text>
       )}
@@ -76,6 +78,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderWidth: 0.5,
+    borderRadius: 50
   },
 });
 

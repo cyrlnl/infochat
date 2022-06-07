@@ -2,6 +2,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+
 
 const googleSignIn = async () => {
   try {
@@ -60,6 +62,10 @@ const googleSignUp = async () => {
             fullName: auth().currentUser.displayName,
             status: 'Guest',
             email: auth().currentUser.email,
+            phone: '',
+            course: '',
+            department: '',
+            organization: '',
             createdAt: firestore.Timestamp.fromDate(new Date()),
             userImg: auth().currentUser.photoURL,
           })
@@ -89,12 +95,16 @@ const googleSignUp = async () => {
 
 }
 
-const createUserDb = (uid, fullName, email) => {
+const createUserDb = (uid, fullName, email, phone, department, course, organization) => {
   return firestore().collection('users').doc(uid).set(
     {
       uid,
       fullName,
       email,
+      phone,
+      department,
+      course,
+      organization,
       status: 'Guest',
       createdAt: firestore.Timestamp.fromDate(new Date())
     }
@@ -102,16 +112,26 @@ const createUserDb = (uid, fullName, email) => {
 }
 
 // SIGNUP handling
-const signUp = async (fullName, email, password) => {
+const signUp = (fullName, email, password, phone, department, course, organization) => {
   try {
-    const cred = await auth().createUserWithEmailAndPassword(email, password);
-    const { uid } = cred.user;
+    return auth().createUserWithEmailAndPassword(email, password)
+      .then(cred => {
+        const { uid } = cred.user;
 
-    auth().currentUser.updateProfile({
-      displayName: fullName
-    });
-    const uid_1 = uid;
-    return await createUserDb(uid_1, fullName, email);
+        auth().currentUser.updateProfile({
+          displayName: fullName
+        })
+
+        return uid
+      })
+      .then(uid => createUserDb(uid, fullName, email, phone, department, course, organization))
+      .then(() => {
+        auth().currentUser.sendEmailVerification();
+        auth().signOut();
+        Alert.alert('Please verify your email. Check out link in your inbox.');
+      })
+
+
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
       Alert.alert('That email address is already in use!');

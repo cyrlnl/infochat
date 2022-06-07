@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import auth from '@react-native-firebase/auth';
 
@@ -10,7 +10,10 @@ import { Chatbot } from "../screens";
 import { Profile } from "../screens";
 import { About } from "../screens";
 import { EditProfile } from "../screens";
+import { SubmitQuery } from "../screens";
 import HeaderImage from '../components/HeaderImage';
+import SubmitModal from "../screens/SubmitModal";
+import Modal from '../screens/ChatbotInstruction';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +40,7 @@ const AppNavigator = ({ navigation, route }) => {
           tabBarHideOnKeyboard: true,
           title: 'Edit Profile',
           headerTitleStyle: {
-            fontFamily: 'Poppins-Bold',
+            fontFamily: 'Poppins-Medium',
             color: 'black'
           },
           headerBackTitleVisible: false,
@@ -52,18 +55,9 @@ const AppNavigator = ({ navigation, route }) => {
     </Stack.Navigator>
   );
 
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: '#235b93',
-          height: 55,
-        },
-
-      }}
-    >
-      <Tab.Screen
+  const ChatbotStack = () => (
+    <Stack.Navigator>
+      <Stack.Screen
         name='Chatbot'
         component={Chatbot}
         initialParams={{
@@ -71,83 +65,128 @@ const AppNavigator = ({ navigation, route }) => {
           id: user.uid,
         }}
         options={{
+          headerShown: false,
           tabBarHideOnKeyboard: true,
-          title: 'GC Infochat',
+        }}
+      />
+      <Stack.Screen
+        name='SubmitQuery'
+        component={SubmitQuery}
+        options={{
+          headerShown: false,
+          tabBarHideOnKeyboard: true,
+        }}
+      />
+    </Stack.Navigator>
+  )
+
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: '#38a67e',
+          marginTop: 4,
+          height: 50,
+          width: 300,
+          left: 46,
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30
+        },
+
+      }}
+    >
+      <Tab.Screen
+        name='Chatbot'
+        component={ChatbotStack}
+        initialParams={{
+          name: user.displayName,
+          id: user.uid,
+        }}
+        options={{
+          tabBarHideOnKeyboard: true,
           headerStyle: {
-            backgroundColor: '#235b93',
+            backgroundColor: '#38a67e',
           },
           headerTitleStyle: {
-            fontFamily: 'Poppins-Bold',
-            fontSize: 16,
-            top: 2,
-            color: 'white'
+            opacity: 0
           },
-          headerLeft: () => <Icon name="robot" size={27} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
-          headerRight: () => <HeaderImage/>,
+          headerRight: () => <View style={{ bottom: 21, flexDirection: 'row' }}><View style={{ right: 50 }}><Modal /></View><View style={{ right: 100 }}><SubmitModal /></View></View>,
+          headerLeft: () => <HeaderImage />,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
-                source={require('../assets/bot-outline.png')}
+                source={require('../assets/bot.png')}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? '#fff' : '#92949c'
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? '#fff' : '#267357'
                 }}
               />
-              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontFamily: 'Poppins-Bold', fontSize: 12, top: 1 }}>CHAT</Text>
+              <Text style={{ color: focused ? 'white' : '#267357', fontFamily: 'Poppins-Medium', fontSize: 12, top: 1 }}>CHAT</Text>
             </View>
           )
         }}
 
 
       />
-      <Tab.Screen name='Profile' component={ProfileStack}
+      <Tab.Screen
+        name='Profile'
+        component={ProfileStack}
         options={{
-          // unmountOnBlur: true,
-          headerShown: false,
+          title: 'Profile',
+          headerStyle: {
+            backgroundColor: '#38a67e',
+          },
+          headerTitleStyle: {
+            fontFamily: 'Poppins-Medium',
+            top: 2,
+            color: 'white'
+          },
+          headerLeft: () => <Icon name="person-circle-outline" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
-                source={require('../assets/user-outline.png')}
+                source={require('../assets/usersharp.png')}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? '#fff' : '#92949c'
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? '#fff' : '#267357'
                 }}
               />
-              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontFamily: 'Poppins-Bold', fontSize: 12, top: 1 }}>PROFILE</Text>
+              <Text style={{ color: focused ? 'white' : '#267357', fontFamily: 'Poppins-Medium', fontSize: 12, top: 1 }}>PROFILE</Text>
             </View>
           )
         }}
       />
       <Tab.Screen name='About' component={About}
         options={{
-          // unmountOnBlur: true,
           title: 'About',
           headerStyle: {
-            backgroundColor: '#235b93',
+            backgroundColor: '#38a67e',
           },
           headerTitleStyle: {
-            fontFamily: 'Poppins-Bold',
+            fontFamily: 'Poppins-Medium',
             top: 2,
             color: 'white'
           },
-          headerLeft: () => <Icon name="information-outline" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
+          headerLeft: () => <Icon name="information-circle-outline" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
               <Image
-                source={require('../assets/info-outline.png')}
+                source={require('../assets/info.png')}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? '#fff' : '#92949c'
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? '#fff' : '#267357'
                 }}
               />
-              <Text style={{ color: focused ? '#3dc2ff' : '#c0c4c4', fontFamily: 'Poppins-Bold', fontSize: 12, top: 1 }}>ABOUT</Text>
+              <Text style={{ color: focused ? 'white' : '#267357', fontFamily: 'Poppins-Medium', fontSize: 12, top: 1 }}>ABOUT</Text>
             </View>
           )
         }}

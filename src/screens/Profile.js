@@ -51,7 +51,7 @@ const Profile = ({ navigation, route }) => {
       showsVerticalScrollIndicator={false}
     >
       <ImageBackground
-        source={require('../assets/bg.jpg')}
+        source={require('../assets/newBG/1.jpg')}
         style={{
           flex: 1,
           resizeMode: "cover",
@@ -62,71 +62,102 @@ const Profile = ({ navigation, route }) => {
       >
 
         <View style={styles.header}>
-
-          <Image
-            style={styles.userImg}
-            source={{ uri: userData ? userData.userImg || 'https://i.ibb.co/Swt3gZP/gclogo.png' : 'https://i.ibb.co/Swt3gZP/gclogo.png' }}
+          <ImageBackground
+            style={styles.userCoverPhoto}
+            source={{ uri: 'https://i.ibb.co/njzbFmp/gcwallpaper.jpg' }}
           />
-
-          <Text style={styles.userName}>{userData ? userData.fullName : 'Sample Name'}</Text>
-
-          {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
-
-          <Text style={styles.aboutUser}>{userData ? userData.status : 'Unknown'}</Text>
         </View>
 
         <View style={styles.footer}>
-          <View style={styles.userBtnWrapper}>
+          <View style={{ justifyContent: 'center', marginTop: -60, alignItems: 'center', marginBottom: 10 }}>
+            <ImageBackground
+              style={{
+                height: 135,
+                width: 135,
+                top: -10
+              }}
+              imageStyle={{ borderRadius: 90, borderWidth: 1, borderColor: '#9eb2a0', }}
+              source={{ uri: userData ? userData.userImg || 'https://i.ibb.co/0ZtX4K7/user-Image.png' : 'https://i.ibb.co/0ZtX4K7/user-Image.png' }}
+            >
+              <TouchableOpacity style={{
+                flex: 1,
+                top: -10,
+                alignItems: 'flex-end',
+                justifyContent: 'flex-end',
+              }} onPress={() => { navigation.navigate('EditProfile') }}>
+                <View>
+                  <Icon
+                    name='pencil'
+                    size={20}
+                    color="#fff"
+                    style={{
+                      opacity: 0.8,
+                      backgroundColor: '#000',
+                      borderRadius: 50,
+                      padding: 5
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </ImageBackground>
 
-            <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
-              <Icon name="account-edit" color="#009e05" size={22} />
-              <Text style={styles.userBtnTxt}>Edit Profile</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
-              <AntDesign name="logout" color="#ff3842" size={22} />
-              <Text style={styles.userBtnTxt}>Logout</Text>
-            </TouchableOpacity>
+            <View style={{ top: 10 }}>
+              <Text style={styles.userName}>{userData ? userData.fullName : 'Sample Fullname'}</Text>
+
+              <Text style={styles.aboutUser}>{userData ? userData.status : 'Status'}</Text>
+            </View>
 
           </View>
-
           <View style={styles.userInfoWrapper}>
             <View style={styles.userInfoSection}>
               <View style={styles.row}>
-                <Icon name="email" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                <Icon name="email" color="#2c8162" size={25} />
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
                   {userData ? userData.email : 'Email Address'}
                 </Text>
               </View>
               <View style={styles.row}>
-                <Icon name="phone" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                <Icon name="phone" color="#2c8162" size={25} />
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
                   {userData ? userData.phone : 'Phone Number'}
                 </Text>
               </View>
               <View style={styles.row}>
-                <Icon name="book-open-blank-variant" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                <Icon name="book-open-blank-variant" color="#2c8162" size={25} />
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
                   {userData ? userData.course : 'Course'}
                 </Text>
               </View>
               <View style={styles.row}>
-                <Icon name="office-building-marker" color="#235b93" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
+                <Icon name="office-building-marker" color="#2c8162" size={25} />
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
                   {userData ? userData.department : 'Department'}
                 </Text>
               </View>
               <View style={styles.row}>
-                <FontAwesome5 name="school" color="#235b93" size={21} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 16 }}>
-                  {userData ? userData.organization : 'School'}
+                <FontAwesome5 name="school" color="#2c8162" size={21} />
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                  {userData ? userData.organization : 'Organization'}
                 </Text>
               </View>
             </View>
           </View>
+
+          <View style={styles.userBtnWrapper}>
+
+            {/* <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
+          <Icon name="account-edit" color="#009e05" size={22} />
+          <Text style={styles.userBtnTxt}>Edit Profile</Text>
+        </TouchableOpacity> */}
+
+            <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
+              {/* <AntDesign name="logout" color="#ff3842" size={22} /> */}
+              <Text style={styles.userBtnTxt}>Logout</Text>
+            </TouchableOpacity>
+
+          </View>
         </View>
-
-
 
       </ImageBackground>
     </ScrollView>
@@ -136,69 +167,78 @@ const Profile = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    // padding: 2,
+    backgroundColor: 'white',
   },
   header: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20
+    // marginBottom: 20,
   },
   footer: {
     flex: 1,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    paddingHorizontal: 15,
-    marginHorizontal: 20,
-    paddingVertical: 20,
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20,
+    paddingHorizontal: 40,
+    // marginHorizontal: 10,
+    // paddingTop: 30,
+    // paddingBottom: 40,
     // marginBottom: 10,
-    bottom: 10,
-    marginTop: -70,
+    // bottom: 10,
+    marginTop: 25,
     // marginBottom: 50
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#9eb2a0'
   },
   userImg: {
-    height: 150,
-    width: 150,
+    height: 135,
+    width: 135,
+    borderWidth: 1,
+    borderColor: '#9eb2a0',
     borderRadius: 90,
-    borderWidth: 0.5,
-    borderColor: '#444',
-    marginBottom: 10
+    top: -10
   },
   userCoverPhoto: {
     height: 160,
     width: 400,
     borderRadius: 5,
     borderWidth: .5,
-    borderColor: '#009e05',
+    // borderColor: '#009e05',
     opacity: 0
 
   },
   userName: {
-    color: '#f2f2f2',
+    textAlign: 'center',
+    color: '#000',
     fontFamily: 'Poppins-Medium',
-    fontSize: 22,
+    fontSize: 20,
+    top: -5
   },
   aboutUser: {
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Poppins-Regular',
-    color: '#f2f2f2',
+    color: '#000',
     textAlign: 'center',
-    marginBottom: 10,
+    top: -10
   },
   userBtnWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
-    marginBottom: 20,
+    top: -7
+    // marginBottom: 10,
   },
   userBtn: {
-    borderColor: '#235b93',
-    backgroundColor: '#f2f2f2',
-    borderWidth: 2,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2c8162',
+    // borderWidth: 2,
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
@@ -206,16 +246,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   userBtnTxt: {
-    color: '#333',
-    fontFamily: 'Poppins-Bold',
+    color: '#fff',
+    fontFamily: 'Poppins-Medium',
     fontSize: 14,
-    marginLeft: 5
+    // marginLeft: 5
   },
   userInfoWrapper: {
     // flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    // marginVertical: 20,
+    marginTop: 10,
   },
   userInfoItem: {
     justifyContent: 'center',
@@ -232,12 +272,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userInfoSection: {
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
     // marginBottom: 25,
   },
   row: {
     flexDirection: 'row',
-    marginBottom: 35,
+    marginBottom: 20,
   },
 });
 

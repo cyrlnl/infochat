@@ -1,41 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   SafeAreaView,
   Keyboard,
   ScrollView,
-  Modal,
   ActivityIndicator,
   TouchableOpacity,
-  // Button,
-  StyleSheet
+  ImageBackground,
+  StyleSheet,
+  Alert
 } from 'react-native';
-
-import { Button } from 'react-native-elements';
+import { useIsFocused } from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 // services
-import { Auth } from '../services'
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
+import { Auth } from '../services'
 
 import colors from '../constants/colors';
 import Buttons from '../components/Button';
 import Input from '../components/Input';
-import Social from '../components/SocialButton';
-import terms from '../components/Terms';
-import CheckBox from '@react-native-community/checkbox';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const SignUp = ({ navigation }) => {
 
   const [errors, setErrors] = useState({});
 
-  const [userName, setUserName] = useState()
+  const [userName, setUsername] = useState()
   const [email, setEmail] = useState()
+  const [phone, setPhone] = useState()
+  const [department, setDepartment] = useState()
+  const [course, setCourse] = useState()
+  const [organization, setOrganization] = useState()
   const [password, setPassword] = useState()
   const [confirmPass, setConfirmPass] = useState()
   const [loading, setLoading] = useState(false)
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
-  const [complianceModal, setComplianceModal] = useState(true);
+
 
   if (loading) {
     return (
@@ -56,42 +60,42 @@ const SignUp = ({ navigation }) => {
     let isValid = true;
 
     if (!email) {
-      handleError('Please input email', 'email');
+      handleError('Please input E-mail', 'email');
       isValid = false;
     } else if (!email.match(/\S+@\S+\.\S+/)) {
-      handleError('Please input a valid email', 'email');
+      handleError('Please input a valid E-mail', 'email');
       isValid = false;
     }
 
     if (!userName) {
-      handleError('Please input fullName', 'fullName');
+      handleError('Please input Full Name', 'fullName');
       isValid = false;
     }
 
     if (!password) {
-      handleError('Please input password', 'password');
+      handleError('Please input Password', 'password');
       isValid = false;
     } else if (password.length < 8 || password.length > 20) {
-      handleError('Password should be min 8 char and max 20 char', 'password');
+      handleError('Password should be min of 8 char and max 20 char', 'password');
       isValid = false;
     } else if (password !== confirmPass) {
-      handleError('Password and confirm password should be same.', 'password');
+      handleError('Password and Confirm Password should be same.', 'password');
       isValid = false;
     }
 
     if (!confirmPass) {
-      handleError('Please input confirm password', 'confirmPass');
+      handleError('Please input Confirm Password', 'confirmPass');
       isValid = false;
     } else if (confirmPass.length < 8 || confirmPass.length > 20) {
       handleError('Confirm Password should be min 8 char and max 20 char', 'confirmPass');
       isValid = false;
     } else if (confirmPass !== password) {
-      handleError('Password and confirm password should be same.', 'confirmPass');
+      handleError('Password and Confirm Password should be same.', 'confirmPass');
       isValid = false;
     }
 
     if (isValid) {
-      Auth.signUp(userName, email, password)
+      Auth.signUp(userName, email, password, phone, department, course, organization)
     } else {
       setLoading(false)
     }
@@ -104,99 +108,20 @@ const SignUp = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
 
-      <View>
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={complianceModal}
-        >
-          <ScrollView>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalView}>
-                <Text style={{ marginBottom: 10, color: '#235b93', textAlign: 'center', fontSize: 22, fontFamily: 'Poppins-Regular' }}>Terms and Conditions</Text>
-                <Text style={[styles.text, { textAlign: 'justify' }]}>{terms}</Text>
-                <View style={styles.checkboxContainer}>
-                  <CheckBox
-                    style={styles.checkbox}
-                    tintColors={{ true: '#235b93', false: 'black' }}
-                    disabled={false}
-                    value={toggleCheckBox}
-                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
-                  />
-                  <Text style={styles.text}>Yes, I agree.</Text>
-                </View>
-
-                <Button
-                  title="Continue to the register"
-                  icon={{
-                    name: 'arrow-right',
-                    type: 'font-awesome',
-                    size: 16,
-                    color: 'white',
-                  }}
-                  iconContainerStyle={{ left: -10 }}
-                  iconRight
-                  titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: '#fff', }}
-                  buttonStyle={{
-                    backgroundColor: toggleCheckBox ? '#235b93' : '#999',
-                    borderColor: 'transparent',
-                    borderWidth: 0,
-                    borderRadius: 20,
-                  }}
-                  containerStyle={{
-                    width: 250,
-                    marginVertical: 30,
-                    marginBottom: 10
-                  }}
-                  disabled={!toggleCheckBox}
-                  onPress={() => setComplianceModal(false)}
-                />
-
-                <Button
-                  title="Back to the login"
-                  icon={{
-                    name: 'arrow-left',
-                    type: 'font-awesome',
-                    size: 16,
-                    color: 'white',
-                  }}
-                  iconContainerStyle={{ left: -10 }}
-                  iconLeft
-                  titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: '#fff', }}
-                  buttonStyle={{
-                    backgroundColor: '#235b93',
-                    borderColor: 'transparent',
-                    borderWidth: 0,
-                    borderRadius: 20,
-                  }}
-                  containerStyle={{
-                    width: 240,
-                    marginVertical: 5,
-                    marginBottom: 10
-                  }}
-                  onPress={() => navigation.goBack()}
-                />
-              </View>
-            </View>
-          </ScrollView>
-        </Modal>
-      </View>
-
       <ScrollView
         contentContainerStyle={{ paddingTop: 30, paddingHorizontal: 20 }}>
 
-        <Text style={{ color: colors.black, fontSize: 40, fontFamily: 'Poppins-Medium', }}>
+        <Text style={{ color: '#2c8162', fontSize: 40, fontFamily: 'Poppins-Medium', }}>
           Register
         </Text>
 
-        <Text style={{ color: colors.facebook, fontSize: 18, fontFamily: 'Poppins-Regular', marginVertical: -5 }}>
+        <Text style={{ color: colors.black, fontSize: 14, fontFamily: 'Poppins-Regular', marginVertical: -5 }}>
           Enter Your Details to Register
         </Text>
 
         <View style={{ marginVertical: 20 }}>
 
           <Input
-            // onChangeText={text => handleOnchange(text, 'email')}
             value={email}
             onChangeText={e => setEmail(e)}
             onFocus={() => handleError(null, 'email')}
@@ -208,9 +133,8 @@ const SignUp = ({ navigation }) => {
           />
 
           <Input
-            // onChangeText={text => handleOnchange(text, 'fullName')}
             value={userName}
-            onChangeText={e => setUserName(e)}
+            onChangeText={e => setUsername(e)}
             onFocus={() => handleError(null, 'fullName')}
             iconName="account-outline"
             label="Full Name"
@@ -218,9 +142,48 @@ const SignUp = ({ navigation }) => {
             error={errors.fullName}
           />
 
+          <Input
+            value={phone}
+            onChangeText={e => setPhone(e)}
+            onFocus={() => handleError(null, 'phone')}
+            iconName="cellphone"
+            label="Phone Number"
+            placeholder="Enter your phone number"
+            keyboardType="number-pad"
+            error={errors.phone}
+          />
 
           <Input
-            // onChangeText={text => handleOnchange(text, 'password')}
+            value={department}
+            onChangeText={e => setDepartment(e)}
+            onFocus={() => handleError(null, 'department')}
+            iconName="office-building-outline"
+            label="Department (Optional)"
+            placeholder="Enter your department"
+            error={errors.department}
+          />
+
+          <Input
+            value={course}
+            onChangeText={e => setCourse(e)}
+            onFocus={() => handleError(null, 'course')}
+            iconName="book-open-outline"
+            label="Course (Optional)"
+            placeholder="Enter your course"
+            error={errors.course}
+          />
+
+          <Input
+            value={organization}
+            onChangeText={e => setOrganization(e)}
+            onFocus={() => handleError(null, 'organization')}
+            iconName="office-building-marker-outline"
+            label="Organization (Optional)"
+            placeholder="Enter your organization"
+            error={errors.organization}
+          />
+
+          <Input
             value={password}
             onChangeText={e => setPassword(e)}
             onFocus={() => handleError(null, 'password')}
@@ -232,7 +195,6 @@ const SignUp = ({ navigation }) => {
           />
 
           <Input
-            // onChangeText={text => handleOnchange(text, 'password')}
             value={confirmPass}
             onChangeText={e => setConfirmPass(e)}
             onFocus={() => handleError(null, 'confirmPass')}
@@ -247,69 +209,34 @@ const SignUp = ({ navigation }) => {
           <Buttons title="Register" onPress={validate} />
 
           <Text
-            style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: 'black', bottom: 5 }}
-          >
-            -- OR --
-          </Text>
-
-          <Social
-            buttonTitle="Sign Up with Google"
-            btnType="google"
-            color="#f5e7ea"
-            backgroundColor="#de4d41"
-            onPress={() => Auth.googleSignUp()}
-          />
-
-          <Text
             onPress={() => navigation.navigate('Login')}
             style={{
               color: colors.black,
               fontFamily: 'Poppins-Regular',
               textAlign: 'center',
               fontSize: 16,
-              top: 15
+              top: 10
             }}>
-            Already have account? Login
+            Already have an account? Sign In
           </Text>
         </View>
       </ScrollView>
+
     </SafeAreaView >
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
+  statusWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0, 0.6)',
   },
-  modalView: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    margin: 20,
-    padding: 20,
-    alignItems: 'center'
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    marginVertical: -20,
-    alignItems: 'center'
-  },
-  checkbox: {
-    width: 30,
-    height: 30,
-    marginRight: 10
-  },
-  continueButton: {
-    marginTop: 30,
+  commandButton: {
     padding: 15,
-    borderRadius: 20,
-  },
-  text: {
-    fontFamily: 'Poppins-Medium',
-    color: '#333'
+    borderRadius: 10,
+    backgroundColor: '#235b93',
+    alignItems: 'center',
+    marginTop: 10,
   }
 });
 
