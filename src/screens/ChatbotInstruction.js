@@ -6,90 +6,59 @@ import { Button, FAB } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
-export default function ChatbotInstruction() {
+export default function SubmitQueryModal() {
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  checkIfNeedOpenModal = async () => {
-    try {
-      const isFirstOpen = await AsyncStorage.getItem('IS_FIRST_OPEN');
-      if (!isFirstOpen || isFirstOpen !== 'true') { // Check if key IS_FIRST_OPEN doesnt have value or not 'true'
-        // isFirstOpen is null or not 'true' so this is first time app open
-
-        setModalVisible(true)
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  }
-
-  saveModalOpen = async () => {
-    try {
-      await AsyncStorage.setItem('IS_FIRST_OPEN', 'true');
-    } catch (error) {
-      // Error saving data
-    }
-  }
-
-  onModalShow = () => {
-    saveModalOpen();
-  }
-
-  useEffect(() => {
-    checkIfNeedOpenModal()
-  }, [])
 
   return (
     <View
       blurRadius={modalVisible ? 4 : 0}
-      style={{ zIndex: 99 }}>
-
+      style={{
+        flex: 1,
+        zIndex: 99,
+      }}>
       <Modal
-        animationType="fade"
+        animationType='fade'
         transparent={true}
         visible={modalVisible}
-        onShow={onModalShow}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={{ marginBottom: 10, color: '#235b93', textAlign: 'center', fontSize: 22, fontFamily: 'Poppins-Regular' }}>How it Works?</Text>
+        <ScrollView>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
 
-            <Text>
-              <Text style={{ color: '#235b93', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
-                For Gordon College Student:{'\n'}
-              </Text>
-              <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ marginBottom: 10, marginTop: 20, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
+                  How GC InfoChat Works?
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Icon name="closecircle" color="#2c8162" size={25} />
+                </TouchableOpacity>
+              </View>
+
+              <Text style={{ color: '#222', fontFamily: 'Poppins-Medium', textAlign: 'center', fontSize: 15 }}>
+                From the provided categories, you can choose any by tapping the button to display pre-set questions under that category. Once pre-set questions appears, you can choose from those by clicking the desired question. In case, your question is not in the provided question, you can type it in the text box.
                 {'\n'}
-                To log in, use your Gordon College Domain E-mail <Text style={{ color: '#235b93' }}>(201******@gordoncollege.edu.ph)</Text> and default password <Text style={{ color: '#235b93' }}>(lastnameGC2022)</Text>.
                 {'\n'}
+                If you are not satisfied with the answers given by the chat bot, you can click the '<Text style={{ color: '#2c8162', fontSize: 18}}>+</Text>' sign placed on the upper right corner of the screen and submit your question there so we can review it and will be added to the record soon.
+                {'\n'}
+                {'\n'}
+                If you have more questions, feel free to contact us:{'\n'}<Text style={{textDecorationLine: 'underline', color: '#2c8162'}} onPress={() => Linking.openURL('mailto:codebrewers.ccs@gmail.com?subject=Concern&body=Description')}>codebrewers.ccs@gmail.com</Text>
+                {'\n'}
+                {'\n'}
+                Thank you.
+                {'\n'}
+                Good day!
               </Text>
 
-              <Text style={{ color: '#235b93', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
-                {'\n'}For Guest and New Users Outside Gordon College Community:{'\n'}
-              </Text>
-              <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
-                {'\n'}
-                You can register an account through our <Text>Registration Form</Text>.
-                {'\n'}
-                {'\n'}
-                OR
-                {'\n'}
-                {'\n'}
-                If you wish to <Text style={{ color: '#235b93' }}>SIGN IN WITH GOOGLE</Text>, kindly <Text style={{ color: '#235b93' }}>SIGN UP WITH GOOGLE first</Text>, found on the <Text style={{ color: '#235b93' }}>Registration Page</Text> to save your Google Account data. {'\n'}Once logged out, you can now <Text style={{ color: '#235b93' }}>SIGN IN WITH GOOGLE</Text> every time you open the application.
-              </Text>
-            </Text>
-
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Confirm</Text>
-              <Icon name="checkcircleo" color="#fff" size={18} style={{ paddingBottom: 4 }} />
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
-
+        </ScrollView>
       </Modal>
+
       <FAB
         icon={{
           name: 'info',
@@ -115,28 +84,28 @@ export default function ChatbotInstruction() {
         }}
         onPress={() => setModalVisible(true)}
       />
+
     </View>
   );
 
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: -100,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalView: {
-    height: windowHeight - 100,
-    width: windowWidth - 70,
+    // height: windowHeight - 100,
+    width: windowWidth - 60,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#999',
-    margin: 5,
-    padding: 10,
+    margin: 20,
+    padding: 20,
     alignItems: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -148,31 +117,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    // marginTop: 50,
-    width: 130,
-    padding: 5,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
     position: 'absolute',
-    bottom: 10,
-    borderRadius: 20,
-    elevation: 2,
-    flexDirection: 'row',
+    top: -10,
+    left: 260
   },
-  buttonClose: {
-    backgroundColor: "#235b93",
-  },
-  textStyle: {
-    fontSize: 16,
-    color: "white",
+  text: {
     fontFamily: 'Poppins-Medium',
-    textAlign: "center"
-  },
-  modalText: {
-    // marginBottom: 10,
-    color: '#333',
-    fontFamily: 'Poppins-Medium',
-    textAlign: 'left'
+    color: '#333'
   }
 });

@@ -5,9 +5,10 @@ import {
   Actions,
   Bubble,
   GiftedChat,
-  InputToolbar,
-  Send
+  InputToolbar
 } from "react-native-gifted-chat";
+import uuid from 'react-native-uuid';
+
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 
 import firestore from '@react-native-firebase/firestore';
@@ -41,7 +42,8 @@ class Chatbot extends Component {
   state = {
     messages: [],
     id: 1,
-    name: ''
+    name: '',
+    textBtn: []
   };
 
   // STORE CONVERSATION
@@ -95,48 +97,76 @@ class Chatbot extends Component {
                 text: 'Here are the Categories Available.',
                 createdAt: new Date().getTime(),
                 user: BOT,
-                quickReplies: {
-                  type: 'radio',
-                  keepIt: true,
-                  values: [
-                    {
-                      title: 'FAQs',
-                      value: 'faq',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
-                    },
-                    {
-                      title: 'General',
-                      value: 'generalqueries',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
-                    },
-                    {
-                      title: 'Records and Classes',
-                      value: 'recordandclass',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
-                    },
-                    {
-                      title: 'Finance',
-                      value: 'finances',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
-                    },
-                    {
-                      title: 'Enrollment & Admission',
-                      value: 'enrollandadmission',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
-                    },
-                    {
-                      title: 'Education',
-                      value: 'educations',
-                      bColor: '#38a67e',
-                      bgColor: '#2c8162'
+                categoryOption: true,
+                data: [
+                  {
+                    title: 'FAQs',
+                    // text: 'Frequently Asked Questions',
+                    image: 'https://i.ibb.co/cFSL25B/undraw-Questions-re-1fy7-1.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'Frequently Asked Questions',
+                      createdAt: new Date().getTime(),
+                      user: theUser
                     }
-                  ],
-                }
+                  },
+                  {
+                    title: 'General',
+                    // text: 'General Queries',
+                    image: 'https://i.ibb.co/0ssXCRK/undraw-File-searching-re-3evy.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'General Queries',
+                      createdAt: new Date().getTime(),
+                      user: theUser
+                    }
+                  },
+                  {
+                    title: 'Records and Classes',
+                    // text: 'Records and Classes',
+                    image: 'https://i.ibb.co/fdXMPk3/undraw-Filing-system-re-56h6.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'Records and Classes',
+                      createdAt: new Date().getTime(),
+                      user: theUser
+                    }
+                  },
+                  {
+                    title: 'Finance',
+                    // text: 'Finance Queries',
+                    image: 'https://i.ibb.co/8K2vRtt/undraw-printing-invoices-5r4r.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'Finance',
+                      createdAt: new Date().getTime(),
+                      user: theUser
+                    }
+                  },
+                  {
+                    title: 'Enrollment & Admission',
+                    // text: 'Enrollment & Admission Queries',
+                    image: 'https://i.ibb.co/LCmFBK8/undraw-Meeting-re-i53h.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'Enrollment & Admission',
+                      createdAt: new Date().getTime(),
+                      user: theUser
+                    }
+                  },
+                  {
+                    title: 'Education',
+                    // text: 'Education Queries',
+                    image: 'https://i.ibb.co/YNVH2jH/undraw-my-files-swob.png',
+                    optionData: {
+                      _id: uuid.v4(),
+                      text: 'Education',
+                      createdAt: new Date().getTime(),
+                      user: theUser
+                    }
+                  }
+
+                ]
               },
               {
                 _id: 2,
@@ -237,8 +267,7 @@ class Chatbot extends Component {
     // CATEGORIES
     if (text == 'categories') {
       msg = {
-        // _id: this.state.messages.length + 1,
-        text: 'Here are the Curricular Programs Available in Gordon College.',
+        _id: uuid.v4(),
         createdAt: new Date().getTime(),
         user: BOT,
         categoryOption: true,
@@ -248,7 +277,7 @@ class Chatbot extends Component {
             // text: 'Frequently Asked Questions',
             image: 'https://i.ibb.co/cFSL25B/undraw-Questions-re-1fy7-1.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'Frequently Asked Questions',
               createdAt: new Date().getTime(),
               user: theUser
@@ -259,7 +288,7 @@ class Chatbot extends Component {
             // text: 'General Queries',
             image: 'https://i.ibb.co/0ssXCRK/undraw-File-searching-re-3evy.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'General Queries',
               createdAt: new Date().getTime(),
               user: theUser
@@ -270,7 +299,7 @@ class Chatbot extends Component {
             // text: 'Records and Classes',
             image: 'https://i.ibb.co/fdXMPk3/undraw-Filing-system-re-56h6.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'Records and Classes',
               createdAt: new Date().getTime(),
               user: theUser
@@ -281,7 +310,7 @@ class Chatbot extends Component {
             // text: 'Finance Queries',
             image: 'https://i.ibb.co/8K2vRtt/undraw-printing-invoices-5r4r.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'Finance',
               createdAt: new Date().getTime(),
               user: theUser
@@ -292,7 +321,7 @@ class Chatbot extends Component {
             // text: 'Enrollment & Admission Queries',
             image: 'https://i.ibb.co/LCmFBK8/undraw-Meeting-re-i53h.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'Enrollment & Admission',
               createdAt: new Date().getTime(),
               user: theUser
@@ -303,7 +332,7 @@ class Chatbot extends Component {
             // text: 'Education Queries',
             image: 'https://i.ibb.co/YNVH2jH/undraw-my-files-swob.png',
             optionData: {
-              // _id: this.state.messages.length + 1,
+              _id: uuid.v4(),
               text: 'Education',
               createdAt: new Date().getTime(),
               user: theUser
@@ -469,7 +498,7 @@ class Chatbot extends Component {
   }
 
   // ON SEND MESSAGE BUTTON
-  onSendBtn(messages = []) {
+  onSendBtn(messages) {
     this.setState((previouseState) => ({
       messages: GiftedChat.append(previouseState.messages, messages)
     }));
@@ -543,6 +572,7 @@ class Chatbot extends Component {
     )
   }
 
+
   // BUBBLE CHAT
   renderBubble = (props) => {
 
@@ -590,8 +620,8 @@ class Chatbot extends Component {
         >
           {props.currentMessage.data.map((category) => (
             <Card
-              key={category.id}
-              title={category.title}
+              key={category.title}
+              // title={value.title}
               containerStyle={{
                 padding: 0,
                 borderRadius: 20,
@@ -794,6 +824,7 @@ class Chatbot extends Component {
 
 
     return (
+
       <Bubble
         {...props}
         textStyle={{ right: { fontFamily: 'Poppins-Light', color: 'white' }, left: { fontFamily: 'Poppins-Light', color: 'black' } }}
@@ -834,41 +865,93 @@ class Chatbot extends Component {
 
     // if (props.text.trim().length > 0) {
     return (
-      <TouchableOpacity
-        style={{
-          height: 40,
-          width: 40,
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 3,
-          marginHorizontal: 10,
-        }}
+      <>
+        <TouchableOpacity
+          style={{
+            height: 40,
+            width: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 3,
+            marginHorizontal: 10,
+            left: 10
+          }}
 
-        onPress={() => {
-          if (text && onSend) {
-            onSend(
-              {
-                text: text.trim(),
-                user,
-                _id: messageIdGenerator(),
-              },
-              true
-            );
-          }
-        }}
-      >
-        <Icon
-          name="send-circle"
-          style={{ marginBottom: 1, marginRight: 1 }}
-          size={40}
-          color="#2c8162"
-        />
-      </TouchableOpacity>
+          onPress={() => {
+            if (onSend) {
+              onSend(
+                {
+                  text: 'CATEGORY',
+                  user,
+                  _id: messageIdGenerator(),
+                },
+                true
+              );
+            }
+          }}
+        >
+          <Icon
+            name="microsoft-xbox-controller-menu"
+            style={{ marginBottom: 1, marginRight: 1 }}
+            size={40}
+            color="#2c8162"
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            height: 40,
+            width: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 3,
+            marginHorizontal: 10,
+            
+          }}
+
+          onPress={() => {
+            if (text && onSend) {
+              onSend(
+                {
+                  text: text.trim(),
+                  user,
+                  _id: messageIdGenerator(),
+                },
+                true
+              );
+            }
+          }}
+        >
+          <Icon
+            name="send-circle"
+            style={{ marginBottom: 1, marginRight: 1 }}
+            size={40}
+            color="#2c8162"
+          />
+        </TouchableOpacity>
+      </>
     );
     // }
 
     return null;
 
+  }
+
+
+  renderActions = (props) => {
+    <Actions
+      {...props}
+      containerStyle={{
+        position: "absolute",
+        right: 50,
+        bottom: 5,
+        zIndex: 9999,
+      }}
+      // onPressActionButton={()=>{}}
+      icon={() => (
+        <Icon name="camera" size={30} color='#38a67e' />
+      )}
+    />
   }
 
   render() {
@@ -884,6 +967,7 @@ class Chatbot extends Component {
           renderInputToolbar={this.renderInputToolbar}
           renderSend={this.renderSend}
           user={{ _id: 1 }}
+          // inverted={false}
           scrollToBottom={true}
           renderLoading={() => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator size="large" color="#38a67e" /></View>}
         />

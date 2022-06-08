@@ -128,7 +128,10 @@ const signUp = (fullName, email, password, phone, department, course, organizati
       .then(() => {
         auth().currentUser.sendEmailVerification();
         auth().signOut();
-        Alert.alert('Please verify your email. Check out link in your inbox.');
+        Alert.alert(
+          'SUCCESSFULLY REGISTERED',
+          'Thank you for registering. We sent a verification link to your registered e-mail address. Please, check you inbox and verify yourself to continue.'
+        );
       })
 
 
@@ -235,7 +238,7 @@ const signOut = async () => {
       .signOut()
       .then(() => {
         Alert.alert(
-          'Logging out...',
+          'LOGGING OUT... ',
           'Your are now signed out.'
         )
       });

@@ -7,4 +7,5 @@ export { default as SubmitQuery } from './SubmitQuery';
 export { default as Profile } from './Profile';
 export { default as EditProfile } from './EditProfile';
 export { default as About } from './About';
+export { default as Sample } from './Sample';
 

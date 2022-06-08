@@ -15,7 +15,7 @@ import auth from '@react-native-firebase/auth';
 
 const Login = ({ navigation }) => {
 
-  const user = auth().currentUser;
+  // const user = auth().currentUser;
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -44,7 +44,10 @@ const Login = ({ navigation }) => {
       auth().onAuthStateChanged(function (user) {
         if (user) {
           if (user.emailVerified === false) {
-            Alert.alert('Please verify Your Email Checkout Inbox');
+            Alert.alert(
+              'ACCESS DENIED',
+              "It looks like you haven't verified your e-mail address yet. Please check your inbox and verify yourself. Thank you."
+            );
             auth().signOut();
           } else {
             // successful login 

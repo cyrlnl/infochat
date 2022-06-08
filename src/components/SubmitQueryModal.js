@@ -5,92 +5,86 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, FAB } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { windowHeight, windowWidth } from '../utils/Dimensions';
-import CheckBox from '@react-native-community/checkbox';
 
-import terms from '../components/Terms';
 export default function SubmitQueryModal() {
 
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false);
-  const [complianceModal, setComplianceModal] = useState(true);
+  const [modalVisible, setModalVisible] = useState(true);
 
   return (
-    <View>
+    <View
+      blurRadius={modalVisible ? 4 : 0}
+      style={{
+        flex: 1,
+        zIndex: 99,
+      }}>
       <Modal
-        animationType='slide'
+        animationType='fade'
         transparent={true}
-        visible={complianceModal}
+        visible={modalVisible}
       >
-        <ScrollView>
+        <ScrollView contentContainerStyle={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={{ marginBottom: 10, color: '#235b93', textAlign: 'center', fontSize: 22, fontFamily: 'Poppins-Regular' }}>Terms and Conditions</Text>
-              <Text style={[styles.text, { textAlign: 'justify' }]}>{terms}</Text>
-              <View style={styles.checkboxContainer}>
-                <CheckBox
-                  style={styles.checkbox}
-                  tintColors={{ true: '#235b93', false: 'black' }}
-                  disabled={false}
-                  value={toggleCheckBox}
-                  onValueChange={(newValue) => setToggleCheckBox(newValue)}
-                />
-                <Text style={styles.text}>Yes, I agree.</Text>
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
+                  How to Access the Application?
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Icon name="closecircle" color="#2c8162" size={25} />
+                </TouchableOpacity>
               </View>
 
-              <Button
-                title="Continue to the register"
-                icon={{
-                  name: 'arrow-right',
-                  type: 'font-awesome',
-                  size: 16,
-                  color: 'white',
-                }}
-                iconContainerStyle={{ left: -10 }}
-                iconRight
-                titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: '#fff', }}
-                buttonStyle={{
-                  backgroundColor: toggleCheckBox ? '#235b93' : '#999',
-                  borderColor: 'transparent',
-                  borderWidth: 0,
-                  borderRadius: 20,
-                }}
-                containerStyle={{
-                  width: 250,
-                  marginVertical: 30,
-                  marginBottom: 10
-                }}
-                disabled={!toggleCheckBox}
-                onPress={() => setComplianceModal(false)}
-              />
+              <Text style={{ color: '#222', fontFamily: 'Poppins-Medium', textAlign: 'center', fontSize: 15 }}>
+                It seems like your question/s was/were not in the record yet. To make our service better, you can submit your concerns/inquiries/questions by typing it in the space below so we can review and provide answer for it so we can add this in the record soon.
+                {'\n'}
+                {'\n'}
+                If you have more questions, feel free to contact us:{'\n'}<Text style={{ textDecorationLine: 'underline', color: '#2c8162' }} onPress={() => Linking.openURL('mailto:codebrewers.ccs@gmail.com?subject=Concern&body=Description')}>codebrewers.ccs@gmail.com</Text>
+                {'\n'}
+                {'\n'}
+                Thank you.
+                {'\n'}
+                Good day!
+              </Text>
 
-              <Button
-                title="Back to the login"
-                icon={{
-                  name: 'arrow-left',
-                  type: 'font-awesome',
-                  size: 16,
-                  color: 'white',
-                }}
-                iconContainerStyle={{ left: -10 }}
-                iconLeft
-                titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 15, color: '#fff', }}
-                buttonStyle={{
-                  backgroundColor: '#235b93',
-                  borderColor: 'transparent',
-                  borderWidth: 0,
-                  borderRadius: 20,
-                }}
-                containerStyle={{
-                  width: 240,
-                  marginVertical: 5,
-                  marginBottom: 10
-                }}
-                onPress={() => navigation.goBack()}
-              />
             </View>
           </View>
         </ScrollView>
       </Modal>
+
+      <FAB
+        icon={{
+          name: 'question',
+          type: 'font-awesome',
+          size: 21,
+          color: 'white',
+        }}
+        buttonStyle={{
+          backgroundColor: '#2c8162',
+          borderColor: 'transparent',
+          borderWidth: 0,
+          borderRadius: 30,
+          width: 30,
+          height: 35,
+        }}
+        containerStyle={{
+          opacity: 0.9,
+          width: 32,
+          height: 31,
+          position: 'absolute',
+          top: -1,
+          right: -3,
+        }}
+        onPress={() => setModalVisible(true)}
+      />
+
     </View>
   );
 
@@ -101,11 +95,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50
+    marginTop: 20,
   },
   modalView: {
-    flex: 1,
+    // height: windowHeight - 150,
+    width: windowWidth - 60,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1,
@@ -122,20 +116,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    marginVertical: -20,
-    alignItems: 'center'
-  },
-  checkbox: {
-    width: 30,
-    height: 30,
-    marginRight: 10
-  },
-  continueButton: {
-    marginTop: 30,
-    padding: 15,
-    borderRadius: 20,
+  button: {
+    position: 'absolute',
+    top: -5,
+    left: 220
   },
   text: {
     fontFamily: 'Poppins-Medium',

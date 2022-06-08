@@ -6,7 +6,7 @@ import { Button, FAB } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
-export default function Reminder() {
+export default function SubmitQueryModal() {
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -14,53 +14,67 @@ export default function Reminder() {
     <View
       blurRadius={modalVisible ? 4 : 0}
       style={{
-        zIndex: 99
+        flex: 1,
+        zIndex: 99,
       }}>
       <Modal
-        animationType="fade"
+        animationType='fade'
         transparent={true}
         visible={modalVisible}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 22, fontFamily: 'Poppins-Regular' }}>How it Works?</Text>
+        <ScrollView>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
 
-            <Text>
-              <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
-                For Gordon College Student:{'\n'}
-              </Text>
-              <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
-                {'\n'}
-                To log in, use your Gordon College Domain E-mail <Text style={{ color: '#2c8162' }}>(201******@gordoncollege.edu.ph)</Text> and default password <Text style={{ color: '#2c8162' }}>(lastnameGC2022)</Text>.
-                {'\n'}
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
+                  How to Access the Application?
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Icon name="closecircle" color="#2c8162" size={25} />
+                </TouchableOpacity>
+              </View>
+
+              <Text>
+                <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
+                  For Gordon College Student:{'\n'}
+                </Text>
+                <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
+                  {'\n'}
+                  To log in, use your Gordon College Domain E-mail <Text style={{ color: '#2c8162' }}>(201******@gordoncollege.edu.ph)</Text> and default password <Text style={{ color: '#2c8162' }}>(lastnameGC2022)</Text>.
+                  {'\n'}
+                </Text>
+
+                <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
+                  {'\n'}For Guest and New Users Outside Gordon College Community:{'\n'}
+                </Text>
+                <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
+                  {'\n'}
+                  <Text>You have 2 options to access the application:</Text>
+                  {'\n'}
+                  {'\n'}
+                  1. You can register an account through the <Text style={{ color: '#2c8162' }}>Registration Form</Text>. Please, use your <Text style={{ color: '#2c8162' }}>valid e-mail address</Text>so you can get verified.
+                  {'\n'}
+                  {'\n'}
+                  2. You can use <Text style={{ color: '#2c8162' }}>Google Sign In</Text> to directly access the application without verifying yourself.
+                  {'\n'}
+                  {'\n'}
+                  <Text style={{ color: '#2c8162' }}>NOTE: </Text>Questions will be asked must be about Gordon College only.
+                  {'\n'}
+                  {'\n'}
+                  <Text style={{ color: '#2c8162' }}>Have a nice day!</Text>
+                </Text>
               </Text>
 
-              <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
-                {'\n'}For Guest and New Users Outside Gordon College Community:{'\n'}
-              </Text>
-              <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
-                {'\n'}
-                You can register an account through our <Text>Registration Form</Text>.
-                {'\n'}
-                {'\n'}
-                OR
-                {'\n'}
-                {'\n'}
-                If you wish to <Text style={{ color: '#2c8162' }}>SIGN IN WITH GOOGLE</Text>, kindly <Text style={{ color: '#2c8162' }}>SIGN UP WITH GOOGLE first</Text>, found on the <Text style={{ color: '#2c8162' }}>Registration Page</Text> to save your Google Account data. {'\n'}Once logged out, you can now <Text style={{ color: '#2c8162' }}>SIGN IN WITH GOOGLE</Text> every time you open the application.
-              </Text>
-            </Text>
-
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.textStyle}>Confirm</Text>
-              <Icon name="checkcircleo" color="#fff" size={18} style={{ paddingBottom: 4 }} />
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
-
+        </ScrollView>
       </Modal>
+
       <FAB
         icon={{
           name: 'info',
@@ -86,28 +100,27 @@ export default function Reminder() {
         }}
         onPress={() => setModalVisible(true)}
       />
+
     </View>
   );
 
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: -100,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalView: {
-    height: windowHeight - 150,
+    // height: windowHeight - 150,
     width: windowWidth - 60,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#999',
-    margin: 5,
-    padding: 10,
+    margin: 20,
+    padding: 20,
     alignItems: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -119,31 +132,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    // marginTop: 50,
-    width: 130,
-    padding: 5,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
     position: 'absolute',
-    bottom: 10,
-    borderRadius: 20,
-    elevation: 2,
-    flexDirection: 'row',
+    top: -5,
+    left: 220
   },
-  buttonClose: {
-    backgroundColor: "#1E8C45",
-  },
-  textStyle: {
-    fontSize: 16,
-    color: "white",
+  text: {
     fontFamily: 'Poppins-Medium',
-    textAlign: "center"
-  },
-  modalText: {
-    // marginBottom: 10,
-    color: '#333',
-    fontFamily: 'Poppins-Medium',
-    textAlign: 'left'
+    color: '#333'
   }
 });

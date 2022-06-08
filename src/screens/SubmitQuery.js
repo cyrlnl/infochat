@@ -84,9 +84,9 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
 
   return (
     <View style={styles.container}>
-      <SubmitQueryModal />
-      <View style={{ margin: 20 }}>
 
+      <View style={{ margin: 20 }}>
+        <SubmitQueryModal />
         <Text style={{
           color: '#2c8162',
           fontSize: 21,
@@ -106,17 +106,6 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
         </Text>
 
         <View style={styles.action}>
-
-          {/* <TextInput
-            style={styles.textInput}
-            placeholder="What is your concern?"
-            multiline={true}
-            onChangeText={(value) => setConcern(value)}
-            value={concern}
-            numberOfLines={3}
-            mode="outlined"
-          // maxLength={4} //input length
-          /> */}
 
           <SubmitQueryInput
             onChangeText={text => setConcern(text)}
@@ -168,9 +157,8 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: '#fff',
-
   },
   textInput: {
     flex: 1,

@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
-  Alert
+  Alert,
+  Modal
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -26,7 +27,7 @@ import Input from '../components/Input';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const SignUp = ({ navigation }) => {
+export default function SignUp({ navigation }) {
 
   const [errors, setErrors] = useState({});
 
@@ -219,6 +220,7 @@ const SignUp = ({ navigation }) => {
             }}>
             Already have an account? Sign In
           </Text>
+          
         </View>
       </ScrollView>
 
@@ -239,5 +241,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   }
 });
-
-export default SignUp;
