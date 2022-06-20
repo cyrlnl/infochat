@@ -8,6 +8,7 @@ import {
   InputToolbar
 } from "react-native-gifted-chat";
 import uuid from 'react-native-uuid';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 
@@ -43,7 +44,7 @@ class Chatbot extends Component {
     messages: [],
     id: 1,
     name: '',
-    textBtn: []
+    toolTipVisible: true
   };
 
   // STORE CONVERSATION
@@ -352,17 +353,17 @@ class Chatbot extends Component {
         faqOption: true,
         data: [
           {
-            title: 'Curricular Program Offerings',
-            text: 'Please type "courses" to prepare the list of programs.'
-          },
-          {
             title: 'Send an inquiry or concern',
             text: '• For Admission/School Records Request queries, email registrar@gordoncollege.edu.ph\n \n• For Finance (Payment) related queries, email gcpay@gordoncollege.edu.ph\n \n• For Senior High School related queries, info.shs@gordoncollege.edu.ph\n \n• For Institute of Graduate Studies queries, email anicas.roel@gordoncollege.edu.ph\n \n• For technical support on GCLAMP or Google Domain Account, email gc.lamp@gordoncollege.edu.ph\n \n• For other concerns/inquiries you may send email to info@gordoncollege.edu.ph',
           },
           {
             title: 'GC Satellite Office address',
             text: "Thank you for messaging us.\n \nGordon College Satellite Office is located in the former Olongapo Skills Training Center at Otero Avenue, Brgy. Mabayuan (Beside Subic Water Filtration) It's open to public Mondays to Thursdays from 8am to 4pm and Fridays from 8am to 2pm.\n \nStrict Health Protocols shall be followed."
-          }
+          },
+          {
+            title: 'Online Request for Student Records',
+            text: "𝗢𝗻𝗹𝗶𝗻𝗲 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝗳𝗼𝗿 𝗦𝘁𝘂𝗱𝗲𝗻𝘁 𝗥𝗲𝗰𝗼𝗿𝗱𝘀\nStep 1. Download and fill out the Student Request Form. (Link:https://bit.ly/StudentRequestFormGC)\nStep 2. Email to gctranscripts@gordoncollege.edu.ph with the following details:\nSUBJECT: REQUEST (Lastname, Firstname, Middle name / Student ID Number / Program/Strand)\n\nBODY:\n𝙊𝙩𝙝𝙚𝙧 𝙙𝙚𝙩𝙖𝙞𝙡𝙨 𝙤𝙛 𝙩𝙝𝙚 𝙧𝙚𝙦𝙪𝙚𝙨𝙩:\n1) Enclosed to Official Envelope (Please specify the address of the Recipient)\n2) Certified Copies (# of Copies)\n\n𝘼𝙩𝙩𝙖𝙘𝙝𝙢𝙚𝙣𝙩𝙨:\n1) Student Request Form (Scanned or Clear Copy)\n2) Valid ID/Passport (Scanned or Clear Copy)\n3) School Request Letter (For OTR/F137 requested by the school only) (Scanned or Clear Copy)\n4) For Apostille/Red Ribbon Applicants (attach Scanned/Clear Copy of Official Transcript of Records, Diploma, RLE Summary (for Nursing/Midwifery graduates/students)\nStep 3. Expect an email response within 2 to 3 days; you shall be notified if you have any unsettled accounts and obligations to the college.\nIf found cleared of all accountabilities, an email shall be received with the necessary fees to be paid including the postage fee.\nStep 4. Pay the fees through online modes of payment. (Please refer to Gordon College Advisory No. 3 - Alternative Modes of Payment)\nStep 5. Once payment has been verified, the documents will be sent through LBC. *𝑆ℎ𝑖𝑝𝑝𝑖𝑛𝑔 𝑜𝑓 𝐷𝑜𝑐𝑢𝑚𝑒𝑛𝑡𝑠 𝑤𝑖𝑙𝑙 𝑏𝑒 𝑜𝑛 𝑎 𝐶𝑂𝐷 (𝐶𝑎𝑠ℎ 𝑜𝑛 𝐷𝑒𝑙𝑖𝑣𝑒𝑟𝑦) 𝑏𝑎𝑠𝑖𝑠.\n\n𝘿𝙤𝙘𝙪𝙢𝙚𝙣𝙩 𝙁𝙚𝙚𝙨 𝙖𝙣𝙙 𝙋𝙧𝙤𝙘𝙚𝙨𝙨𝙞𝙣𝙜 𝙋𝙚𝙧𝙞𝙤𝙙\nType of Documents = Document Fee [Turnaround Time Upon Verification of Payment]\nTRANSFER CREDENTIAL (OTR, CET, GMCC) = Php1000 [7 working days]\nOFFICIAL TRANSCRIPT OF RECORDS (OTR) = Php400 [7 working days]\nSTUDENT PERMANENT RECORD (F-137) = Php150 [7 working days]\nGOOD MORAL CHARACTER CERT. (GMCC) = Php150 [3 working days]\nCERT. OF AUTHENTICATION AND VERIFICATION (CAV) = 150 [3 working days]\nCERT. OF UNITS EARNED (CUE) = Php100 [3 working days]\nCERT. OF ENROLMENT (COE) = Php150 [3 working days]\nCERT. OF GRADUATION (COG) = Php200 [3 working days]\nMEDIUM OF INSTRUCTION CERT. (MIC) = Php150 [3 working days]\nCERT. OF GRADUATION w/ GWA = Php200 [3 working days]\nCERT. OF ENROLMENT & BILLING (CEB) = Php100 [3 working days]\nDETAILED COURSE DESCRIPTION (DCD) = Php100 [5 working days]\nRELATED LEARNING EXPERIENCE SUMMARY (RLES) = Php200 [5 working days]\nOTHER CERTIFICATIONS = Php150 [-]",
+          },
         ]
       }
     }
@@ -878,10 +879,11 @@ class Chatbot extends Component {
           }}
 
           onPress={() => {
+            this.setState({ toolTipVisible: false });
             if (onSend) {
               onSend(
                 {
-                  text: 'CATEGORY',
+                  text: 'Category',
                   user,
                   _id: messageIdGenerator(),
                 },
@@ -890,12 +892,21 @@ class Chatbot extends Component {
             }
           }}
         >
-          <Icon
-            name="microsoft-xbox-controller-menu"
-            style={{ marginBottom: 1, marginRight: 1 }}
-            size={40}
-            color="#2c8162"
-          />
+          <Tooltip
+            isVisible={this.state.toolTipVisible}
+            content={<Text style={{ fontFamily: 'Poppins-Medium' }}>Category</Text>}
+            placement="top"
+            onClose={() => this.setState({ toolTipVisible: false })}
+          >
+
+            <Icon
+              name="microsoft-xbox-controller-menu"
+              style={{ marginBottom: 1, marginRight: 1 }}
+              size={40}
+              color="#2c8162"
+            // onPress={() => this.setState({ toolTipVisible: false })}
+            />
+          </Tooltip>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -906,7 +917,7 @@ class Chatbot extends Component {
             justifyContent: "center",
             marginBottom: 3,
             marginHorizontal: 10,
-            
+
           }}
 
           onPress={() => {
@@ -967,7 +978,6 @@ class Chatbot extends Component {
           renderInputToolbar={this.renderInputToolbar}
           renderSend={this.renderSend}
           user={{ _id: 1 }}
-          // inverted={false}
           scrollToBottom={true}
           renderLoading={() => <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator size="large" color="#38a67e" /></View>}
         />

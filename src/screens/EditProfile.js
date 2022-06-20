@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { windowHeight, windowWidth } from '../utils/Dimensions';
 
 const EditProfile = ({ navigation }) => {
 
@@ -194,9 +195,16 @@ const EditProfile = ({ navigation }) => {
             <ActivityIndicator size="large" color="#2c8162" />
           </View>
         ) : (
-          <TouchableOpacity style={styles.commandButton} onPress={handleUpdate}>
-            <Text style={styles.panelButtonTitle}>Update</Text>
-          </TouchableOpacity>
+          <View style={{ marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity
+              disabled={image ? false : true}
+              style={styles.commandButton}
+              onPress={handleUpdate}
+            >
+              <Text style={styles.panelButtonTitle}>Save</Text>
+            </TouchableOpacity>
+          </View>
+
         )}
 
 
@@ -216,8 +224,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   commandButton: {
-    padding: 15,
-    borderRadius: 10,
+    width: windowWidth - 250,
+    padding: 12,
+    borderRadius: 30,
     backgroundColor: '#2c8162',
     alignItems: 'center',
     marginTop: 10,

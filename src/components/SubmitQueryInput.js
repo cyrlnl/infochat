@@ -62,7 +62,7 @@ const SubmitQueryInput = ({
 const style = StyleSheet.create({
   label: {
     marginVertical: 5,
-    left: 20,
+    left: 5,
     fontSize: 15,
     // fontWeight: 'bold',
     fontFamily: 'Poppins-Regular',

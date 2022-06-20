@@ -42,10 +42,10 @@ const ForgotPassword = ({ navigation }) => {
 					Forgot Password
 				</Text>
 				<Text style={{ color: colors.black, fontSize: 15, fontFamily: 'Poppins-Regular' }}>
-					Enter your registered E-mail to reset your password.
+					Enter your registered e-mail to reset your password.
 				</Text>
 
-				<View style={{ marginVertical: 50 }}>
+				<View style={{ marginVertical: 20 }}>
 
 					<Input
             onChangeText={text => setEmail(text)}
@@ -53,21 +53,21 @@ const ForgotPassword = ({ navigation }) => {
             keyboardType="email-address"
             onFocus={() => handleError(null, 'email')}
             iconName="email-outline"
-            label="Email"
-            placeholder="Enter your email address"
+            // label="Email"
+            placeholder="Enter your e-mail address"
             error={errors.email}
 						style={{ fontSize: 18 }}
 					/>
 
 					<Button
-						title="Forgot Password"
+						title="Submit"
 						onPress={validate}
 					/>
 
 					<Text
 						onPress={() => navigation.navigate('Login')}
 						style={{
-							color: colors.google,
+							color: colors.black,
 							fontFamily: 'Poppins-Medium',
 							textAlign: 'center',
 							fontSize: 16,

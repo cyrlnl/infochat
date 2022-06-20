@@ -69,7 +69,7 @@ const Profile = ({ navigation, route }) => {
         </View>
 
         <View style={styles.footer}>
-          <View style={{ justifyContent: 'center', marginTop: -60, alignItems: 'center', marginBottom: 10 }}>
+          <View style={{ justifyContent: 'center', marginTop: -60, alignItems: 'center', marginBottom: 20 }}>
             <ImageBackground
               style={{
                 height: 135,
@@ -113,50 +113,50 @@ const Profile = ({ navigation, route }) => {
             <View style={styles.userInfoSection}>
               <View style={styles.row}>
                 <Icon name="email" color="#2c8162" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 15 }}>
                   {userData ? userData.email : 'Email Address'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="phone" color="#2c8162" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 15 }}>
                   {userData ? userData.phone : 'Phone Number'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="book-open-blank-variant" color="#2c8162" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 15 }}>
                   {userData ? userData.course : 'Course'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <Icon name="office-building-marker" color="#2c8162" size={25} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 15 }}>
                   {userData ? userData.department : 'Department'}
                 </Text>
               </View>
               <View style={styles.row}>
                 <FontAwesome5 name="school" color="#2c8162" size={21} />
-                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 14 }}>
+                <Text style={{ color: "#222", marginLeft: 15, fontFamily: 'Poppins-Medium', fontSize: 15 }}>
                   {userData ? userData.organization : 'Organization'}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.userBtnWrapper}>
+          {/* <View style={styles.userBtnWrapper}>
 
-            {/* <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
+            <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfile') }}>
           <Icon name="account-edit" color="#009e05" size={22} />
           <Text style={styles.userBtnTxt}>Edit Profile</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
             <TouchableOpacity style={styles.userBtn} onPress={() => Auth.signOut()}>
-              {/* <AntDesign name="logout" color="#ff3842" size={22} /> */}
+              <AntDesign name="logout" color="#ff3842" size={22} />
               <Text style={styles.userBtnTxt}>Logout</Text>
             </TouchableOpacity>
 
-          </View>
+          </View> */}
         </View>
 
       </ImageBackground>
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 35,
   },
 });
 

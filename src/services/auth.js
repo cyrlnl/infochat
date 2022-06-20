@@ -130,7 +130,7 @@ const signUp = (fullName, email, password, phone, department, course, organizati
         auth().signOut();
         Alert.alert(
           'SUCCESSFULLY REGISTERED',
-          'Thank you for registering. We sent a verification link to your registered e-mail address. Please, check you inbox and verify yourself to continue.'
+          'Thank you for registering. We sent a verification link to your registered e-mail address.\n\nPlease, check you inbox and verify yourself to continue.'
         );
       })
 

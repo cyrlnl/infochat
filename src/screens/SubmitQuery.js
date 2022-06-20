@@ -36,16 +36,17 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
         .collection('FAQs_SUBMITTED')
         .add({
           UID: user.uid,
-          fullName: user.displayName,
-          email: user.email,
+          FullName: user.displayName,
+          Email: user.email,
           createdAt: firestore.Timestamp.fromDate(new Date()),
-          concern: concern
+          Concern: concern,
+          Status: 'PENDING'
         })
         .then(() => {
           console.log('Data added!');
           Alert.alert(
-            "Data Submitted!",
-            "Thank you " + user.displayName + " for using GC Infochat.",
+            "Submitted Successfully!",
+            "Thank you " + user.displayName + " for using GC Infochat.\n\nKindly wait for our response in your registered E-mail.",
           );
         });
       setLoading(false)
@@ -96,15 +97,6 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
           Submit additional question
         </Text>
 
-        <Text style={{
-          color: colors.black,
-          fontSize: 16,
-          fontFamily: 'Poppins-Medium',
-          marginVertical: 5,
-        }}>
-          Enter Your Additional Concern
-        </Text>
-
         <View style={styles.action}>
 
           <SubmitQueryInput
@@ -112,7 +104,7 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
             value={concern}
             onFocus={() => handleError(null, 'concern')}
             iconName="comment-edit-outline"
-            label="Submit Form"
+            label="Enter Your Additional Concern"
             placeholder="What is your concern?"
             multiline={true}
             numberOfLines={3}
@@ -147,7 +139,7 @@ const SubmitQuery = ({ navigation: { goBack } }) => {
             fontSize: 16,
             top: 20
           }}>
-          GO BACK
+          BACK
         </Text>
       </View>
 
@@ -179,8 +171,8 @@ const styles = StyleSheet.create({
 
   },
   submitButton: {
-    width: windowWidth - 200,
-    padding: 15,
+    width: windowWidth - 250,
+    padding: 10,
     borderRadius: 25,
     backgroundColor: '#2c8162',
     alignItems: 'center',
@@ -188,7 +180,7 @@ const styles = StyleSheet.create({
   },
   submitButtonTitle: {
     fontSize: 17,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Medium',
     color: 'white',
   },
 });

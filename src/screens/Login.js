@@ -3,6 +3,7 @@ import { ActivityIndicator, View, Text, SafeAreaView, Keyboard, Image, Touchable
 
 import Reminder from '../screens/Reminder';
 import Terms from '../components/TermsCondition';
+import TermsButton from '../components/TermsButtonModal';
 import colors from '../constants/colors';
 import Buttons from '../components/Button';
 import Input from '../components/Input';
@@ -15,9 +16,8 @@ import auth from '@react-native-firebase/auth';
 
 const Login = ({ navigation }) => {
 
-  // const user = auth().currentUser;
+  const user = auth().currentUser;
 
-  const [inputs, setInputs] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState();
@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
         <ActivityIndicator
           animating={true}
           size="large"
-          color="#265d94" />
+          color="#38a67e" />
         <Text style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 20 }}>Loading. Please wait...</Text>
       </View>
 
@@ -56,7 +56,7 @@ const Login = ({ navigation }) => {
           }
         }
       });
-     
+
       setLoading(false)
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
@@ -110,20 +110,7 @@ const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#38a67e' }}>
 
-      {/* <ImageBackground
-        source={require('../assets/newBG/newBG3.jpg')}
-        resizeMode="cover"
-        imageStyle={{
-          flex: 1,
-          width: windowWidth,
-          height: windowHeight,
-          // width: 550,
-          // height: 300,
-          justifyContent: "center",
-          opacity: 1
-        }}
-      > */}
-      <ScrollView>
+      <ScrollView contentContainerStyle={{}}>
         <Terms />
         <Reminder />
         <View style={styles.header}>
@@ -211,9 +198,21 @@ const Login = ({ navigation }) => {
             }}>
             Don't have an account? Sign Up
           </Text>
+
+          <TermsButton />
+
+          <Text
+            style={{
+              color: colors.grey,
+              fontFamily: 'Poppins-Regular',
+              textAlign: 'center',
+              fontSize: 16,
+              top: 70
+            }}>
+            Version 1.4
+          </Text>
         </View>
       </ScrollView>
-      {/* </ImageBackground> */}
 
     </SafeAreaView >
   );
@@ -231,17 +230,13 @@ const styles = StyleSheet.create({
   footer: {
     // flex: 1,
     backgroundColor: '#fff',
-    // borderColor: '#089447',
-    // borderWidth: 3,
-    // borderBottomColor: '#3880ff',
-    // borderRadius: 10,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 20,
     // marginHorizontal: 1,
     // marginVertical: 20,
     paddingVertical: 20,
-    paddingBottom: 50,
+    paddingBottom: 160,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -258,6 +253,10 @@ const styles = StyleSheet.create({
     // bottom: 135,
     marginBottom: 15,
   },
+  tinyLogo: {
+    width: 150,
+    height: 150,
+  }
 })
 
 export default Login;

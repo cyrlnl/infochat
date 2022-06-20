@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Tooltip from 'react-native-walkthrough-tooltip';
 
+// service
+import { Auth } from '../services'
 import auth from '@react-native-firebase/auth';
 
 import { Chatbot } from "../screens";
@@ -13,12 +17,16 @@ import { EditProfile } from "../screens";
 import { SubmitQuery } from "../screens";
 import HeaderImage from '../components/HeaderImage';
 import SubmitModal from "../screens/SubmitModal";
+import AddModal from "../components/addModal";
+import TermModal from "../components/TermsButtonModal";
 import Modal from '../screens/ChatbotInstruction';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = ({ navigation, route }) => {
+
+  const [isToolTip, setIsToolTip] = useState(true);
 
   const user = auth().currentUser;
   console.log(user);
@@ -38,7 +46,7 @@ const AppNavigator = ({ navigation, route }) => {
         component={EditProfile}
         options={{
           tabBarHideOnKeyboard: true,
-          title: 'Edit Profile',
+          title: 'Edit Photo',
           headerTitleStyle: {
             fontFamily: 'Poppins-Medium',
             color: 'black'
@@ -86,11 +94,15 @@ const AppNavigator = ({ navigation, route }) => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          // alignContent: 'center',
+          alignSelf: 'center',
           backgroundColor: '#38a67e',
           marginTop: 4,
           height: 50,
           width: 300,
-          left: 46,
+          // left: 46,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30
         },
@@ -112,7 +124,15 @@ const AppNavigator = ({ navigation, route }) => {
           headerTitleStyle: {
             opacity: 0
           },
-          headerRight: () => <View style={{ bottom: 21, flexDirection: 'row' }}><View style={{ right: 50 }}><Modal /></View><View style={{ right: 100 }}><SubmitModal /></View></View>,
+          headerRight: () => <View style={{ bottom: 21, flexDirection: 'row' }}>
+            <View style={{ right: 50 }}>
+              <Modal />
+            </View>
+            <View style={{ right: 100 }}>
+              <SubmitModal />
+              {/* <AddModal /> */}
+            </View>
+          </View>,
           headerLeft: () => <HeaderImage />,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>
@@ -146,6 +166,7 @@ const AppNavigator = ({ navigation, route }) => {
             color: 'white'
           },
           headerLeft: () => <Icon name="person-circle-outline" size={35} color="#fff" style={{ marginHorizontal: 3, left: 7 }} />,
+          headerRight: () => <TouchableOpacity onPress={() => Auth.signOut()}><MaterialIcons name="logout" size={30} color="#fff" style={{ marginHorizontal: 3, right: 10 }} /></TouchableOpacity>,
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', top: 3 }}>

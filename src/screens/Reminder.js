@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native'
 import Modal from 'react-native-modal';
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,30 +26,27 @@ export default function SubmitQueryModal() {
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
-                  How to Access the Application?
-                </Text>
+              <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
+                How to Access the Application?
+              </Text>
 
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Icon name="closecircle" color="#2c8162" size={25} />
-                </TouchableOpacity>
-              </View>
+              <Image
+                style={styles.tinyLogo}
+                // source={require('../assets/modal/login.png')}
+                source={require('../assets/modal/login.png')}
+              />
 
               <Text>
-                <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
+                <Text style={{ color: '#2c8162', fontSize: 16, fontFamily: 'Poppins-Medium', textAlign: 'center' }}>
                   For Gordon College Student:{'\n'}
                 </Text>
-                <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
+                <Text style={{ color: '#333', fontFamily: 'Poppins-Medium', }}>
                   {'\n'}
-                  To log in, use your Gordon College Domain E-mail <Text style={{ color: '#2c8162' }}>(201******@gordoncollege.edu.ph)</Text> and default password <Text style={{ color: '#2c8162' }}>(lastnameGC2022)</Text>.
+                  To login, use your Gordon College Domain E-mail <Text style={{ color: '#2c8162' }}>(201******@gordoncollege.edu.ph)</Text> and default password <Text style={{ color: '#2c8162' }}>(lastnameGC2022)</Text>.
                   {'\n'}
                 </Text>
 
-                <Text style={{ color: '#2c8162', fontSize: 18, fontFamily: 'Poppins-Regular' }}>
+                <Text style={{ color: '#2c8162', fontSize: 16, fontFamily: 'Poppins-Medium' }}>
                   {'\n'}For Guest and New Users Outside Gordon College Community:{'\n'}
                 </Text>
                 <Text style={{ color: '#333', fontFamily: 'Poppins-Medium' }}>
@@ -70,6 +67,24 @@ export default function SubmitQueryModal() {
                 </Text>
               </Text>
 
+              <Button
+                title="OKAY"
+                iconContainerStyle={{ left: -10 }}
+                iconRight
+                titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: '#fff', }}
+                buttonStyle={{
+                  backgroundColor: '#2c8162',
+                  borderColor: 'transparent',
+                  borderWidth: 0,
+                  borderRadius: 20,
+                }}
+                containerStyle={{
+                  width: 100,
+                  marginVertical: 30,
+                  marginBottom: 10
+                }}
+                onPress={() => setModalVisible(!modalVisible)}
+              />
             </View>
           </View>
         </ScrollView>
@@ -111,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    top: 20
   },
   modalView: {
     // height: windowHeight - 150,
@@ -139,5 +155,10 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Poppins-Medium',
     color: '#333'
+  },
+  tinyLogo: {
+    width: 160,
+    height: 160,
+    marginBottom: 20
   }
 });

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Linking, StyleSheet, ScrollView, Image } from 'react-native'
 import Modal from 'react-native-modal';
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,32 +29,48 @@ export default function SubmitQueryModal() {
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ marginBottom: 10, color: '#2c8162', textAlign: 'center', fontSize: 21, fontFamily: 'Poppins-Regular' }}>
-                  How to Access the Application?
-                </Text>
+                <Image
+                  style={styles.tinyLogo}
+                  source={require('../assets/modal/addsubmit.png')}
+                />
 
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Icon name="closecircle" color="#2c8162" size={25} />
-                </TouchableOpacity>
-              </View>
 
-              <Text style={{ color: '#222', fontFamily: 'Poppins-Medium', textAlign: 'center', fontSize: 15 }}>
+              <Text style={{ color: '#222', fontFamily: 'Poppins-Medium', textAlign: 'justify', fontSize: 15 }}>
                 It seems like your question/s was/were not in the record yet. To make our service better, you can submit your concerns/inquiries/questions by typing it in the space below so we can review and provide answer for it so we can add this in the record soon.
                 {'\n'}
                 {'\n'}
-                If you have more questions, feel free to contact us:{'\n'}<Text style={{ textDecorationLine: 'underline', color: '#2c8162' }} onPress={() => Linking.openURL('mailto:codebrewers.ccs@gmail.com?subject=Concern&body=Description')}>codebrewers.ccs@gmail.com</Text>
+                If this concern needs an urgent response, you can send an e-mail at:{'\n'}<Text style={{ textDecorationLine: 'underline', color: '#2c8162' }} onPress={() => Linking.openURL('mailto:info@gordoncollege.edu.ph?subject=Concern&body=Description')}>info@gordoncollege.edu.ph</Text>
                 {'\n'}
                 {'\n'}
-                Thank you.
+                Kindly wait for our response in your registered E-mail.
                 {'\n'}
-                Good day!
+                {'\n'}
+                Thank you. Good day!
               </Text>
 
+              <Button
+                title="OKAY"
+                iconContainerStyle={{ left: -10 }}
+                iconRight
+                titleStyle={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 14, color: '#fff', }}
+                buttonStyle={{
+                  backgroundColor: '#2c8162',
+                  borderColor: 'transparent',
+                  borderWidth: 0,
+                  borderRadius: 20,
+                }}
+                containerStyle={{
+                  width: 100,
+                  marginVertical: 5,
+                  marginBottom: 5
+                }}
+                onPress={() => setModalVisible(!modalVisible)}
+              />
+
             </View>
+
+
+
           </View>
         </ScrollView>
       </Modal>
@@ -95,11 +111,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 70,
   },
   modalView: {
     // height: windowHeight - 150,
-    width: windowWidth - 60,
+    // width: windowWidth - 60,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1,
@@ -119,10 +135,14 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     top: -5,
-    left: 220
+    left: 190
   },
   text: {
     fontFamily: 'Poppins-Medium',
     color: '#333'
+  },
+  tinyLogo: {
+    width: 230,
+    height: 170,
   }
 });

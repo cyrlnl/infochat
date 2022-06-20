@@ -48,7 +48,7 @@ export default function SignUp({ navigation }) {
         <ActivityIndicator
           animating={true}
           size="large"
-          color="#265d94" />
+          color="#38a67e" />
         <Text style={{ textAlign: 'center', fontFamily: 'Poppins-Medium', fontSize: 20 }}>Loading. Please wait...</Text>
       </View>
 
